@@ -5,39 +5,31 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [role="arc42help"]
 ****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. 
-These include
+Arcucheck is a tool for static architecture conformance checking based on PlantUML diagramms.
 
-* underlying business goals, 
-* essential features, 
-* essential functional requirements, 
-* quality goals for the architecture and
-* relevant stakeholders and their expectations
+.Core mission of the system
+The system warns if the implementation deviates from the planned architecture.
+The most important aspects of the specialist domain are architecture, warning and relationships.
+
+.Category of the systems
+Development process support system ->
+The system is intended to optimize the process of software development and architecture and make it more pleasant.
 ****
 
 === Requirements Overview
 
 [role="arc42help"]
 ****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
+.Functional requirements
+* the system outputs textual warnings about deviations form the planned architecture
+* the system is able to process existing PlantUML class diagramms
+* the system is able to autogenerate PlantUML class diagramms form existing Java codebases
+* the system is able to compare those two PlantUML class diagramms
+* the system categorises the detected deviations and outputs the corresponding warning
+* the system provides a CLI, so it can be included in CI/CD processes
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
-
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
-
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-
-
-.Further Information
-
-See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 documentation.
+.Note
+ The system should not be a finished product with a variety of features at the end of the development period, but rather serve as a prototype so that it can be evaluated whether this approach is useful for checking static architectural conformity
 
 ****
 
@@ -45,49 +37,52 @@ See https://docs.arc42.org/section-1/[Introduction and Goals] in the arc42 docum
 
 [role="arc42help"]
 ****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. 
-We really mean quality goals for the architecture. Don't confuse them with project goals.
-They are not necessarily identical.
+[cols="1,1,1"]
+|===
+|Quality goal |General description| System specific description
 
-Consider this overview of potential topics (based upon the ISO 25010 standard):
+|Operability (ease of use)
+|Degree to which the software product makes it easy for users to operate and control it
+|The system should be as easy as possible for developers to use without much additional effort (automated at best)
 
-image::01_2_iso-25010-topics-EN.drawio.png["Categories of Quality Requirements"]
+|Functional suitability (accuracy)
+|Does the system deliver results with the required degree of precision?
+|Warnings should be appropriately accurate and categorized
 
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. 
-Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged...
-
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
+|Compatibility (interoperability)
+|Ability to interact with predefined systems. This also includes embedding in the operating infrastructure.
+|The system should be embeddable in the CI/CD infrastructure.
+|===
 ****
 
 === Stakeholders
 
 [role="arc42help"]
 ****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
-
 [options="header",cols="1,2,2"]
 |===
-|Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|Role|Description|Expectations
+
+| potential user: software architect
+| The person(s) responsible for the design of the system
+| Compliance with the designed architecture is checked by using the system and improved if necessary. Monitoring of the compliance status without much additional effort.
+
+| potential user: software developer
+| The person(s) responsible for implementing the system
+| Raising awareness of the decay of architecture. Better cooperation with architects. Improved development experience in the long term.
+
+| potential user: DevOps engineer
+| The person(s) responsible for the CI/CD processes
+| Simple integration of the system in pipelines.
+
+| Pia Schilling
+| Developer of arucheck
+|Development of a prototype system suitable for evaluation in the Bachelor's thesis. Detailed documentation to make the work process comprehensible.
+
+| Examiners
+| First and second examiner of the Bachelor's thesis
+| System that is described and evaluated in detail and the design decisions are justified. Development process should be comprehensible. Presumably no expectation of a fully functional system.
+
 |===
+****
+
