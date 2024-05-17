@@ -1,0 +1,18 @@
+@startuml
+[existing source code] as existingCodeBase
+[system under design]  as systemUnderDesign
+[existing documentation] as existingDocu
+actor User as user
+
+interface " " as CLI
+CLI -down- systemUnderDesign
+user -( CLI
+
+interface " " as A
+A )-left- systemUnderDesign
+existingCodeBase -left- A
+
+interface " " as B
+B )-right- systemUnderDesign
+existingDocu -right- B
+@enduml
