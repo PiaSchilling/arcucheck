@@ -7,7 +7,7 @@ class CodeParserImpl : CodeParser {
 
     /**
      * Parse the code of the provided path into a plantUML diagram
-     * @param args the arguments for the parsing (path to codebase, path to output dir, ...)
+     * @param codePath the path to the code
      */
     override fun parseCode(codePath:String) {
         //TODO comment in when .jar files are available
