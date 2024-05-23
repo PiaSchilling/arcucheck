@@ -1,5 +1,9 @@
 package ui
 
+import com.google.inject.Guice
+import control.api.Controller
+import control.impl.ControllerImpl
+import di.CoreModule
 import picocli.CommandLine
 import java.util.concurrent.Callable
 
@@ -16,11 +20,10 @@ class CLI : Callable<Int> {
         description = ["the path to the diagram (intended state of the system)"])
     private var diagramPath: String = ""
     override fun call(): Int {
-        println("test")
-        println(codePath)
-        println(diagramPath)
+
+        val injector = Guice.createInjector(listOf(CoreModule()))
+        val controller = injector.getInstance(Controller::class.java)
+        controller.onExecuteCommand(listOf(codePath,diagramPath));
         return 0
     }
 }
-
-fun main(args: Array<String>) = System.exit(CommandLine(CLI()).execute(*args))

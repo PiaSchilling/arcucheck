@@ -9,8 +9,10 @@ class CodeParserImpl : CodeParser {
      * Parse the code of the provided path into a plantUML diagram
      * @param args the arguments for the parsing (path to codebase, path to output dir, ...)
      */
-    override fun parseCode(args: Array<String>) {
+    override fun parseCode(codePath:String) {
         //TODO comment in when .jar files are available
+        println("ParseCodeDummy: ")
+        print(codePath)
 
         /* try {
              val options: Options = CliOptionsHolder.createOptions()

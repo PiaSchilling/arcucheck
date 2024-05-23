@@ -1,5 +1,5 @@
 package control.api
 
 interface Controller {
-    fun onExecuteCommand();
+    fun onExecuteCommand(args: List<String>);
 }
