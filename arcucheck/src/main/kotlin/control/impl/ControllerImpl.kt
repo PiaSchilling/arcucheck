@@ -1,10 +1,9 @@
 package control.impl
 
-import com.google.inject.Inject
 import control.api.Controller
 import core.api.CodeParser
 
-class ControllerImpl @Inject constructor(private val codeParser: CodeParser) : Controller {
+class ControllerImpl(private val codeParser: CodeParser) : Controller {
 
     override fun onExecuteCommand(args: List<String>) {
         codeParser.parseCode(args[0]) // TODO this is risky, add error handling (maybe create model class for programm args)
