@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="chore: add dependency lib jars (plantuml-parser)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,28 +36,71 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "last_opened_file_path": "/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.arcucheck [dependencies]">
+    <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="arcucheck [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="arcucheck.main" />
-      <option name="PROGRAM_PARAMETERS" value="-o $USER_HOME$/Desktop/test.puml -f $PROJECT_DIR$/../../../../../../2022-03-14_Semester_4/SE3/Repo/se3/project/arcudoc/de.hdm_stuttgart.editor/src/main/java/de/hdm_stuttgart/editor/ -sctr -spkg -fpub -mpub -fpro -mpro" />
+      <option name="PROGRAM_PARAMETERS" value="-cp $PROJECT_DIR$/../../../../../../2022-03-14_Semester_4/SE3/Repo/se3/project/arcudoc/de.hdm_stuttgart.editor/src/main/java/de/hdm_stuttgart/editor/ -dp $USER_HOME$/Desktop/out.puml" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -62,6 +109,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Gradle.arcucheck [clean build]" />
+        <item itemvalue="Gradle.arcucheck [dependencies]" />
       </list>
     </recent_temporary>
   </component>
@@ -73,7 +122,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1716365415020</updated>
-      <workItem from="1716365416271" duration="4410000" />
+      <workItem from="1716365416271" duration="6126000" />
+      <workItem from="1716886858580" duration="661000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: migrate from maven to gradle">
       <created>1716365776719</created>
@@ -96,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1716369202064</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="chore: add dependency lib jars (plantuml-parser)">
+      <created>1716885007797</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1716885007797</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -113,6 +170,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor: migrate from maven to gradle" />
     <MESSAGE value="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised" />
+    <MESSAGE value="chore: add dependency lib jars (plantuml-parser)" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: add dependency lib jars (plantuml-parser)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NoSuchMethodError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
