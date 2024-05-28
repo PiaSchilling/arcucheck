@@ -9,6 +9,6 @@ fun main(args: Array<String>) {
     startKoin {
         modules(coreModule, controlModule)
     }
-    
+
     System.exit(CommandLine(CLI()).execute(*args))
 }
