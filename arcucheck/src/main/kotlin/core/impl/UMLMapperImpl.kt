@@ -14,7 +14,7 @@ fun main() {
         + void renderMarkdownToHtml(String)
         + StringProperty getHtmlStringProperty()
         - {static} Test privateMethod()
-        # {abstract} Test protectedMethod()
+        # {abstract} Test protectedMethod(Test,Pia)
         }
     """.trimIndent()
 
@@ -25,7 +25,7 @@ fun main() {
     println("Class Name: $className")
 
     // Regex for Methoden
-    val methodPattern = Regex("""([+\-#])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)(\(.*?\)))""")
+    val methodPattern = Regex("""([+\-#])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)\((.*?)\))""")
     val methods = methodPattern.findAll(text)
 
     val pumlMethods = mutableListOf<PUMLMethod>()
@@ -44,7 +44,7 @@ fun main() {
             PUMLMethod(
                 methodName,
                 methodReturnType,
-                listOf(methodParameters),
+                methodParameters.split(","),
                 Visibility.fromString(methodVisibility),
                 isStatic,
                 isAbstract
