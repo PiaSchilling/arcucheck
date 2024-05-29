@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="chore: add dependency lib jars (plantuml-parser)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" afterDir="false" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add PUML data classes to model diagrams">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/UMLMapperImpl.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -53,7 +53,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.arcucheck [dependencies]">
+  <component name="RunManager" selected="Kotlin.MainKt">
     <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -124,6 +124,7 @@
       <updated>1716365415020</updated>
       <workItem from="1716365416271" duration="6126000" />
       <workItem from="1716886858580" duration="661000" />
+      <workItem from="1716887541941" duration="6629000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: migrate from maven to gradle">
       <created>1716365776719</created>
@@ -153,12 +154,90 @@
       <option name="project" value="LOCAL" />
       <updated>1716885007797</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="chore: remove guice&#10;&#10;It caused problems that cant be fixed quickly">
+      <created>1716892748008</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716892748008</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: add Koin di">
+      <created>1716894560404</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1716894560404</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: wire up CodeParserImpl">
+      <created>1716894713383</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1716894713383</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat: add PUML data classes to model diagrams">
+      <created>1716896793196</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1716896793196</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/src/main/kotlin/control/di" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="9613bee4-43f3-49f2-9397-99501a69537b">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/src/main/kotlin/core/di" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -166,12 +245,22 @@
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
+        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor: migrate from maven to gradle" />
     <MESSAGE value="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised" />
     <MESSAGE value="chore: add dependency lib jars (plantuml-parser)" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: add dependency lib jars (plantuml-parser)" />
+    <MESSAGE value="chore: remove guice&#10;&#10;It caused problems that cant be fixed quickly" />
+    <MESSAGE value="feat: add Koin di" />
+    <MESSAGE value="feat: wire up CodeParserImpl" />
+    <MESSAGE value="feat: add PUML data classes to model diagrams" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add PUML data classes to model diagrams" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
