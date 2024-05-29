@@ -11,10 +11,10 @@ class UMLMapperImpl : UMLMapper {
         val methods = mapMethods(umlText)
         val fields = mapFields(umlText)
 
-        println(className)
-        println(constructors)
-        println(methods)
-        println(fields)
+        println("classname: $className")
+        println("constructors: $constructors")
+        println("methods: $methods")
+        println("fields: $fields")
 
         return PUMLDiagram("Test")
     }
@@ -24,7 +24,11 @@ class UMLMapperImpl : UMLMapper {
 
         ///([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!$\()(?!\()$/gm
         ///([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!\()
-        val fieldPattern = Regex("""([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!\()(?!\()$""") // TODO fix
+        // "([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!$\()(?!\()$"mg
+        val fieldPattern = Regex(
+            """([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!${'$'}\()(?!\()${'$'}""",
+            RegexOption.MULTILINE
+        )
         val fields = fieldPattern.findAll(umlText)
 
         fields.forEach { field ->
@@ -34,6 +38,8 @@ class UMLMapperImpl : UMLMapper {
             val fieldName = field.groupValues[4]
 
             val isStatic = fieldStatic.contains("static")
+
+            print("test")
 
             pumlFields.add(
                 PUMLField(fieldName, fieldDataType, Visibility.fromString(fieldVisibility), isStatic)
@@ -111,7 +117,7 @@ fun main() {
         - {static} Test privateMethod()
         # {abstract} Test protectedMethod(Test,Pia)
         }
-    """.trimIndent()
+    """
 
     val mapper = UMLMapperImpl()
     mapper.mapDiagram(text)
