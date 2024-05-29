@@ -1,6 +1,8 @@
 package core.impl
 
 import core.api.UMLMapper
+import core.model.PUMLMethod
+import core.model.Visibility
 
 class UMLMapperImpl : UMLMapper {
 }
@@ -23,19 +25,34 @@ fun main() {
     println("Class Name: $className")
 
     // Regex for Methoden
-    val methodPattern = Regex("""([+\-#])\s*((\w+)\s+(\w+)(\(.*?\)))""")
+    val methodPattern = Regex("""([+\-#])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)(\(.*?\)))""")
     val methods = methodPattern.findAll(text)
 
+    val pumlMethods = mutableListOf<PUMLMethod>()
+
     for (method in methods) {
-        val visibilityModifier = method.groupValues[1]
-        val methodName= method.groupValues[4]
-        val methodParameters = method.groupValues[5]
-        val methodReturnType = method.groupValues[3]
-        println("Visibility: $visibilityModifier, " +
-                "Return type: $methodReturnType, " +
-                "MethodName: $methodName, " +
-                "Params: $methodParameters")
+        val methodVisibility = method.groupValues[1]
+        val methodStaticAbstract = method.groupValues[2]
+        val methodReturnType = method.groupValues[4]
+        val methodName = method.groupValues[5]
+        val methodParameters = method.groupValues[6]
+
+        val isAbstract = methodStaticAbstract.contains("abstract")
+        val isStatic = methodStaticAbstract.contains("static")
+
+        pumlMethods.add(
+            PUMLMethod(
+                methodName,
+                methodReturnType,
+                listOf(methodParameters),
+                Visibility.fromString(methodVisibility),
+                isStatic,
+                isAbstract
+            )
+        )
     }
+
+    println("PUML Methods: $pumlMethods")
 
     // Regex for constructor
     val pattern = "([+\\-#])\\s*<<Create>>\\s+(\\w+)\\((.*?)\\)".toRegex()
