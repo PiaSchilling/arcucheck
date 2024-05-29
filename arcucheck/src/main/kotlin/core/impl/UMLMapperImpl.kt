@@ -8,7 +8,7 @@ class UMLMapperImpl : UMLMapper {
 fun main() {
     val text = """
         class de.hdm_stuttgart.editor.integration.EditorController {
-        + <<Create>> EditorController(IEditorRepo)
+        + <<Create>> EditorController(IEditorRepo,String)
         + void renderMarkdownToHtml(String)
         + StringProperty getHtmlStringProperty()
         - Test private()
@@ -22,7 +22,7 @@ fun main() {
     val className = classNameMatch?.groupValues?.get(1) ?: "Class name not found"
     println("Class Name: $className")
 
-    // Regex für Konstruktoren und Methoden
+    // Regex for Methoden
     val methodPattern = Regex("""([+\-#])\s*(\w+\s+\w+\(.*?\))""")
     val methods = methodPattern.findAll(text)
 
@@ -31,4 +31,19 @@ fun main() {
         val methodSignature = method.groupValues[2]
         println("Visibility: $visibilityModifier, Method: $methodSignature")
     }
+
+    // Regex for constructor
+    val pattern = "([+\\-#])\\s*<<Create>>\\s+(\\w+)\\((.*?)\\)".toRegex()
+    val matches = pattern.findAll(text)
+
+    matches.forEach { matchResult ->
+        val constructorName = matchResult.groupValues[2]
+        val constructorParams = matchResult.groupValues[3]
+        val constructorVisibility = matchResult.groupValues[1]
+        println("Constructor Name: $constructorName")
+        println("Constructor Parameters: $constructorParams")
+        println("Constructor visibility: $constructorVisibility")
+    }
+
+
 }
