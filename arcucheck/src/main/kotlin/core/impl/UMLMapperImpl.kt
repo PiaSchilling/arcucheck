@@ -6,7 +6,7 @@ import core.model.*
 class UMLMapperImpl : UMLMapper {
 
     fun mapDiagram(umlText: String): PUMLDiagram {
-        val className = mapClassName(umlText)
+        val className = mapClassNames(umlText)
         val constructors = mapConstructors(umlText)
         val methods = mapMethods(umlText)
         val fields = mapFields(umlText)
@@ -22,9 +22,6 @@ class UMLMapperImpl : UMLMapper {
     private fun mapFields(umlText: String): List<PUMLField> {
         val pumlFields = mutableListOf<PUMLField>()
 
-        ///([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!$\()(?!\()$/gm
-        ///([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!\()
-        // "([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!$\()(?!\()$"mg
         val fieldPattern = Regex(
             """([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!${'$'}\()(?!\()${'$'}""",
             RegexOption.MULTILINE
@@ -79,11 +76,16 @@ class UMLMapperImpl : UMLMapper {
         return pumlMethods
     }
 
-    private fun mapClassName(umlText: String): String {
+    private fun mapClassNames(umlText: String): List<String> {
+        val pumlClassNames = mutableListOf<String>()
         // TODO check if splitting up class name and package names is necessary
         val classNamePattern = Regex("""class\s+([\w.]+)\s*\{""")
-        val classNameMatch = classNamePattern.find(umlText)
-        return classNameMatch?.groupValues?.get(1) ?: "Class name not found";
+        val classNameMatches = classNamePattern.findAll(umlText)
+
+         classNameMatches.forEach {
+            matchResult -> pumlClassNames.add(matchResult.groupValues[1])
+        }
+        return pumlClassNames
     }
 
     private fun mapConstructors(umlText: String): List<PUMLConstructor> {
@@ -116,6 +118,10 @@ fun main() {
         + StringProperty getHtmlStringProperty()
         - {static} Test privateMethod()
         # {abstract} Test protectedMethod(Test,Pia)
+        }
+        class de.hdm_stuttgart.editor.data.EditorRepo {
+        + void fetchMarkDown(String)
+        + StringProperty getHtmlStringProperty()
         }
     """
 
