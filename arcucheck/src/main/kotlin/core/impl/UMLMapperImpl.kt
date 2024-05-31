@@ -6,17 +6,43 @@ import core.model.*
 class UMLMapperImpl : UMLMapper {
 
     fun mapDiagram(umlText: String): PUMLDiagram {
-        val className = mapClassNames(umlText)
+        val umlTextClasses = splitUMLTextClasses(umlText);
+        val classes = mapClasses(umlTextClasses)
+
+
+        println("----")
+        println(splitUMLTextClasses(umlText))
+        println("-----")
+
+        println(classes)
+        return PUMLDiagram("Test")
+    }
+
+    /**
+     * Spilt the complete PlantUML Text into single PlantUML Text chunks each containing one class or abstract class
+     *
+     * @param umlText the whole PlantUML Text as String
+     * @return a List of String which each contains a single PlantUML class in text form
+     */
+    private fun splitUMLTextClasses(umlText: String): List<String> {
+        return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class)"""))
+    }
+
+    private fun mapClasses(umlTextClasses: List<String>): List<PUMLClass> {
+        val mappedClasses = mutableListOf<PUMLClass>()
+        umlTextClasses.forEach { textClass ->
+            mappedClasses.add(mapClass(textClass))
+        }
+        return mappedClasses
+    }
+
+    private fun mapClass(umlText: String): PUMLClass {
+        val className = mapClassName(umlText)
         val constructors = mapConstructors(umlText)
         val methods = mapMethods(umlText)
         val fields = mapFields(umlText)
-
-        println("classname: $className")
-        println("constructors: $constructors")
-        println("methods: $methods")
-        println("fields: $fields")
-
-        return PUMLDiagram("Test")
+        // TODO remove hardcoded false
+        return PUMLClass(className,constructors,fields,methods,false)
     }
 
     private fun mapFields(umlText: String): List<PUMLField> {
@@ -82,10 +108,22 @@ class UMLMapperImpl : UMLMapper {
         val classNamePattern = Regex("""class\s+([\w.]+)\s*\{""")
         val classNameMatches = classNamePattern.findAll(umlText)
 
-         classNameMatches.forEach {
-            matchResult -> pumlClassNames.add(matchResult.groupValues[1])
+        classNameMatches.forEach { matchResult ->
+            pumlClassNames.add(matchResult.groupValues[1])
         }
         return pumlClassNames
+    }
+
+    private fun mapClassName(umlText: String): String {
+        val classNamePattern = Regex("""class\s+([\w.]+)\s*\{""")
+        val classNamePatternAbstract = Regex("""(?:abstract\s+)?class\s+([\w.]+)\s*\{""")
+        val classNameMatchAbstract = classNamePatternAbstract.find(umlText)
+        return classNameMatchAbstract?.groupValues?.get(1) ?: run {
+            println("not abstract")
+            val classNameMatch = classNamePattern.find(umlText)
+             classNameMatch?.groupValues?.get(1) ?: ""
+        }
+// TODO hier weitermachen, um zwischen abstrakten und normalen klassen zu unterscheiden
     }
 
     private fun mapConstructors(umlText: String): List<PUMLConstructor> {
@@ -119,11 +157,12 @@ fun main() {
         - {static} Test privateMethod()
         # {abstract} Test protectedMethod(Test,Pia)
         }
-        class de.hdm_stuttgart.editor.data.EditorRepo {
+        abstract class de.hdm_stuttgart.editor.data.EditorRepo {
         + void fetchMarkDown(String)
         + StringProperty getHtmlStringProperty()
         }
     """
+    // TODO add interfaces
 
     val mapper = UMLMapperImpl()
     mapper.mapDiagram(text)
