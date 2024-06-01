@@ -15,7 +15,9 @@ class UMLMapperImpl : UMLMapper {
         println("-----")
 
         println(pumlTypes)
-        return PUMLDiagram("Test")
+        val pumlClasses = pumlTypes.filterIsInstance<PUMLClass>()
+        val pumlInterfaces = pumlTypes.filterIsInstance<PUMLInterface>()
+        return PUMLDiagram("Test", pumlClasses, pumlInterfaces) // TODO remove hardcoded name
     }
 
     /**
