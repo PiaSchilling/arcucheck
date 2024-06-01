@@ -7,14 +7,14 @@ class UMLMapperImpl : UMLMapper {
 
     fun mapDiagram(umlText: String): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
-        val classes = mapClasses(umlTextClasses)
+        val pumlTypes = mapTypes(umlTextClasses)
 
 
         println("----")
         println(splitUMLTextClasses(umlText))
         println("-----")
 
-        println(classes)
+        println(pumlTypes)
         return PUMLDiagram("Test")
     }
 
@@ -25,13 +25,17 @@ class UMLMapperImpl : UMLMapper {
      * @return a List of String which each contains a single PlantUML class in text form
      */
     private fun splitUMLTextClasses(umlText: String): List<String> {
-        return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class)"""))
+        return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class|interface)"""))
     }
 
-    private fun mapClasses(umlTextClasses: List<String>): List<PUMLClass> {
-        val mappedClasses = mutableListOf<PUMLClass>()
-        umlTextClasses.forEach { textClass ->
-            mappedClasses.add(mapClass(textClass))
+    private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
+        val mappedClasses = mutableListOf<PUMLType>()
+        umlTextTypes.forEach { textClass ->
+            if (textClass.contains("interface")) {
+                mappedClasses.add(mapInterface(textClass))
+            } else {
+                mappedClasses.add(mapClass(textClass))
+            }
         }
         return mappedClasses
     }
@@ -42,6 +46,12 @@ class UMLMapperImpl : UMLMapper {
         val methods = mapMethods(umlText)
         val fields = mapFields(umlText)
         return PUMLClass(className.name, constructors, fields, methods, className.isAbstract)
+    }
+
+    private fun mapInterface(umlText: String): PUMLInterface {
+        val interfaceName = mapInterfaceName(umlText)
+        val methods = mapMethods(umlText)
+        return PUMLInterface(interfaceName, methods)
     }
 
     private fun mapFields(umlText: String): List<PUMLField> {
@@ -109,6 +119,12 @@ class UMLMapperImpl : UMLMapper {
         }
     }
 
+    private fun mapInterfaceName(umlText: String): String {
+        val interfaceNamePattern = Regex("""interface\s+([\w.]+)\s*\{""")
+        val interfaceNameMatch = interfaceNamePattern.find(umlText)
+        return interfaceNameMatch?.groupValues?.get(1) ?: ""
+    }
+
     private fun mapConstructors(umlText: String): List<PUMLConstructor> {
         val pumlConstructors = mutableListOf<PUMLConstructor>()
 
@@ -143,6 +159,10 @@ fun main() {
         abstract class de.hdm_stuttgart.editor.data.EditorRepo {
         + void fetchMarkDown(String)
         + StringProperty getHtmlStringProperty()
+        }
+         interface de.hdm_stuttgart.ui.HomeScreen {
+        + void onButtonClicked(Event)
+        + boolean onReload()
         }
     """
     // TODO add interfaces
