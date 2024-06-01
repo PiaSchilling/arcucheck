@@ -1,6 +1,6 @@
 package core.model
 
-enum class Visibility(val pumlCharacter:String) {
+enum class Visibility(val pumlIdentifier:String) {
     PUBLIC("+"),
     PRIVATE("-"),
     PROTECTED("#"),
@@ -8,13 +8,13 @@ enum class Visibility(val pumlCharacter:String) {
 
     companion object {
         /**
-         * Returns the matching Visibility constant for the provided string
+         * Returns the matching Visibility enum constant for the provided string identifier
          *
          * @param string string representation of a visibility (+,-,#,~)
-         * @return
+         * @return the matching Visibility enum constant
          */
         fun fromString(string: String): Visibility {
-            return Visibility.values().first { visibility -> visibility.pumlCharacter == string }
+            return Visibility.values().first { visibility -> visibility.pumlIdentifier == string }
         }
     }
 }

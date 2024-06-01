@@ -9,7 +9,7 @@ class UMLMapperImpl : UMLMapper {
         val umlTextClasses = splitUMLTextClasses(umlText)
         val pumlTypes = mapTypes(umlTextClasses)
 
-
+        // TODO hier weitermachen: PUML beziehungen extrahieren und kategorisieren
         println("----")
         println(splitUMLTextClasses(umlText))
         println("-----")
