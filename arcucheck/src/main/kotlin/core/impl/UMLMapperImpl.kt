@@ -11,7 +11,6 @@ class UMLMapperImpl : UMLMapper {
         val umlTextRelations = splitUMLTextRelations(umlText)
         val pumlRelations = mapRelations(umlTextRelations)
 
-        // TODO hier weitermachen: PUML beziehungen extrahieren und kategorisieren
         println("--classes--")
         println(splitUMLTextClasses(umlText))
         println(pumlTypes)
@@ -55,6 +54,12 @@ class UMLMapperImpl : UMLMapper {
         return relationTexts
     }
 
+    /**
+     * Map UML relations from text format to PUMLRelation models
+     *
+     * @param umlTextRelations a list of the text formatted relations that should be mapped
+     * @return a list of mapped PUMLRelation models
+     */
     private fun mapRelations(umlTextRelations: List<String>): List<PUMLRelation> {
         val mappedRelations = mutableListOf<PUMLRelation>()
         val relationPattern = Regex("""^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}""")
@@ -79,6 +84,12 @@ class UMLMapperImpl : UMLMapper {
         return mappedRelations
     }
 
+    /**
+     * Map UML Types (classes and interfaces) from text format to PUMLType models
+     *
+     * @param umlTextTypes a list of the text formatted types that should be mapped
+     * @return a list of mapped PUMLType models
+     */
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
         val mappedClasses = mutableListOf<PUMLType>()
         umlTextTypes.forEach { textClass ->
@@ -91,6 +102,12 @@ class UMLMapperImpl : UMLMapper {
         return mappedClasses
     }
 
+    /**
+     * Map a UML class form text format to a PUMLClass model
+     *
+     * @param umlText an uml class in text format that should be mapped
+     * @return the mapped PUMLClass
+     */
     private fun mapClass(umlText: String): PUMLClass {
         val className = mapClassName(umlText)
         val constructors = mapConstructors(umlText)
@@ -99,12 +116,24 @@ class UMLMapperImpl : UMLMapper {
         return PUMLClass(className.name, constructors, fields, methods, className.isAbstract)
     }
 
+    /**
+     * Map a UML interface form text format to a PUMLInterface model
+     *
+     * @param umlText an uml interface in text format that should be mapped
+     * @return the mapped PUMLInterface
+     */
     private fun mapInterface(umlText: String): PUMLInterface {
         val interfaceName = mapInterfaceName(umlText)
         val methods = mapMethods(umlText)
         return PUMLInterface(interfaceName, methods)
     }
 
+    /**
+     * Map all UML fields contained by a class form text format to a PUMLField models
+     *
+     * @param umlText an uml class in text format that contains the fields to be mapped
+     * @return a list of the mapped PUMLFields
+     */
     private fun mapFields(umlText: String): List<PUMLField> {
         val pumlFields = mutableListOf<PUMLField>()
 
@@ -130,6 +159,12 @@ class UMLMapperImpl : UMLMapper {
         return pumlFields
     }
 
+    /**
+     * Map all UML methods contained by a class form text format to a PUMLMethod models
+     *
+     * @param umlText an uml class in text format that contains the methods to be mapped
+     * @return a list of the mapped PUMLMethods
+     */
     private fun mapMethods(umlText: String): List<PUMLMethod> {
         val pumlMethods = mutableListOf<PUMLMethod>()
 
@@ -160,6 +195,12 @@ class UMLMapperImpl : UMLMapper {
         return pumlMethods
     }
 
+    /**
+     * Map the class name of an uml class in text format
+     *
+     * @param umlText an uml class in text format that contains the classname to be mapped
+     * @return a ClassName object which contains the name of the class and bool which indicates, if the class is abstract
+     */
     private fun mapClassName(umlText: String): ClassName {
         val classNamePattern = Regex("""(?:abstract\s+)?class\s+([\w.]+)\s*\{""")
         val classNameMatch = classNamePattern.find(umlText)
@@ -170,12 +211,24 @@ class UMLMapperImpl : UMLMapper {
         }
     }
 
+    /**
+     * Map the interface name of an uml interface in text format
+     *
+     * @param umlText an uml interface in text format that contains the interface name to be mapped
+     * @return the name of the interface as a string
+     */
     private fun mapInterfaceName(umlText: String): String {
         val interfaceNamePattern = Regex("""interface\s+([\w.]+)\s*\{""")
         val interfaceNameMatch = interfaceNamePattern.find(umlText)
         return interfaceNameMatch?.groupValues?.get(1) ?: ""
     }
 
+    /**
+     * Map all UML constructors contained by a class form text format to PUMLConstructor models
+     *
+     * @param umlText an uml class in text format that contains the constructors to be mapped
+     * @return a list of the mapped PUMLConstructors
+     */
     private fun mapConstructors(umlText: String): List<PUMLConstructor> {
         val pumlConstructors = mutableListOf<PUMLConstructor>()
 
@@ -207,10 +260,12 @@ fun main() {
         - {static} Test privateMethod()
         # {abstract} Test protectedMethod(Test,Pia)
         }
+        
         abstract class de.hdm_stuttgart.editor.data.EditorRepo {
         + void fetchMarkDown(String)
         + StringProperty getHtmlStringProperty()
         }
+        
          interface de.hdm_stuttgart.ui.HomeScreen {
         + void onButtonClicked(Event)
         + boolean onReload()
