@@ -277,7 +277,6 @@ fun main() {
         de.hdm_stuttgart.ui.HomeScreen <|.. de.hdm_stuttgart.ui.IHomeScreen
          de.hdm_stuttgart.ui.HomeScreen *-- de.hdm_stuttgart.ui.IHomeScreen
     """
-    // TODO add interfaces
 
     val mapper = UMLMapperImpl()
     mapper.mapDiagram(text)

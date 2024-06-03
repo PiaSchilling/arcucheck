@@ -1,6 +1,7 @@
 package core.constants
 
 class RegexConstants {
+    // TODO extract keywords {abstract, static, interface} (refactoring this file is mandatory for that)
 
     /**
      * Contains constant strings representing regex patterns
@@ -66,6 +67,6 @@ class RegexConstants {
          * - group 2: constructor name
          * - group 3: constructor parameters
          */
-        const val EXTRACT_CONSTRUCTORS = "([+\\-#])\\s*<<Create>>\\s+(\\w+)\\((.*?)\\)" // TODO FIX RAW STRING
+        const val EXTRACT_CONSTRUCTORS = """([+\-#])\s*<<Create>>\s+(\w+)\((.*?)\)"""
     }
 }
