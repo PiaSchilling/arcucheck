@@ -8,24 +8,27 @@ class UMLMapperImpl : UMLMapper {
     fun mapDiagram(umlText: String): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
         val pumlTypes = mapTypes(umlTextClasses)
+        val umlTextRelations = splitUMLTextRelations(umlText)
+        val pumlRelations = mapRelations(umlTextRelations)
 
         // TODO hier weitermachen: PUML beziehungen extrahieren und kategorisieren
         println("--classes--")
         println(splitUMLTextClasses(umlText))
+        println(pumlTypes)
         println("-----")
 
         println("--relationships--")
         println(splitUMLTextRelations(umlText))
+        println(pumlRelations)
         println("-----")
 
-        println(pumlTypes)
         val pumlClasses = pumlTypes.filterIsInstance<PUMLClass>()
         val pumlInterfaces = pumlTypes.filterIsInstance<PUMLInterface>()
         return PUMLDiagram("Test", pumlClasses, pumlInterfaces) // TODO remove hardcoded name
     }
 
     /**
-     * Spilt the complete PlantUML Text into single PlantUML Text chunks each containing one class or abstract class
+     * Spilt the complete PlantUML Text into single PlantUML Text chunks each containing one (abstract) class or interface
      *
      * @param umlText the whole PlantUML Text as String
      * @return a List of String which each contains a single PlantUML class in text form
@@ -34,20 +37,46 @@ class UMLMapperImpl : UMLMapper {
         return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class|interface)"""))
     }
 
+    /**
+     * Spilt the complete PlantUML Text into single PlantUML Text chunks each containing one relation
+     *
+     * @param umlText the whole PlantUML Text as String
+     * @return a List of String which each contains a single PlantUML relation in text form
+     */
     private fun splitUMLTextRelations(umlText: String): List<String> {
-        val relationshipTexts = mutableListOf<String>()
-        val relationshipRegex = Regex(
-            """^\s*([\w.]+)\s*([<!-o*.]{3,4})\s*([\w.]+)\s*${'$'}""",
+        val relationTexts = mutableListOf<String>()
+        val relationPattern = Regex(
+            """^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}""",
             RegexOption.MULTILINE
         )
-        relationshipRegex.findAll(umlText)
+        relationPattern.findAll(umlText)
             .map { result -> result.groupValues[0].trim() }
-            .toCollection(relationshipTexts)
-        return relationshipTexts
+            .toCollection(relationTexts)
+        return relationTexts
     }
 
-    private fun mapRelations(umlText: String): List<PUMLRelation> {
-        return emptyList()
+    private fun mapRelations(umlTextRelations: List<String>): List<PUMLRelation> {
+        val mappedRelations = mutableListOf<PUMLRelation>()
+        val relationPattern = Regex("""^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}""")
+
+        umlTextRelations.forEach { textRelation ->
+            val relation = relationPattern.find(textRelation)
+            relation?.let {
+                val relationType = it.groupValues[2]
+                val sourceClassName = it.groupValues[1]
+                val destinationClassName = it.groupValues[3]
+
+                mappedRelations.add(
+                    PUMLRelation(
+                        RelationType.fromString(relationType),
+                        sourceClassName,
+                        destinationClassName
+                    )
+                )
+            }
+
+        }
+        return mappedRelations
     }
 
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
@@ -187,8 +216,8 @@ fun main() {
         + boolean onReload()
         }
         
-        de.hdm_stuttgart.editor.integration.EditorController <!-- de.hdm_stuttgart.editor.data.EditorRepo
-        de.hdm_stuttgart.ui.HomeScreen <!.. de.hdm_stuttgart.ui.IHomeScreen
+        de.hdm_stuttgart.editor.integration.EditorController <|-- de.hdm_stuttgart.editor.data.EditorRepo
+        de.hdm_stuttgart.ui.HomeScreen <|.. de.hdm_stuttgart.ui.IHomeScreen
          de.hdm_stuttgart.ui.HomeScreen *-- de.hdm_stuttgart.ui.IHomeScreen
     """
     // TODO add interfaces

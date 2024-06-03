@@ -1,3 +1,3 @@
 package core.model
 
-data class PUMLRelation(val relationType: RelationType, val sourceClass: PUMLClass, val destinationClass: PUMLClass)
+data class PUMLRelation(val relationType: RelationType, val sourceClass: String, val destinationClass: String)
