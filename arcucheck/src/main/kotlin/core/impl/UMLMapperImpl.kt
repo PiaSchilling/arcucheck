@@ -1,6 +1,7 @@
 package core.impl
 
 import core.api.UMLMapper
+import core.constants.RegexConstants.Patterns
 import core.model.*
 
 class UMLMapperImpl : UMLMapper {
@@ -16,7 +17,8 @@ class UMLMapperImpl : UMLMapper {
         println(pumlTypes)
         println("-----")
 
-        println("--relationships--")
+
+        println("--relations--")
         println(splitUMLTextRelations(umlText))
         println(pumlRelations)
         println("-----")
@@ -33,7 +35,7 @@ class UMLMapperImpl : UMLMapper {
      * @return a List of String which each contains a single PlantUML class in text form
      */
     private fun splitUMLTextClasses(umlText: String): List<String> {
-        return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class|interface)"""))
+        return umlText.split(Regex(Patterns.SPLIT_CLASSES))
     }
 
     /**
@@ -45,7 +47,7 @@ class UMLMapperImpl : UMLMapper {
     private fun splitUMLTextRelations(umlText: String): List<String> {
         val relationTexts = mutableListOf<String>()
         val relationPattern = Regex(
-            """^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}""",
+            Patterns.SPLIT_RELATIONS,
             RegexOption.MULTILINE
         )
         relationPattern.findAll(umlText)
@@ -62,7 +64,7 @@ class UMLMapperImpl : UMLMapper {
      */
     private fun mapRelations(umlTextRelations: List<String>): List<PUMLRelation> {
         val mappedRelations = mutableListOf<PUMLRelation>()
-        val relationPattern = Regex("""^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}""")
+        val relationPattern = Regex(Patterns.EXTRACT_RELATIONS)
 
         umlTextRelations.forEach { textRelation ->
             val relation = relationPattern.find(textRelation)
@@ -138,7 +140,7 @@ class UMLMapperImpl : UMLMapper {
         val pumlFields = mutableListOf<PUMLField>()
 
         val fieldPattern = Regex(
-            """([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!${'$'}\()(?!\()${'$'}""",
+            Patterns.EXTRACT_FIELDS,
             RegexOption.MULTILINE
         )
         val fields = fieldPattern.findAll(umlText)
@@ -168,7 +170,7 @@ class UMLMapperImpl : UMLMapper {
     private fun mapMethods(umlText: String): List<PUMLMethod> {
         val pumlMethods = mutableListOf<PUMLMethod>()
 
-        val methodPattern = Regex("""([+\-#])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)\((.*?)\))""")
+        val methodPattern = Regex(Patterns.EXTRACT_METHOD)
         val methods = methodPattern.findAll(umlText)
 
         methods.forEach { method ->
@@ -202,7 +204,7 @@ class UMLMapperImpl : UMLMapper {
      * @return a ClassName object which contains the name of the class and bool which indicates, if the class is abstract
      */
     private fun mapClassName(umlText: String): ClassName {
-        val classNamePattern = Regex("""(?:abstract\s+)?class\s+([\w.]+)\s*\{""")
+        val classNamePattern = Regex(Patterns.EXTRACT_CLASS_NAME)
         val classNameMatch = classNamePattern.find(umlText)
         val classSignature = classNameMatch?.groupValues?.get(0)
         val className = classNameMatch?.groupValues?.get(1)
@@ -218,7 +220,7 @@ class UMLMapperImpl : UMLMapper {
      * @return the name of the interface as a string
      */
     private fun mapInterfaceName(umlText: String): String {
-        val interfaceNamePattern = Regex("""interface\s+([\w.]+)\s*\{""")
+        val interfaceNamePattern = Regex(Patterns.EXTRACT_INTERFACE_NAME)
         val interfaceNameMatch = interfaceNamePattern.find(umlText)
         return interfaceNameMatch?.groupValues?.get(1) ?: ""
     }
@@ -232,12 +234,12 @@ class UMLMapperImpl : UMLMapper {
     private fun mapConstructors(umlText: String): List<PUMLConstructor> {
         val pumlConstructors = mutableListOf<PUMLConstructor>()
 
-        val pattern = Regex("([+\\-#])\\s*<<Create>>\\s+(\\w+)\\((.*?)\\)")
+        val pattern = Regex(Patterns.EXTRACT_CONSTRUCTORS)
         val matches = pattern.findAll(umlText)
 
         matches.forEach { matchResult ->
-            val constructorParams = matchResult.groupValues[3]
             val constructorVisibility = matchResult.groupValues[1]
+            val constructorParams = matchResult.groupValues[3]
 
             pumlConstructors.add(
                 PUMLConstructor(constructorParams.split(","), Visibility.fromString(constructorVisibility))
