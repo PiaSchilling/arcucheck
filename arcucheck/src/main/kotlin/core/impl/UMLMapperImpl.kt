@@ -1,7 +1,8 @@
 package core.impl
 
 import core.api.UMLMapper
-import core.constants.RegexConstants.Patterns
+import core.constants.Keywords
+import core.constants.Patterns
 import core.model.*
 
 class UMLMapperImpl : UMLMapper {
@@ -95,7 +96,7 @@ class UMLMapperImpl : UMLMapper {
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
         val mappedClasses = mutableListOf<PUMLType>()
         umlTextTypes.forEach { textClass ->
-            if (textClass.contains("interface")) {
+            if (textClass.contains(Keywords.INTERFACE)) {
                 mappedClasses.add(mapInterface(textClass))
             } else {
                 mappedClasses.add(mapClass(textClass))
@@ -151,7 +152,7 @@ class UMLMapperImpl : UMLMapper {
             val fieldDataType = field.groupValues[3]
             val fieldName = field.groupValues[4]
 
-            val isStatic = fieldStatic.contains("static")
+            val isStatic = fieldStatic.contains(Keywords.STATIC)
 
             pumlFields.add(
                 PUMLField(fieldName, fieldDataType, Visibility.fromString(fieldVisibility), isStatic)
@@ -180,8 +181,8 @@ class UMLMapperImpl : UMLMapper {
             val methodName = method.groupValues[5]
             val methodParameters = method.groupValues[6]
 
-            val isAbstract = methodStaticAbstract.contains("abstract")
-            val isStatic = methodStaticAbstract.contains("static")
+            val isAbstract = methodStaticAbstract.contains(Keywords.ABSTRACT)
+            val isStatic = methodStaticAbstract.contains(Keywords.STATIC)
 
             pumlMethods.add(
                 PUMLMethod(
@@ -208,7 +209,7 @@ class UMLMapperImpl : UMLMapper {
         val classNameMatch = classNamePattern.find(umlText)
         val classSignature = classNameMatch?.groupValues?.get(0)
         val className = classNameMatch?.groupValues?.get(1)
-        classSignature?.contains("abstract").let {
+        classSignature?.contains(Keywords.ABSTRACT).let {
             return ClassName(className ?: "", it ?: false)
         }
     }
