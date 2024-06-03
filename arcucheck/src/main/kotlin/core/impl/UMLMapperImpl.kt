@@ -10,8 +10,12 @@ class UMLMapperImpl : UMLMapper {
         val pumlTypes = mapTypes(umlTextClasses)
 
         // TODO hier weitermachen: PUML beziehungen extrahieren und kategorisieren
-        println("----")
+        println("--classes--")
         println(splitUMLTextClasses(umlText))
+        println("-----")
+
+        println("--relationships--")
+        println(splitUMLTextRelations(umlText))
         println("-----")
 
         println(pumlTypes)
@@ -28,6 +32,22 @@ class UMLMapperImpl : UMLMapper {
      */
     private fun splitUMLTextClasses(umlText: String): List<String> {
         return umlText.split(Regex("""(?=abstract\s+class|(?<!abstract\s)class|interface)"""))
+    }
+
+    private fun splitUMLTextRelations(umlText: String): List<String> {
+        val relationshipTexts = mutableListOf<String>()
+        val relationshipRegex = Regex(
+            """^\s*([\w.]+)\s*([<!-o*.]{3,4})\s*([\w.]+)\s*${'$'}""",
+            RegexOption.MULTILINE
+        )
+        relationshipRegex.findAll(umlText)
+            .map { result -> result.groupValues[0].trim() }
+            .toCollection(relationshipTexts)
+        return relationshipTexts
+    }
+
+    private fun mapRelations(umlText: String): List<PUMLRelation> {
+        return emptyList()
     }
 
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
@@ -166,6 +186,10 @@ fun main() {
         + void onButtonClicked(Event)
         + boolean onReload()
         }
+        
+        de.hdm_stuttgart.editor.integration.EditorController <!-- de.hdm_stuttgart.editor.data.EditorRepo
+        de.hdm_stuttgart.ui.HomeScreen <!.. de.hdm_stuttgart.ui.IHomeScreen
+         de.hdm_stuttgart.ui.HomeScreen *-- de.hdm_stuttgart.ui.IHomeScreen
     """
     // TODO add interfaces
 
