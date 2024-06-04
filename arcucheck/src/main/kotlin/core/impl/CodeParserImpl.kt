@@ -9,7 +9,9 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.CommandLineParser
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.Options
+import java.nio.file.Path
 import java.util.function.Consumer
+import kotlin.io.path.absolutePathString
 
 
 class CodeParserImpl : CodeParser {
@@ -18,11 +20,13 @@ class CodeParserImpl : CodeParser {
      * Parse the code of the provided path into a plantUML diagram
      * @param codePath the path to the code that should be parsed into a plantUML diagram
      */
-    override fun parseCode(codePath: String) {
+    override fun parseCode(codePath: String): Path {
+
+        val tempFilePath = createTempFile()
 
         val args = arrayOf(
             "-o",
-            "/Users/piaschilling/Desktop/output.puml", // TODO replace hardcoded output path
+            tempFilePath.absolutePathString(),
             "-f",
             codePath,
             "-sctr",
@@ -52,5 +56,12 @@ class CodeParserImpl : CodeParser {
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
+        return tempFilePath
+    }
+
+    private fun createTempFile(): Path {
+        val tempFile = kotlin.io.path.createTempFile(prefix = "codeDiagram", suffix = ".tmp")
+        println("Temporary file created with Kotlin extensions at: ${tempFile.toAbsolutePath()}")
+        return tempFile
     }
 }
