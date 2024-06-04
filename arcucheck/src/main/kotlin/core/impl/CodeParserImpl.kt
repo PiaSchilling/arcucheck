@@ -9,6 +9,7 @@ import org.apache.commons.cli.CommandLine
 import org.apache.commons.cli.CommandLineParser
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.Options
+import java.io.File
 import java.nio.file.Path
 import java.util.function.Consumer
 import kotlin.io.path.absolutePathString
@@ -16,17 +17,22 @@ import kotlin.io.path.absolutePathString
 
 class CodeParserImpl : CodeParser {
 
-    /**
-     * Parse the code of the provided path into a plantUML diagram
-     * @param codePath the path to the code that should be parsed into a plantUML diagram
-     */
-    override fun parseCode(codePath: String): Path {
-
+    override fun parseCode(codePath: String): String {
         val tempFilePath = createTempFile()
+        generateDiagram(codePath, tempFilePath.absolutePathString())
+        return readFileIntoString(tempFilePath)
+    }
 
+    /**
+     * Generate a PlantUML diagram from the code located at the provided path
+     *
+     * @param codePath path to the code for which the diagram should be generated
+     * @param tempFilePath the location where the generated diagram will be saved (temporarily)
+     */
+    private fun generateDiagram(codePath: String, tempFilePath: String) {
         val args = arrayOf(
             "-o",
-            tempFilePath.absolutePathString(),
+            tempFilePath,
             "-f",
             codePath,
             "-sctr",
@@ -56,12 +62,24 @@ class CodeParserImpl : CodeParser {
         } catch (ex: Exception) {
             ex.printStackTrace()
         }
-        return tempFilePath
     }
 
+    /**
+     * Create a temporary empty file
+     *
+     * @return the path to the temporary file
+     */
     private fun createTempFile(): Path {
-        val tempFile = kotlin.io.path.createTempFile(prefix = "codeDiagram", suffix = ".tmp")
-        println("Temporary file created with Kotlin extensions at: ${tempFile.toAbsolutePath()}")
-        return tempFile
+        return kotlin.io.path.createTempFile(prefix = "codeDiagram", suffix = ".tmp")
+    }
+
+    /**
+     * Read the content of a file into a single string
+     *
+     * @param path path to the file which should be read
+     * @return the whole content of the file as a string
+     */
+    private fun readFileIntoString(path: Path): String {
+        return File(path.toUri()).readText()
     }
 }

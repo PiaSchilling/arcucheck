@@ -7,7 +7,7 @@ import core.model.*
 
 class UMLMapperImpl : UMLMapper {
 
-    fun mapDiagram(umlText: String): PUMLDiagram {
+    override fun mapDiagram(umlText: String): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
         val pumlTypes = mapTypes(umlTextClasses)
         val umlTextRelations = splitUMLTextRelations(umlText)
@@ -85,8 +85,8 @@ class UMLMapperImpl : UMLMapper {
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
         val mappedClasses = mutableListOf<PUMLType>()
         umlTextTypes.forEach { textClass ->
-            if(textClass.isBlank()){
-               return@forEach
+            if (textClass.isBlank()) {
+                return@forEach
             } else if (textClass.contains(Keywords.INTERFACE)) {
                 mappedClasses.add(mapInterface(textClass))
             } else {
@@ -240,39 +240,5 @@ class UMLMapperImpl : UMLMapper {
 
         return pumlConstructors
     }
-}
-
-fun main() {
-    val text = """
-        class de.hdm_stuttgart.editor.integration.EditorController {
-        + String id
-        - Int number
-        # {static} Double counter
-        + <<Create>> EditorController(IEditorRepo,String)
-        + void renderMarkdownToHtml(String)
-        + StringProperty getHtmlStringProperty()
-        - {static} Test privateMethod()
-        # {abstract} Test protectedMethod(Test,Pia)
-        }
-        
-        abstract class de.hdm_stuttgart.editor.data.EditorRepo {
-        + void fetchMarkDown(String)
-        + StringProperty getHtmlStringProperty()
-        }
-        
-         interface de.hdm_stuttgart.ui.HomeScreen {
-        + void onButtonClicked(Event)
-        + boolean onReload()
-        }
-        
-        de.hdm_stuttgart.editor.integration.EditorController <|-- de.hdm_stuttgart.editor.data.EditorRepo
-        de.hdm_stuttgart.ui.HomeScreen <|.. de.hdm_stuttgart.ui.IHomeScreen
-         de.hdm_stuttgart.ui.HomeScreen *-- de.hdm_stuttgart.ui.IHomeScreen
-    """
-
-    val mapper = UMLMapperImpl()
-    val diagram = mapper.mapDiagram(text)
-    println(diagram)
-
 }
 
