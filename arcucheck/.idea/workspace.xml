@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add PUML data classes to model diagrams">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/UMLMapperImpl.kt" afterDir="false" />
-    </list>
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add fromString method" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +18,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Enum" />
-        <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Sealed Class" />
+        <option value="Kotlin Data Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -53,7 +52,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.MainKt">
+  <component name="RunManager" selected="Kotlin.UMLMapperImplKt">
     <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -106,8 +105,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="UMLMapperImplKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="core.impl.UMLMapperImplKt" />
+      <module name="arcucheck.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.UMLMapperImplKt" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Gradle.arcucheck [clean build]" />
         <item itemvalue="Gradle.arcucheck [dependencies]" />
@@ -182,8 +189,68 @@
       <option name="project" value="LOCAL" />
       <updated>1716896793196</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="feat: edit class name matching so all class names are extracted">
+      <created>1717150498094</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1717150498094</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat: split uml files into classes&#10;&#10;Not yet finished">
+      <created>1717155406007</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1717155406007</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: add differentiation between abstract and non-abstract classes">
+      <created>1717247736070</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1717247736070</updated>
+    </task>
+    <task id="LOCAL-00012" summary="feat: add interface mapping">
+      <created>1717249046670</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1717249046670</updated>
+    </task>
+    <task id="LOCAL-00013" summary="feat: extent PUMLDiagram with classes and interfaces">
+      <created>1717249475200</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1717249475200</updated>
+    </task>
+    <task id="LOCAL-00014" summary="feat: add models for relation mapping">
+      <created>1717250361278</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1717250361278</updated>
+    </task>
+    <task id="LOCAL-00015" summary="feat: add fromString method">
+      <created>1717250593634</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1717250593634</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -260,7 +327,14 @@
     <MESSAGE value="feat: add Koin di" />
     <MESSAGE value="feat: wire up CodeParserImpl" />
     <MESSAGE value="feat: add PUML data classes to model diagrams" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add PUML data classes to model diagrams" />
+    <MESSAGE value="feat: edit class name matching so all class names are extracted" />
+    <MESSAGE value="feat: split uml files into classes&#10;&#10;Not yet finished" />
+    <MESSAGE value="feat: add differentiation between abstract and non-abstract classes" />
+    <MESSAGE value="feat: add interface mapping" />
+    <MESSAGE value="feat: extent PUMLDiagram with classes and interfaces" />
+    <MESSAGE value="feat: add models for relation mapping" />
+    <MESSAGE value="feat: add fromString method" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add fromString method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

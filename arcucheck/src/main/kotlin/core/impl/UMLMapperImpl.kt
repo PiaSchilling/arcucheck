@@ -13,20 +13,9 @@ class UMLMapperImpl : UMLMapper {
         val umlTextRelations = splitUMLTextRelations(umlText)
         val pumlRelations = mapRelations(umlTextRelations)
 
-        println("--classes--")
-        println(splitUMLTextClasses(umlText))
-        println(pumlTypes)
-        println("-----")
-
-
-        println("--relations--")
-        println(splitUMLTextRelations(umlText))
-        println(pumlRelations)
-        println("-----")
-
         val pumlClasses = pumlTypes.filterIsInstance<PUMLClass>()
         val pumlInterfaces = pumlTypes.filterIsInstance<PUMLInterface>()
-        return PUMLDiagram("Test", pumlClasses, pumlInterfaces) // TODO remove hardcoded name
+        return PUMLDiagram("Test", pumlClasses, pumlInterfaces, pumlRelations) // TODO remove hardcoded name
     }
 
     /**
@@ -96,7 +85,9 @@ class UMLMapperImpl : UMLMapper {
     private fun mapTypes(umlTextTypes: List<String>): List<PUMLType> {
         val mappedClasses = mutableListOf<PUMLType>()
         umlTextTypes.forEach { textClass ->
-            if (textClass.contains(Keywords.INTERFACE)) {
+            if(textClass.isBlank()){
+               return@forEach
+            } else if (textClass.contains(Keywords.INTERFACE)) {
                 mappedClasses.add(mapInterface(textClass))
             } else {
                 mappedClasses.add(mapClass(textClass))
@@ -280,7 +271,8 @@ fun main() {
     """
 
     val mapper = UMLMapperImpl()
-    mapper.mapDiagram(text)
+    val diagram = mapper.mapDiagram(text)
+    println(diagram)
 
 }
 
