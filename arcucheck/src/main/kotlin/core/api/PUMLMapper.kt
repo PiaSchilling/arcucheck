@@ -2,7 +2,7 @@ package core.api
 
 import core.model.PUMLDiagram
 
-interface UMLMapper {
+interface PUMLMapper {
     /**
      * Maps the string representation of a PlantUML diagram into a PUMLDiagram model by extracting classes,
      * interfaces, methods, relationships, and other elements from the diagram.

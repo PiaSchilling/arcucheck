@@ -1,11 +1,11 @@
 package core.impl
 
-import core.api.UMLMapper
+import core.api.PUMLMapper
 import core.constants.Keywords
 import core.constants.Patterns
 import core.model.*
 
-class UMLMapperImpl : UMLMapper {
+class PUMLMapperImpl : PUMLMapper {
 
     override fun mapDiagram(umlText: String): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
