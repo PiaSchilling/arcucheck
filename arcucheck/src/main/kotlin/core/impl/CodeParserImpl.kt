@@ -78,8 +78,8 @@ class CodeParserImpl : CodeParser {
      *
      * @param path path to the file which should be read
      * @return the whole content of the file as a string
-     */
-    private fun readFileIntoString(path: Path): String {
+     */ // TODO extract to separate class
+    override fun readFileIntoString(path: Path): String {
         return File(path.toUri()).readText()
     }
 }
