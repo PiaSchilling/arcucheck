@@ -1,12 +1,11 @@
 package core.model.deviation
 
-import core.model.puml.PUMLClass
 
 data class Deviation(
     val level: DeviationLevel,
     val area: DeviationArea,
     val type: DeviationType,
-    val affectedClass: PUMLClass,
+    val affectedClassesNames: List<String>,
     val title: String,
     val description: String,
 ) {
