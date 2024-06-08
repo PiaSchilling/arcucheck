@@ -1,4 +1,4 @@
-package core.model
+package core.model.PUML
 
 data class PUMLDiagram(
     val name: String,

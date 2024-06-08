@@ -1,4 +1,4 @@
-package core.model
+package core.model.PUML
 
 enum class Visibility(val pumlIdentifier:String) {
     PUBLIC("+"),

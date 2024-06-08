@@ -1,4 +1,4 @@
-package core.model
+package core.model.PUML
 
 /**
  * Marker interface for PUMLClass and PUMLInterface to provide polymorphism functionality to those classes
