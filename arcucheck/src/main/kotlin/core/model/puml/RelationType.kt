@@ -1,4 +1,4 @@
-package core.model.PUML
+package core.model.puml
 
 enum class RelationType(val pumlIdentifier: String) {
     /**

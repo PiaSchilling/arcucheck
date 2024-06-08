@@ -1,4 +1,4 @@
-package core.model.PUML
+package core.model.puml
 
 data class PUMLClass (
     val name: String,

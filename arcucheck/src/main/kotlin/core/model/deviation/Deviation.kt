@@ -1,6 +1,6 @@
 package core.model.deviation
 
-import core.model.PUML.PUMLClass
+import core.model.puml.PUMLClass
 
 data class Deviation(
     val level: DeviationLevel,

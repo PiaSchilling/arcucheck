@@ -3,7 +3,7 @@ package core.impl
 import core.api.PUMLMapper
 import core.constants.Keywords
 import core.constants.Patterns
-import core.model.PUML.*
+import core.model.puml.*
 
 class PUMLMapperImpl : PUMLMapper {
 

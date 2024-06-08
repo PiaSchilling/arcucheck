@@ -1,6 +1,6 @@
 package core.api
 
-import core.model.PUML.PUMLDiagram
+import core.model.puml.PUMLDiagram
 
 interface PUMLMapper {
     /**

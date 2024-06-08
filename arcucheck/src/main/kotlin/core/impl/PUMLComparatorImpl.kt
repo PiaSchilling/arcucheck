@@ -1,8 +1,8 @@
 package core.impl
 
-import core.model.PUML.PUMLClass
-import core.model.PUML.PUMLDiagram
-import core.model.PUML.PUMLMethod
+import core.model.puml.PUMLClass
+import core.model.puml.PUMLDiagram
+import core.model.puml.PUMLMethod
 import core.model.deviation.Deviation
 import core.model.deviation.DeviationArea
 import core.model.deviation.DeviationLevel
