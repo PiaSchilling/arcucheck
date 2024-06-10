@@ -10,6 +10,7 @@ import org.apache.commons.cli.CommandLineParser
 import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.Options
 import java.io.File
+import java.io.FileNotFoundException
 import java.nio.file.Path
 import java.util.function.Consumer
 import kotlin.io.path.absolutePathString
@@ -80,6 +81,11 @@ class CodeParserImpl : CodeParser {
      * @return the whole content of the file as a string
      */ // TODO extract to separate class
     override fun readFileIntoString(path: Path): String {
-        return File(path.toUri()).readText()
+        try{
+            return File(path.toUri()).readText()
+        }catch (exception: FileNotFoundException){
+           println("File \"${path.fileName}\" at path ${path.absolutePathString()} does not exist. Returning empty String.")
+        }
+        return ""
     }
 }

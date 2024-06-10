@@ -14,17 +14,21 @@ class PUMLComparatorImpl {
     fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
 
         val classDeviations = comparePUMLClasses(implementationDiagram.classes, designDiagram.classes)
-        val relationDeviations = comparePUMLRelations(implementationDiagram.relations,designDiagram.relations)
+        val relationDeviations = comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
 
         val result = classDeviations + relationDeviations
-        println(result)
+        if (result.isEmpty()) {
+            println("No deviations between implementation and design found")
+        } else {
+            println(result)
+        }
     }
 
     private fun comparePUMLClasses(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
-        // TODO add missing class checks
+        // TODO add missing method checks etc.
         return checkUnexpectedAbsentClasses(implementationClasses, designClasses)
     }
 
@@ -75,7 +79,7 @@ class PUMLComparatorImpl {
     private fun comparePUMLRelations(
         implementationRelations: List<PUMLRelation>,
         designRelations: List<PUMLRelation>
-    ) : List<Deviation> {
+    ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         val unexpectedRelations = designRelations.subtract(implementationRelations.toSet())
         val absentRelations = implementationRelations.subtract(designRelations.toSet())
@@ -87,12 +91,12 @@ class PUMLComparatorImpl {
                         DeviationLevel.MAKRO,
                         DeviationArea.RELATION,
                         DeviationType.ABSENCE,
-                        listOf(absentRelation.sourceClass,absentRelation.destinationClass),
+                        listOf(absentRelation.sourceClass, absentRelation.destinationClass),
                         "Absent relation",
                         "Relation of type ${absentRelation.relationType} between source class " +
                                 "\"${absentRelation.sourceClass}\" and destination class \"${absentRelation.destinationClass}\" " +
                                 "is expected in the design but missing in the implementation."
-                        )
+                    )
                 )
             }
         }
@@ -104,7 +108,7 @@ class PUMLComparatorImpl {
                         DeviationLevel.MAKRO,
                         DeviationArea.RELATION,
                         DeviationType.UNEXPECTED,
-                        listOf(unexpectedRelation.sourceClass,unexpectedRelation.destinationClass),
+                        listOf(unexpectedRelation.sourceClass, unexpectedRelation.destinationClass),
                         "Unexpected relation",
                         "Relation of type ${unexpectedRelation.relationType} between source class " +
                                 "\"${unexpectedRelation.sourceClass}\" and destination class \"${unexpectedRelation.destinationClass}\" " +
