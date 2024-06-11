@@ -107,7 +107,14 @@ class PUMLMapperImpl : PUMLMapper {
         val constructors = mapConstructors(umlText)
         val methods = mapMethods(umlText)
         val fields = mapFields(umlText)
-        return PUMLClass(className.name, constructors, fields, methods, className.isAbstract)
+        return PUMLClass(
+            className.className,
+            PUMLPackage(className.packageName),
+            constructors,
+            fields,
+            methods,
+            className.isAbstract
+        )
     }
 
     /**

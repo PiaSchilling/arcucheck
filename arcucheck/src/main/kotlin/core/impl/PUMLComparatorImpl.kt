@@ -15,8 +15,9 @@ class PUMLComparatorImpl {
 
         val classDeviations = comparePUMLClasses(implementationDiagram.classes, designDiagram.classes)
         val relationDeviations = comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
+        val packageDeviations = checkUnexpectedAbsentPackages(implementationDiagram.classes, designDiagram.classes)
 
-        val result = classDeviations + relationDeviations
+        val result = classDeviations + relationDeviations + packageDeviations
         if (result.isEmpty()) {
             println("No deviations between implementation and design found")
         } else {
@@ -69,10 +70,78 @@ class PUMLComparatorImpl {
                         listOf(unexpectedClass.value.name),
                         "Unexpected class",
                         "Class \"${unexpectedClass.value.name}\" is not expected in the design but present in the implementation."
+                    ) // TODO add package name
+                )
+            }
+        }
+        return deviations
+    }
+
+    /**
+     * Check for unexpected or absent packages
+     *
+     * @param implementationClasses
+     * @param designClasses
+     * @return
+     */
+    private fun checkUnexpectedAbsentPackages(
+        implementationClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+        val implPackages = implementationClasses.map { pumlClass -> pumlClass.pumlPackage }.distinct()
+        val designPackages = designClasses.map { pumlClass -> pumlClass.pumlPackage }.distinct()
+
+        val unexpectedPackages = designPackages.subtract(implPackages.toSet())
+        val absentPackages = implPackages.subtract(designPackages.toSet())
+
+
+        if (absentPackages.isNotEmpty()) {
+            absentPackages.forEach { absentPackage ->
+                deviations.add(
+                    Deviation(
+                        DeviationLevel.MAKRO,
+                        DeviationArea.PROPERTY,
+                        DeviationType.ABSENCE,
+                        listOf(absentPackage.fullName),
+                        "Missing package",
+                        "Package \"${absentPackage.fullName}\" is expected in the design but missing in the implementation."
                     )
                 )
             }
         }
+        if (unexpectedPackages.isNotEmpty()) {
+            unexpectedPackages.forEach { unexpectedPackage ->
+                deviations.add(
+                    Deviation(
+                        DeviationLevel.MAKRO,
+                        DeviationArea.PROPERTY,
+                        DeviationType.UNEXPECTED,
+                        listOf(unexpectedPackage.fullName),
+                        "Unexpected package",
+                        "Package \"${unexpectedPackage.fullName}\" is not expected in the design but present in the implementation."
+                    )
+                )
+            }
+        }
+
+        return deviations
+    }
+
+    /**
+     * Check if classes are in the wrong package
+     *
+     * @param implementationClasses
+     * @param designClasses
+     * @return
+     */
+    private fun checkClassPackageStructure(
+        implementationClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+
+
         return deviations
     }
 
@@ -128,7 +197,11 @@ class PUMLComparatorImpl {
 
     }
 
-    fun comparePUMLMethod(containingClass: PUMLClass, codeDiagramMethod: PUMLMethod, designDiagramMethod: PUMLMethod) {
+    fun comparePUMLMethod(
+        containingClass: PUMLClass,
+        codeDiagramMethod: PUMLMethod,
+        designDiagramMethod: PUMLMethod
+    ) {
         val differences = mutableListOf<String>()
         if (codeDiagramMethod.returnType != designDiagramMethod.returnType) {
             differences.add(

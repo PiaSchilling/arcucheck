@@ -12,14 +12,14 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
     override fun onExecuteCommand(args: List<String>) {
         println("On exec command")
         val codeDiagram =
-            codeParser.parseCode(args[0]) // TODO this is risky, add error handling (maybe create model class for programm args)
+            codeParser.parseCode(args[0]) // TODO this is risky, add error handling (maybe create model class for programm args) model class contains then codePath, diagramPath, ... and errors can be catched while creating this model
         println("code diagram - - - - - - - - - - - - - ")
         println(codeDiagram)
 
         val designDiagram = codeParser.readFileIntoString(Path(args[1]))
         println("design diagram - - - - - - - - - - - - - -")
         println(designDiagram)
-        // model class contains then codePath, diagramPath, ... and errors can be catched while creating this model
+
         println("- - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - ")
         val codePUMLDiagram = PUMLMapper.mapDiagram(codeDiagram)
         println("codePUMLDiagram: $codePUMLDiagram")
