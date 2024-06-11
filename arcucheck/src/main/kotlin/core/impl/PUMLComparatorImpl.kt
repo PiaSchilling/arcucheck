@@ -2,7 +2,6 @@ package core.impl
 
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLDiagram
-import core.model.puml.PUMLMethod
 import core.model.deviation.Deviation
 import core.model.deviation.DeviationArea
 import core.model.deviation.DeviationLevel
@@ -15,7 +14,7 @@ class PUMLComparatorImpl {
 
         val classDeviations = comparePUMLClasses(implementationDiagram.classes, designDiagram.classes)
         val relationDeviations = comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
-        val packageDeviations = checkUnexpectedAbsentPackages(implementationDiagram.classes, designDiagram.classes)
+        val packageDeviations = comparePUMLPackages(implementationDiagram.classes, designDiagram.classes)
 
         val result = classDeviations + relationDeviations + packageDeviations
         if (result.isEmpty()) {
@@ -25,38 +24,71 @@ class PUMLComparatorImpl {
         }
     }
 
+    /**
+     * TODO (compare PUML classes regarding to thier existence (makro level) and implementation (mikro level)
+     * @param implementationClasses
+     * @param designClasses
+     * @return
+     */
     private fun comparePUMLClasses(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
         // TODO add missing method checks etc.
-        return checkUnexpectedAbsentClasses(implementationClasses, designClasses)
+        return checkClassesExistence(implementationClasses, designClasses)
     }
 
     /**
-     * Prüfen, ob eine Klasse, die im Design vorhanden ist aber mit ihrem full package identifier im code nicht gefunden
-     * wurde evtl nur im falschen package ist oder komplett nicht vorhanden ist.
+     * Check if any classes are unexpected, absent or placed in the wrong package
      *
-     * @param notFoundCodeClasses
-     * @param codeClasses
-     * @return
-     */ // TODO rename method, clean up for consistency
-    private fun checkNotFoundClasses(
-        notFoundCodeClasses: List<PUMLClass>,
-        codeClasses: List<PUMLClass>,
+     * @param implementationClasses the classes present in the implementation
+     * @param designClasses the classes expected by the design
+     * @return a list of all detected deviations between the design and implementation classes
+     */
+    private fun checkClassesExistence(
+        implementationClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+        val implClassesMap = implementationClasses.associateBy { it.fullName }
+        val designClassesMap = designClasses.associateBy { it.fullName }
+
+        val maybeAbsentClassesNames = designClassesMap.keys.subtract(implClassesMap.keys)
+        val maybeUnexpectedClassesNames = implClassesMap.keys.subtract(designClassesMap.keys)
+
+        if (maybeAbsentClassesNames.isNotEmpty()) {
+            val maybeAbsentClasses = designClassesMap.filterKeys { it in maybeAbsentClassesNames }.values.toList()
+            deviations.addAll(checkMaybeAbsentClasses(maybeAbsentClasses, implementationClasses))
+        }
+        if (maybeUnexpectedClassesNames.isNotEmpty()) {
+            val maybeUnexpectedClasses = implClassesMap.filterKeys { it in maybeUnexpectedClassesNames }.values.toList()
+            deviations.addAll(checkMaybeUnexpectedClasses(maybeUnexpectedClasses, designClasses))
+        }
+        return deviations.distinct()
+    }
+
+    /**
+     * Checks for classes that are either absent (present in the design but not in the implementation) or are placed
+     * in the incorrect package.
+     *
+     * @param maybeAbsentClasses Classes expected in the design but not found in the implementation, needing verification.
+     * @param implementationClasses All classes present in the implementation.
+     * @return A list of detected deviations, categorized as "class in wrong package" if the class should have been placed
+     * in another package according to the design, or "absent class" if the class cannot be found anywhere in the implementation.
+     */
+    private fun checkMaybeAbsentClasses(
+        maybeAbsentClasses: List<PUMLClass>,
+        implementationClasses: List<PUMLClass>,
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         // Check classes only by using the class name without the package name
-        val notFoundClassesMap = notFoundCodeClasses.associateBy { it.name }
-        val codeClassesMap = codeClasses.associateBy { it.name }
-
-        // Klassen, die auch mit "nur Klassennamen" (ohne package) nicht gefunden werden
-        // findet klassen, die im design vorhanden sind aber nicht im code
+        val maybeAbsentClassesMap = maybeAbsentClasses.associateBy { it.name }
+        val codeClassesMap = implementationClasses.associateBy { it.name }
 
         // If class still can not be found, it is absent
-        val notFoundClassNames = notFoundClassesMap.keys.subtract(codeClassesMap.keys)
-        val notFoundClasses = notFoundClassesMap.filterKeys { it in notFoundClassNames }
-        notFoundClasses.forEach { absentClass ->
+        val absentClassesNames = maybeAbsentClassesMap.keys.subtract(codeClassesMap.keys)
+        val absentClasses = maybeAbsentClassesMap.filterKeys { it in absentClassesNames }
+        absentClasses.forEach { absentClass ->
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
@@ -70,9 +102,10 @@ class PUMLComparatorImpl {
         }
 
         // If class now can  be found, it is just placed in the wrong package
-        val foundClassNames = notFoundClassesMap.keys.intersect(codeClassesMap.keys)
-        val foundClasses = notFoundClassesMap.filterKeys { it in foundClassNames }
+        val foundClassNames = maybeAbsentClassesMap.keys.intersect(codeClassesMap.keys)
+        val foundClasses = maybeAbsentClassesMap.filterKeys { it in foundClassNames }
 
+        // TODO extract duplicate code
         foundClasses.forEach { existingClass ->
             val wrongClass = codeClassesMap[existingClass.key]
             deviations.add(
@@ -90,20 +123,29 @@ class PUMLComparatorImpl {
         return deviations
     }
 
-    private fun checkTooMuchFoundClasses(
-        tooMuchFoundCodeClasses: List<PUMLClass>,
+    /**
+     * Checks for classes that are either unexpected (present in the implementation but not in the design) or are placed
+     * in the incorrect package.
+     *
+     * @param maybeUnexpectedClasses Classes found in the implementation but not in the design, needing verification.
+     * @param designClasses All classes expected by the design.
+     * @return A list of detected deviations, categorized as "class in wrong package" if the class should have been placed
+     * in another package according to the design, or "unexpected class" if the class cannot be found anywhere in the design.
+     */
+    private fun checkMaybeUnexpectedClasses(
+        maybeUnexpectedClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>,
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
 
         // Check classes only by using the class name without the package name
-        val tooMuchFoundClassesMap = tooMuchFoundCodeClasses.associateBy { it.name }
+        val maybeUnexpectedClassesMap = maybeUnexpectedClasses.associateBy { it.name }
         val designClassesMap = designClasses.associateBy { it.name }
 
         // If class still can not be found, it is unexpected
-        val tooMuchFoundClassNames = tooMuchFoundClassesMap.keys.subtract(designClassesMap.keys)
-        val tooMuchFoundClasses = tooMuchFoundClassesMap.filterKeys { it in tooMuchFoundClassNames }
-        tooMuchFoundClasses.forEach { unexpectedClass ->
+        val unexpectedClassesNames = maybeUnexpectedClassesMap.keys.subtract(designClassesMap.keys)
+        val unexpectedClasses = maybeUnexpectedClassesMap.filterKeys { it in unexpectedClassesNames }
+        unexpectedClasses.forEach { unexpectedClass ->
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
@@ -117,8 +159,8 @@ class PUMLComparatorImpl {
         }
 
         // If class now can  be found, it is just placed in the wrong package
-        val foundClassNames = tooMuchFoundClassesMap.keys.intersect(designClassesMap.keys)
-        val foundClasses = tooMuchFoundClassesMap.filterKeys { it in foundClassNames }
+        val foundClassesNames = maybeUnexpectedClassesMap.keys.intersect(designClassesMap.keys)
+        val foundClasses = maybeUnexpectedClassesMap.filterKeys { it in foundClassesNames }
 
         foundClasses.forEach { existingClass ->
             val correctClass = designClassesMap[existingClass.key]
@@ -138,36 +180,14 @@ class PUMLComparatorImpl {
 
     }
 
-    private fun checkUnexpectedAbsentClasses(
-        implementationClasses: List<PUMLClass>,
-        designClasses: List<PUMLClass>
-    ): List<Deviation> {
-        val deviations = mutableListOf<Deviation>()
-        val implClassesMap = implementationClasses.associateBy { it.fullName }
-        val designClassesMap = designClasses.associateBy { it.fullName }
-
-        val notFoundClassNames = designClassesMap.keys.subtract(implClassesMap.keys)
-        val unexpectedClassNames = implClassesMap.keys.subtract(designClassesMap.keys)
-
-        if (notFoundClassNames.isNotEmpty()) {
-            val notFoundClasses = designClassesMap.filterKeys { it in notFoundClassNames }.values.toList()
-            deviations.addAll(checkNotFoundClasses(notFoundClasses, implementationClasses))
-        }
-        if (unexpectedClassNames.isNotEmpty()) {
-            val unexpectedClasses = implClassesMap.filterKeys { it in unexpectedClassNames }.values.toList()
-            deviations.addAll(checkTooMuchFoundClasses(unexpectedClasses, designClasses))
-        }
-        return deviations.distinct()
-    }
-
     /**
-     * Check for unexpected or absent packages
+     * Check if any packages are absent or unexpected
      *
-     * @param implementationClasses
-     * @param designClasses
-     * @return
+     * @param implementationClasses the classes present in the implementation (classes contain their respective package)
+     * @param designClasses the classes expected by the design (classes contain their respective package)
+     * @return a list of all detected deviations between the design and implementation packages
      */
-    private fun checkUnexpectedAbsentPackages(
+    private fun comparePUMLPackages(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
@@ -212,22 +232,12 @@ class PUMLComparatorImpl {
     }
 
     /**
-     * Check if classes are in the wrong package
+     * Compare the in the design expected relations to the in the implementation present relations and detect any deviations
      *
-     * @param implementationClasses
-     * @param designClasses
-     * @return
+     * @param implementationRelations all relations present in the implementation
+     * @param designRelations all relations expected by the design
+     * @return a list of all detected deviations between design and implementation
      */
-    private fun checkClassPackageStructure(
-        implementationClasses: List<PUMLClass>,
-        designClasses: List<PUMLClass>
-    ): List<Deviation> {
-        val deviations = mutableListOf<Deviation>()
-
-
-        return deviations
-    }
-
     private fun comparePUMLRelations(
         implementationRelations: List<PUMLRelation>,
         designRelations: List<PUMLRelation>
@@ -270,27 +280,5 @@ class PUMLComparatorImpl {
             }
         }
         return deviations
-    }
-
-
-    fun comparePUMLMethods(codeDiagramMethods: List<PUMLMethod>, designDiagramMethods: List<PUMLMethod>) {
-        val codeMethodsMap = codeDiagramMethods.associateBy { it.name }
-        val designMethodsMap = designDiagramMethods.associateBy { it.name }
-
-
-    }
-
-    fun comparePUMLMethod(
-        containingClass: PUMLClass,
-        codeDiagramMethod: PUMLMethod,
-        designDiagramMethod: PUMLMethod
-    ) {
-        val differences = mutableListOf<String>()
-        if (codeDiagramMethod.returnType != designDiagramMethod.returnType) {
-            differences.add(
-                "${containingClass.name}: Wrong return type for Method ${designDiagramMethod.name}." +
-                        " Should be ${designDiagramMethod.returnType}, but is ${codeDiagramMethod.returnType}"
-            )
-        }
     }
 }
