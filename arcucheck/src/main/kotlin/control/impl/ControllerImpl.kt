@@ -20,11 +20,9 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
         println("design diagram - - - - - - - - - - - - - -")
         println(designDiagram)
 
-        println("- - - - - - - - - - - - - -- - - - - - - - - - - - - - - - - - ")
+        println("- - - - - - - - - - - - - -- - - - - - -  ")
         val codePUMLDiagram = PUMLMapper.mapDiagram(codeDiagram)
-        println("codePUMLDiagram: $codePUMLDiagram")
         val designPUMLDiagram = PUMLMapper.mapDiagram(designDiagram)
-        println("designDiagram $designPUMLDiagram")
 
         val comparator = PUMLComparatorImpl()
         comparator.comparePUMLDiagrams(codePUMLDiagram,designPUMLDiagram)
