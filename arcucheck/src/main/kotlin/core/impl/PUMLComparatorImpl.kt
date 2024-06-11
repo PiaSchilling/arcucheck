@@ -41,7 +41,7 @@ class PUMLComparatorImpl {
      * @param codeClasses
      * @return
      */ // TODO rename method, clean up for consistency
-    private fun checkClassPackages(
+    private fun checkNotFoundClasses(
         notFoundCodeClasses: List<PUMLClass>,
         codeClasses: List<PUMLClass>,
     ): List<Deviation> {
@@ -90,6 +90,54 @@ class PUMLComparatorImpl {
         return deviations
     }
 
+    private fun checkTooMuchFoundClasses(
+        tooMuchFoundCodeClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>,
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+
+        // Check classes only by using the class name without the package name
+        val tooMuchFoundClassesMap = tooMuchFoundCodeClasses.associateBy { it.name }
+        val designClassesMap = designClasses.associateBy { it.name }
+
+        // If class still can not be found, it is unexpected
+        val tooMuchFoundClassNames = tooMuchFoundClassesMap.keys.subtract(designClassesMap.keys)
+        val tooMuchFoundClasses = tooMuchFoundClassesMap.filterKeys { it in tooMuchFoundClassNames }
+        tooMuchFoundClasses.forEach { unexpectedClass ->
+            deviations.add(
+                Deviation(
+                    DeviationLevel.MAKRO,
+                    DeviationArea.PROPERTY,
+                    DeviationType.UNEXPECTED,
+                    listOf(unexpectedClass.value.name),
+                    "Unexpected class",
+                    "Class \"${unexpectedClass.value.name}\" is not expected in the design but present in the implementation."
+                )
+            )
+        }
+
+        // If class now can  be found, it is just placed in the wrong package
+        val foundClassNames = tooMuchFoundClassesMap.keys.intersect(designClassesMap.keys)
+        val foundClasses = tooMuchFoundClassesMap.filterKeys { it in foundClassNames }
+
+        foundClasses.forEach { existingClass ->
+            val correctClass = designClassesMap[existingClass.key]
+            deviations.add(
+                Deviation(
+                    DeviationLevel.MAKRO,
+                    DeviationArea.PROPERTY,
+                    DeviationType.ABSENCE,
+                    listOf(existingClass.value.name),
+                    "Class in wrong package",
+                    "Class \"${existingClass.value.name}\" is expected to be placed in the package ${correctClass?.pumlPackage?.fullName}" +
+                            " but is placed in the package ${existingClass.value.pumlPackage.fullName}."
+                )
+            )
+        }
+        return deviations
+
+    }
+
     private fun checkUnexpectedAbsentClasses(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
@@ -103,24 +151,13 @@ class PUMLComparatorImpl {
 
         if (notFoundClassNames.isNotEmpty()) {
             val notFoundClasses = designClassesMap.filterKeys { it in notFoundClassNames }.values.toList()
-            deviations.addAll(checkClassPackages(notFoundClasses, implementationClasses))
+            deviations.addAll(checkNotFoundClasses(notFoundClasses, implementationClasses))
         }
         if (unexpectedClassNames.isNotEmpty()) {
-            val unexpectedClasses = designClassesMap.filterKeys { it in unexpectedClassNames }
-            unexpectedClasses.forEach { unexpectedClass ->
-                deviations.add(
-                    Deviation(
-                        DeviationLevel.MAKRO,
-                        DeviationArea.PROPERTY,
-                        DeviationType.UNEXPECTED,
-                        listOf(unexpectedClass.value.name),
-                        "Unexpected class",
-                        "Class \"${unexpectedClass.value.name}\" is not expected in the design but present in the implementation."
-                    ) // TODO add package name
-                )
-            }
+            val unexpectedClasses = implClassesMap.filterKeys { it in unexpectedClassNames }.values.toList()
+            deviations.addAll(checkTooMuchFoundClasses(unexpectedClasses, designClasses))
         }
-        return deviations
+        return deviations.distinct()
     }
 
     /**
