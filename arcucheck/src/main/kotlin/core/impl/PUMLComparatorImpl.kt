@@ -33,31 +33,77 @@ class PUMLComparatorImpl {
         return checkUnexpectedAbsentClasses(implementationClasses, designClasses)
     }
 
+    /**
+     * Prüfen, ob eine Klasse, die im Design vorhanden ist aber mit ihrem full package identifier im code nicht gefunden
+     * wurde evtl nur im falschen package ist oder komplett nicht vorhanden ist.
+     *
+     * @param notFoundCodeClasses
+     * @param codeClasses
+     * @return
+     */ // TODO rename method, clean up for consistency
+    private fun checkClassPackages(
+        notFoundCodeClasses: List<PUMLClass>,
+        codeClasses: List<PUMLClass>,
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+        // Check classes only by using the class name without the package name
+        val notFoundClassesMap = notFoundCodeClasses.associateBy { it.name }
+        val codeClassesMap = codeClasses.associateBy { it.name }
+
+        // Klassen, die auch mit "nur Klassennamen" (ohne package) nicht gefunden werden
+        // findet klassen, die im design vorhanden sind aber nicht im code
+
+        // If class still can not be found, it is absent
+        val notFoundClassNames = notFoundClassesMap.keys.subtract(codeClassesMap.keys)
+        val notFoundClasses = notFoundClassesMap.filterKeys { it in notFoundClassNames }
+        notFoundClasses.forEach { absentClass ->
+            deviations.add(
+                Deviation(
+                    DeviationLevel.MAKRO,
+                    DeviationArea.PROPERTY,
+                    DeviationType.ABSENCE,
+                    listOf(absentClass.value.name),
+                    "Absent class",
+                    "Class \"${absentClass.value.name}\" is expected in the design but missing in the implementation."
+                )
+            )
+        }
+
+        // If class now can  be found, it is just placed in the wrong package
+        val foundClassNames = notFoundClassesMap.keys.intersect(codeClassesMap.keys)
+        val foundClasses = notFoundClassesMap.filterKeys { it in foundClassNames }
+
+        foundClasses.forEach { existingClass ->
+            val wrongClass = codeClassesMap[existingClass.key]
+            deviations.add(
+                Deviation(
+                    DeviationLevel.MAKRO,
+                    DeviationArea.PROPERTY,
+                    DeviationType.ABSENCE,
+                    listOf(existingClass.value.name),
+                    "Class in wrong package",
+                    "Class \"${existingClass.value.name}\" is expected to be placed in the package ${existingClass.value.pumlPackage.fullName}" +
+                            " but is placed in the package ${wrongClass?.pumlPackage?.fullName}."
+                )
+            )
+        }
+        return deviations
+    }
+
     private fun checkUnexpectedAbsentClasses(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
-        val implClassesMap = implementationClasses.associateBy { it.name }
-        val designClassesMap = designClasses.associateBy { it.name }
+        val implClassesMap = implementationClasses.associateBy { it.fullName }
+        val designClassesMap = designClasses.associateBy { it.fullName }
 
-        val unexpectedClassNames = designClassesMap.keys.subtract(implClassesMap.keys)
-        val absentClassNames = implClassesMap.keys.subtract(designClassesMap.keys)
+        val notFoundClassNames = designClassesMap.keys.subtract(implClassesMap.keys)
+        val unexpectedClassNames = implClassesMap.keys.subtract(designClassesMap.keys)
 
-        if (absentClassNames.isNotEmpty()) {
-            val absentClasses = implClassesMap.filterKeys { it in absentClassNames }
-            absentClasses.forEach { absentClass ->
-                deviations.add(
-                    Deviation(
-                        DeviationLevel.MAKRO,
-                        DeviationArea.PROPERTY,
-                        DeviationType.ABSENCE,
-                        listOf(absentClass.value.name),
-                        "Missing class",
-                        "Class \"${absentClass.value.name}\" is expected in the design but missing in the implementation."
-                    )
-                )
-            }
+        if (notFoundClassNames.isNotEmpty()) {
+            val notFoundClasses = designClassesMap.filterKeys { it in notFoundClassNames }.values.toList()
+            deviations.addAll(checkClassPackages(notFoundClasses, implementationClasses))
         }
         if (unexpectedClassNames.isNotEmpty()) {
             val unexpectedClasses = designClassesMap.filterKeys { it in unexpectedClassNames }
@@ -92,8 +138,8 @@ class PUMLComparatorImpl {
         val implPackages = implementationClasses.map { pumlClass -> pumlClass.pumlPackage }.distinct()
         val designPackages = designClasses.map { pumlClass -> pumlClass.pumlPackage }.distinct()
 
-        val unexpectedPackages = designPackages.subtract(implPackages.toSet())
-        val absentPackages = implPackages.subtract(designPackages.toSet())
+        val absentPackages = designPackages.subtract(implPackages.toSet())
+        val unexpectedPackages = implPackages.subtract(designPackages.toSet())
 
 
         if (absentPackages.isNotEmpty()) {
@@ -150,8 +196,8 @@ class PUMLComparatorImpl {
         designRelations: List<PUMLRelation>
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
-        val unexpectedRelations = designRelations.subtract(implementationRelations.toSet())
-        val absentRelations = implementationRelations.subtract(designRelations.toSet())
+        val absentRelations = designRelations.subtract(implementationRelations.toSet())
+        val unexpectedRelations = implementationRelations.subtract(designRelations.toSet())
 
         if (absentRelations.isNotEmpty()) {
             absentRelations.forEach { absentRelation ->

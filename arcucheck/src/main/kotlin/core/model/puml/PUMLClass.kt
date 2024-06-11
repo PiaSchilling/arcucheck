@@ -1,9 +1,12 @@
 package core.model.puml
 
-data class PUMLClass (
+data class PUMLClass(
     val name: String,
+    val pumlPackage: PUMLPackage,
     val constructors: List<PUMLConstructor>,
     val fields: List<PUMLField>,
     val methods: List<PUMLMethod>,
     val isAbstract: Boolean
-) : PUMLType
+) : PUMLType{
+    val fullName = pumlPackage.fullName + "." + name
+}
