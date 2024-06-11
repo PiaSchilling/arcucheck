@@ -112,7 +112,7 @@ class PUMLComparatorImpl {
                 Deviation(
                     DeviationLevel.MAKRO,
                     DeviationArea.PROPERTY,
-                    DeviationType.ABSENCE,
+                    DeviationType.MISIMPLEMENTED,
                     listOf(existingClass.value.name),
                     "Class in wrong package",
                     "Class \"${existingClass.value.name}\" is expected to be placed in the package ${existingClass.value.pumlPackage.fullName}" +
@@ -168,7 +168,7 @@ class PUMLComparatorImpl {
                 Deviation(
                     DeviationLevel.MAKRO,
                     DeviationArea.PROPERTY,
-                    DeviationType.ABSENCE,
+                    DeviationType.MISIMPLEMENTED,
                     listOf(existingClass.value.name),
                     "Class in wrong package",
                     "Class \"${existingClass.value.name}\" is expected to be placed in the package ${correctClass?.pumlPackage?.fullName}" +
