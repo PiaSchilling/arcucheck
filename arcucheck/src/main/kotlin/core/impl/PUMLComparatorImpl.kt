@@ -47,13 +47,19 @@ class PUMLComparatorImpl {
         return deviations + checkTypesExistence(implementationClasses, designClasses)
     }
 
+    /**
+     * Check if class signatures have any deviations (abstract modifier missing)
+     *
+     * @param implementationClasses the classes present in the implementation
+     * @param designClasses the classes expected by the design
+     * @return a list of all detected deviations between the design and implementation classes
+     */
     private fun checkClassSignatures(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         val implClassesMap = implementationClasses.associateBy { it.fullName }
-        val designClassesMap = designClasses.associateBy { it.fullName }
 
         designClasses.forEach { designClass ->
             val match = implClassesMap[designClass.fullName]
