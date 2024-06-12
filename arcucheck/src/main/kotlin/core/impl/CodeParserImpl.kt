@@ -32,16 +32,20 @@ class CodeParserImpl : CodeParser {
      */
     private fun generateDiagram(codePath: String, tempFilePath: String) {
         val args = arrayOf(
-            "-o",
+            "-o", // --outfile <arg>          Set the output file
             tempFilePath,
-            "-f",
+            "-f", // --filepath <arg>         Set the input file/directory
             codePath,
-            "-sctr",
-            "-spkg",
-            "-fpub",
-            "-mpub",
-            "-fpro",
-            "-mpro"
+            "-fdef", //--field_default       Add default fields
+            "-fpri", //--field_private       Add private fields
+            "-fpro", //--field_protected     Add protected fields
+            "-fpub", //--field_public        Add public fields
+            "-mdef", //--method_default      Add default methods
+            "-mpri", //--method_private      Add private methods
+            "-mpub", //--method_public       Add public methods
+            "-mpro", //--method_protected    Add protected methods
+            "-sctr", //--show_constructors   Show constructors
+            "-spkg", //--show_package        Show package
         )
 
         try {
@@ -81,10 +85,10 @@ class CodeParserImpl : CodeParser {
      * @return the whole content of the file as a string
      */ // TODO extract to separate class
     override fun readFileIntoString(path: Path): String {
-        try{
+        try {
             return File(path.toUri()).readText()
-        }catch (exception: FileNotFoundException){
-           println("File \"${path.fileName}\" at path ${path.absolutePathString()} does not exist. Returning empty String.")
+        } catch (exception: FileNotFoundException) {
+            println("File \"${path.fileName}\" at path ${path.absolutePathString()} does not exist. Returning empty String.")
         }
         return ""
     }
