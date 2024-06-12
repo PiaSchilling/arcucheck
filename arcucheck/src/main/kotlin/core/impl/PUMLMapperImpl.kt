@@ -126,7 +126,7 @@ class PUMLMapperImpl : PUMLMapper {
     private fun mapInterface(umlText: String): PUMLInterface {
         val interfaceName = mapInterfaceName(umlText)
         val methods = mapMethods(umlText)
-        return PUMLInterface(interfaceName, methods)
+        return PUMLInterface(interfaceName.className, PUMLPackage(interfaceName.packageName), methods)
     }
 
     /**
@@ -218,10 +218,11 @@ class PUMLMapperImpl : PUMLMapper {
      * @param umlText an uml interface in text format that contains the interface name to be mapped
      * @return the name of the interface as a string
      */
-    private fun mapInterfaceName(umlText: String): String {
+    private fun mapInterfaceName(umlText: String): ClassName {
         val interfaceNamePattern = Regex(Patterns.EXTRACT_INTERFACE_NAME)
         val interfaceNameMatch = interfaceNamePattern.find(umlText)
-        return interfaceNameMatch?.groupValues?.get(1) ?: ""
+        val interfaceName = interfaceNameMatch?.groupValues?.get(1) ?: ""
+        return ClassName(interfaceName, false)
     }
 
     /**
