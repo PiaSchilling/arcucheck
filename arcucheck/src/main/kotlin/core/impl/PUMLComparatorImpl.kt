@@ -13,8 +13,8 @@ class PUMLComparatorImpl {
 
     fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
 
-        val classDeviations = comparePUMLTypes(implementationDiagram.classes, designDiagram.classes)
-        val interfaceDeviations = comparePUMLTypes(implementationDiagram.interfaces, designDiagram.interfaces)
+        val classDeviations = comparePUMLTypes(implementationDiagram.classes, designDiagram.classes, true)
+        val interfaceDeviations = comparePUMLTypes(implementationDiagram.interfaces, designDiagram.interfaces, false)
         val relationDeviations = comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
         val packageDeviations = comparePUMLPackages(implementationDiagram.classes, designDiagram.classes)
 
@@ -34,10 +34,56 @@ class PUMLComparatorImpl {
      */
     private fun comparePUMLTypes(
         implementationClasses: List<PUMLType>,
-        designClasses: List<PUMLType>
+        designClasses: List<PUMLType>,
+        isClass: Boolean
     ): List<Deviation> {
-        // TODO add missing method checks etc.
-        return checkTypesExistence(implementationClasses, designClasses)
+        val deviations = mutableListOf<Deviation>()
+        if (isClass) {
+            val impl = implementationClasses.filterIsInstance<PUMLClass>()
+            val design = designClasses.filterIsInstance<PUMLClass>()
+            deviations.addAll(checkClassSignatures(impl, design))
+        }
+
+        return deviations + checkTypesExistence(implementationClasses, designClasses)
+    }
+
+    private fun checkClassSignatures(
+        implementationClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+        val implClassesMap = implementationClasses.associateBy { it.fullName }
+        val designClassesMap = designClasses.associateBy { it.fullName }
+
+        designClasses.forEach { designClass ->
+            val match = implClassesMap[designClass.fullName]
+            match?.let {
+                if (designClass.isAbstract && !it.isAbstract) {
+                    deviations.add(
+                        Deviation(
+                            DeviationLevel.MAKRO,
+                            DeviationArea.PROPERTY,
+                            DeviationType.MISIMPLEMENTED,
+                            listOf(it.name),
+                            "Missing abstract modifier",
+                            "Class \"${it.name}\" is expected to be marked as abstract according to the design but it not in the implementation."
+                        )
+                    )
+                } else if (!designClass.isAbstract && it.isAbstract) {
+                    deviations.add(
+                        Deviation(
+                            DeviationLevel.MAKRO,
+                            DeviationArea.PROPERTY,
+                            DeviationType.MISIMPLEMENTED,
+                            listOf(it.name),
+                            "Unexpected abstract modifier",
+                            "Class \"${it.name}\" is marked as abstract in the implementation but is not expected to be abstract according to the design."
+                        )
+                    )
+                }
+            }
+        }
+        return deviations
     }
 
     /**
@@ -119,7 +165,7 @@ class PUMLComparatorImpl {
                     DeviationArea.PROPERTY,
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingClass.value.name),
-                    "$typeKeyword in wrong package",
+                    "$typeKeyword in wrong package", // TODO maybe add "maybe" keyword, es könnte ja immernoch sein, dass es klassen mit dem gleichen namen gibt
                     "$typeKeyword \"${existingClass.value.name}\" is expected to be placed in the package ${existingClass.value.pumlPackage.fullName}" +
                             " but is placed in the package ${wrongClass?.pumlPackage?.fullName}."
                 )
