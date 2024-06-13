@@ -9,6 +9,8 @@ import core.model.puml.PUMLType
 
 class TypesComparator {
 
+    val methodComparator = MethodComparator()
+
     /**
      * TODO (compare PUML classes regarding to thier existence (makro level) and implementation (mikro level)
      * @param implementationClasses
@@ -94,18 +96,18 @@ class TypesComparator {
         val foundClasses = maybeAbsentClassesMap.filterKeys { it in foundClassNames }
 
         // TODO extract duplicate code
-        foundClasses.forEach { existingClass ->
-            val wrongClass = codeClassesMap[existingClass.key]
-            val typeKeyword = if (wrongClass is PUMLClass) "Class" else "Interface"
+        foundClasses.forEach { existingDesignClass ->
+            val wrongImplClass = codeClassesMap[existingDesignClass.key]
+            val typeKeyword = if (wrongImplClass is PUMLClass) "Class" else "Interface"
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
                     DeviationArea.PROPERTY,
                     DeviationType.MISIMPLEMENTED,
-                    listOf(existingClass.value.name),
-                    "$typeKeyword in wrong package", // TODO maybe add "maybe" keyword, es könnte ja immernoch sein, dass es klassen mit dem gleichen namen gibt
-                    "$typeKeyword \"${existingClass.value.name}\" is expected to be placed in the package ${existingClass.value.pumlPackage.fullName}" +
-                            " but is placed in the package ${wrongClass?.pumlPackage?.fullName}."
+                    listOf(existingDesignClass.value.name),
+                    "$typeKeyword maybe in wrong package", // TODO maybe add "maybe" keyword, es könnte ja immernoch sein, dass es klassen mit dem gleichen namen gibt
+                    "$typeKeyword \"${existingDesignClass.value.name}\" is expected to be placed in the package ${existingDesignClass.value.pumlPackage.fullName}" +
+                            " but is placed in the package ${wrongImplClass?.pumlPackage?.fullName}."
                 )
             )
         }
@@ -149,22 +151,22 @@ class TypesComparator {
             )
         }
 
-        // If class now can  be found, it is just placed in the wrong package
+        // If class now can  be found, it might be placed in the wrong package
         val foundClassesNames = maybeUnexpectedClassesMap.keys.intersect(designClassesMap.keys)
         val foundClasses = maybeUnexpectedClassesMap.filterKeys { it in foundClassesNames }
 
-        foundClasses.forEach { existingClass ->
-            val correctClass = designClassesMap[existingClass.key]
-            val typeKeyword = if (correctClass is PUMLClass) "Class" else "Interface"
+        foundClasses.forEach { existingImplClass ->
+            val correctDesignClass = designClassesMap[existingImplClass.key]
+            val typeKeyword = if (correctDesignClass is PUMLClass) "Class" else "Interface"
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
                     DeviationArea.PROPERTY,
                     DeviationType.MISIMPLEMENTED,
-                    listOf(existingClass.value.name),
-                    "$typeKeyword in wrong package",
-                    "$typeKeyword \"${existingClass.value.name}\" is expected to be placed in the package ${correctClass?.pumlPackage?.fullName}" +
-                            " but is placed in the package ${existingClass.value.pumlPackage.fullName}."
+                    listOf(existingImplClass.value.name),
+                    "$typeKeyword maybe in wrong package",
+                    "$typeKeyword \"${existingImplClass.value.name}\" is expected to be placed in the package ${correctDesignClass?.pumlPackage?.fullName}" +
+                            " but is placed in the package ${existingImplClass.value.pumlPackage.fullName}." // TODO revise message
                 )
             )
         }
