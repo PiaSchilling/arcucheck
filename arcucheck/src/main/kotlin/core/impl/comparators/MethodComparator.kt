@@ -24,7 +24,7 @@ class MethodComparator {
             val correctDesignClass = designClassesMap[correctClassName]
 
             if (correctImplClass != null && correctDesignClass != null) {
-               deviations.addAll(checkMethod(correctImplClass, correctDesignClass))
+                deviations.addAll(checkMethod(correctImplClass, correctDesignClass))
             }
 
         }
@@ -81,17 +81,21 @@ class MethodComparator {
                 else -> implementationClassMap[method.key]
             }
             match?.let {
-                val deviationCauses = checkMethodDeviation(match, method.value) // todo fix
-                deviations.add(
-                    Deviation(
-                        DeviationLevel.MIKRO,
-                        DeviationArea.BEHAVIOR, // TODO behavior is bad wording
-                        DeviationType.MISIMPLEMENTED,
-                        listOf(designClass.name),
-                        "Maybe wrong implemented method",
-                        "Method ${method.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
+                // prevent bidirectional/duplicate adding of deviations -> only execute block below if match is a designClass
+                // -> match is designClass if the type is UNEXPECTED
+                if (type == DeviationType.UNEXPECTED) {
+                    val deviationCauses = checkMethodDeviation(method.value,match)
+                    deviations.add(
+                        Deviation(
+                            DeviationLevel.MIKRO,
+                            DeviationArea.BEHAVIOR, // TODO behavior is bad wording
+                            DeviationType.MISIMPLEMENTED,
+                            listOf(designClass.name),
+                            "Maybe wrong implemented method",
+                            "Method ${method.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
+                        )
                     )
-                )
+                }
             } ?: run {
                 deviations.add( // wenn die methode immernoch nicht gefunden wird dann existiert sie nicht
                     Deviation(
@@ -114,15 +118,35 @@ class MethodComparator {
     ): List<String> {
         val methodWarnings = mutableListOf<String>()
         if (implementationMethod.isAbstract && !designMethod.isAbstract) {
-            methodWarnings.add("Method ${implementationMethod.name} is marked as abstract but should not be abstract according to the design") // TODO revise text
+            methodWarnings.add("Method ${designMethod.name} is marked as abstract but should not be abstract according to the design") // TODO revise text
         } else if (!implementationMethod.isAbstract && designMethod.isAbstract) {
             methodWarnings.add("Method ${designMethod.name} should be abstract according to the design but it not in the impl.")
         }
 
+        if (implementationMethod.isStatic && !designMethod.isStatic) {
+            methodWarnings.add("Method ${designMethod.name} is marked as static but should not be static according to the design") // TODO revise text
+        } else if (!implementationMethod.isStatic && designMethod.isStatic) {
+            methodWarnings.add("Method ${designMethod.name} should be static according to the design but it not in the impl.")
+        }
+
         if (implementationMethod.visibility != designMethod.visibility) {
             methodWarnings.add(
-                "Method ${implementationMethod.name} should have the Visbility ${designMethod.visibility} but has the " +
+                "Method ${designMethod.name} should have the Visbility ${designMethod.visibility} but has the " +
                         "visibility ${implementationMethod.visibility}"
+            )
+        }
+
+        if(implementationMethod.returnType != designMethod.returnType){
+            methodWarnings.add(
+                "Method ${designMethod.name} should have the return type ${designMethod.returnType} but has the " +
+                        "return type ${implementationMethod.returnType}"
+            )
+        }
+
+        if(implementationMethod.parameterTypes != designMethod.parameterTypes){
+            methodWarnings.add(
+                "Method ${designMethod.name} should have the parameter types  ${designMethod.parameterTypes} but has the " +
+                        "parameter types ${implementationMethod.parameterTypes}"
             )
         }
 
