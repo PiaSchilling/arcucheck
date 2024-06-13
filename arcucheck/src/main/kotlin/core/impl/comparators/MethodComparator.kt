@@ -9,6 +9,8 @@ import core.model.puml.PUMLType
 
 class MethodComparator {
 
+    // TODO comment and clean up class, maybe rename methods.
+    // TODO check, if class comparator can reuse its methods same as here.
     fun compareTypeMethdos(
         implementationClasses: List<PUMLType>,
         designClasses: List<PUMLType>,
@@ -63,6 +65,7 @@ class MethodComparator {
         return distinct
     }
 
+    // TODO comment
     private fun checkDeviatingMethods(
         deviatingMethods: List<PUMLMethod>,
         implementationClass: PUMLType,
@@ -91,7 +94,7 @@ class MethodComparator {
                             DeviationArea.BEHAVIOR, // TODO behavior is bad wording
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
-                            "Maybe wrong implemented method",
+                            "Maybe wrong implemented method", // TODO clean up message
                             "Method ${method.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
                         )
                     )
@@ -112,6 +115,7 @@ class MethodComparator {
         return deviations
     }
 
+    // TODO clean up messages
     private fun checkMethodDeviation(
         implementationMethod: PUMLMethod,
         designMethod: PUMLMethod
