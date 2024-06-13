@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add fromString method" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add detection of absent and unexpected relations" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,10 +18,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin Sealed Class" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -51,8 +51,12 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/libs" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="core.model.PUML" />
+      <recent name="core.model.deviation" />
+    </key>
   </component>
-  <component name="RunManager" selected="Kotlin.UMLMapperImplKt">
+  <component name="RunManager" selected="Kotlin.MainKt">
     <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -99,7 +103,7 @@
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="arcucheck.main" />
-      <option name="PROGRAM_PARAMETERS" value="-cp $PROJECT_DIR$/../../../../../../2022-03-14_Semester_4/SE3/Repo/se3/project/arcudoc/de.hdm_stuttgart.editor/src/main/java/de/hdm_stuttgart/editor/ -dp $USER_HOME$/Desktop/out.puml" />
+      <option name="PROGRAM_PARAMETERS" value="-cp $PROJECT_DIR$/../../../../../../2022-03-14_Semester_4/SE3/Repo/se3/project/arcudoc/de.hdm_stuttgart.editor/src/main/java/de/hdm_stuttgart/editor/ -dp $USER_HOME$/Desktop/output.puml" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -112,10 +116,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Gradle.arcucheck [clean build]" />
+      <item itemvalue="Gradle.arcucheck [dependencies]" />
+      <item itemvalue="Kotlin.MainKt" />
+      <item itemvalue="Kotlin.UMLMapperImplKt" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Kotlin.UMLMapperImplKt" />
         <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Kotlin.UMLMapperImplKt" />
         <item itemvalue="Gradle.arcucheck [clean build]" />
         <item itemvalue="Gradle.arcucheck [dependencies]" />
       </list>
@@ -238,7 +248,70 @@
       <option name="project" value="LOCAL" />
       <updated>1717250593634</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: prevent empty classes">
+      <created>1717499428237</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1717499428237</updated>
+    </task>
+    <task id="LOCAL-00017" summary="feat: wire up codeParser and umlMapper&#10;&#10;Still needs refactoring">
+      <created>1717500581564</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1717500581564</updated>
+    </task>
+    <task id="LOCAL-00018" summary="feat: finish wiring up CodeParser and UMLMapper">
+      <created>1717502024182</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1717502024182</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor: rename classes">
+      <created>1717502345124</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1717502345124</updated>
+    </task>
+    <task id="LOCAL-00020" summary="feat: add first deviation detection &#10;&#10;Absent and unexpected classes can now be detected">
+      <created>1717798363583</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1717798363583</updated>
+    </task>
+    <task id="LOCAL-00021" summary="refactor: move PUMLModels to subpackage">
+      <created>1717836665110</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1717836665110</updated>
+    </task>
+    <task id="LOCAL-00022" summary="feat: format String representation of Deviation class">
+      <created>1717836692456</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1717836692456</updated>
+    </task>
+    <task id="LOCAL-00023" summary="refactor: rename package to lowercase">
+      <created>1717836834725</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1717836834725</updated>
+    </task>
+    <task id="LOCAL-00024" summary="feat: add detection of absent and unexpected relations">
+      <created>1717839088211</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1717839088211</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -334,7 +407,16 @@
     <MESSAGE value="feat: extent PUMLDiagram with classes and interfaces" />
     <MESSAGE value="feat: add models for relation mapping" />
     <MESSAGE value="feat: add fromString method" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add fromString method" />
+    <MESSAGE value="feat: prevent empty classes" />
+    <MESSAGE value="feat: wire up codeParser and umlMapper&#10;&#10;Still needs refactoring" />
+    <MESSAGE value="feat: finish wiring up CodeParser and UMLMapper" />
+    <MESSAGE value="refactor: rename classes" />
+    <MESSAGE value="feat: add first deviation detection &#10;&#10;Absent and unexpected classes can now be detected" />
+    <MESSAGE value="refactor: move PUMLModels to subpackage" />
+    <MESSAGE value="feat: format String representation of Deviation class" />
+    <MESSAGE value="refactor: rename package to lowercase" />
+    <MESSAGE value="feat: add detection of absent and unexpected relations" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add detection of absent and unexpected relations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -343,6 +425,11 @@
           <properties class="java.lang.NoSuchMethodError" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt</url>
+          <line>13</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

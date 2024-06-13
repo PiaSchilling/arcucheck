@@ -7,7 +7,7 @@ data class Deviation(
     val type: DeviationType,
     val affectedClassesNames: List<String>,
     val title: String,
-    val description: String,
+    val description: String, // TODO add sth. like problem location package.class.method....
 ) {
     override fun toString(): String {
         return "\n Detected deviation \"$title\": \n Level: $level \n Area: $area \n Type: $type \n Cause: $description \n"

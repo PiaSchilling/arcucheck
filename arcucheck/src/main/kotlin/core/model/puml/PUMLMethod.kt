@@ -7,4 +7,6 @@ data class PUMLMethod(
     val visibility: Visibility,
     val isStatic: Boolean,
     val isAbstract: Boolean
-)
+){
+    val signature = "$returnType $name(${parameterTypes})"
+}

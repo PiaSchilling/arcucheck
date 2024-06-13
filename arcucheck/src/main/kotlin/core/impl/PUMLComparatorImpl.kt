@@ -1,15 +1,15 @@
 package core.impl
 
-import core.model.puml.PUMLClass
-import core.model.puml.PUMLDiagram
 import core.model.deviation.Deviation
 import core.model.deviation.DeviationArea
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
-import core.model.puml.PUMLRelation
-import core.model.puml.PUMLType
+import core.model.puml.*
 
 class PUMLComparatorImpl {
+
+    private val validDesignTypes = mutableListOf<PUMLType>()
+    private val validImplTypes = mutableListOf<PUMLType>()
 
     fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
 
@@ -17,8 +17,9 @@ class PUMLComparatorImpl {
         val interfaceDeviations = comparePUMLTypes(implementationDiagram.interfaces, designDiagram.interfaces, false)
         val relationDeviations = comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
         val packageDeviations = comparePUMLPackages(implementationDiagram.classes, designDiagram.classes)
+        val methodDeviations = compareTypeMethdos()
 
-        val result = classDeviations + relationDeviations + packageDeviations + interfaceDeviations
+        val result = classDeviations + relationDeviations + packageDeviations + interfaceDeviations + methodDeviations
         if (result.isEmpty()) {
             println("No deviations between implementation and design found")
         } else {
@@ -48,7 +49,7 @@ class PUMLComparatorImpl {
     }
 
     /**
-     * Check if class signatures have any deviations (abstract modifier missing)
+     * Check if class signatures have any deviations (e.g. if the abstract modifier is missing)
      *
      * @param implementationClasses the classes present in the implementation
      * @param designClasses the classes expected by the design
@@ -109,6 +110,18 @@ class PUMLComparatorImpl {
 
         val maybeAbsentClassesNames = designClassesMap.keys.subtract(implClassesMap.keys)
         val maybeUnexpectedClassesNames = implClassesMap.keys.subtract(designClassesMap.keys)
+
+        // - - - - - -
+        val validImplClassesNames = implClassesMap.keys.intersect(designClassesMap.keys)
+        val validImplClasses =
+            implementationClasses.filter { currentClass -> validImplClassesNames.contains(currentClass.name) }
+        validImplTypes.addAll(validImplClasses)
+
+        val validDesignClassesNames = designClassesMap.keys.intersect(implClassesMap.keys)
+        val validDesignClasses =
+            designClasses.filter { currentClass -> validDesignClassesNames.contains(currentClass.name) }
+        validImplTypes.addAll(validDesignClasses)
+        // - - -- - - -
 
         if (maybeAbsentClassesNames.isNotEmpty()) {
             val maybeAbsentClasses = designClassesMap.filterKeys { it in maybeAbsentClassesNames }.values.toList()
@@ -238,6 +251,95 @@ class PUMLComparatorImpl {
         }
         return deviations
 
+    }
+
+    private fun compareTypeMethdos(
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+
+        validDesignTypes.forEach { currentDesignType ->
+            val currentImplType = validImplTypes.find { type -> type.fullName == currentDesignType.fullName }
+
+            currentImplType?.let {
+                deviations.addAll(checkMethod(currentImplType, currentDesignType))
+            }
+        }
+        return deviations
+    }
+
+    private fun checkMethod(
+        implementationClass: PUMLType,
+        designClass: PUMLType,
+    ): List<Deviation> {
+
+        val maybeAbsentMethods = designClass.methods.subtract(implementationClass.methods.toSet())
+        val maybeUnexpectedMethods = implementationClass.methods.subtract(designClass.methods.toSet())
+
+        val absentDeviations = checkMaybeAbsentMethods(maybeAbsentMethods.toList(), implementationClass, designClass)
+
+        return absentDeviations
+    }
+
+    private fun checkMethodDeviation(
+        implementationMethod: PUMLMethod,
+        designMethod: PUMLMethod
+    ): List<String> {
+        val methodWarnings = mutableListOf<String>()
+        if (implementationMethod.isAbstract && !designMethod.isAbstract) {
+            methodWarnings.add("Method ${implementationMethod.name} is marked as abstract but should not be abstract according to the design") // TODO revise text
+        } else if (!implementationMethod.isAbstract && designMethod.isAbstract) {
+            methodWarnings.add("Method ${designMethod.name} should be abstract according to the design but it not in the impl.")
+        }
+
+        if (implementationMethod.visibility != designMethod.visibility) {
+            methodWarnings.add(
+                "Method ${implementationMethod.name} should have the Visbility ${designMethod.visibility} but has the " +
+                        "visibility ${implementationMethod.visibility}"
+            )
+        }
+
+        return methodWarnings
+    }
+
+    private fun checkMaybeAbsentMethods(
+        maybeAbsentMethods: List<PUMLMethod>,
+        implementationClass: PUMLType,
+        designClass: PUMLType
+    ): List<Deviation> {
+        val deviations = mutableListOf<Deviation>()
+        val maybeAbsentMethodsMap = maybeAbsentMethods.associateBy { it.name }
+        val implementationClassMap = implementationClass.methods.associateBy { it.name }
+
+        maybeAbsentMethodsMap.forEach { method ->
+            val match = implementationClassMap[method.key]
+            match?.let {
+
+                val deviationCauses = checkMethodDeviation(match, method.value)
+                deviations.add(
+                    Deviation(
+                        DeviationLevel.MIKRO,
+                        DeviationArea.BEHAVIOR, // TODO behavior is bad wording
+                        DeviationType.MISIMPLEMENTED,
+                        listOf(designClass.name),
+                        "Maybe wrong implemented method",
+                        "Method ${method.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
+                    )
+                )
+            } ?: run {
+                deviations.add( // wenn die methode immernoch nicht gefunden wird dann existiert sie nicht
+                    Deviation(
+                        DeviationLevel.MIKRO,
+                        DeviationArea.BEHAVIOR, // TODO behavior is bad wording
+                        DeviationType.ABSENCE,
+                        listOf(designClass.name),
+                        "Absent method",
+                        "Method ${method.value.name} in class ${designClass.name} is expected according to the design " +
+                                "but is missing in the implementation."
+                    )
+                )
+            }
+        }
+        return deviations
     }
 
     /**
