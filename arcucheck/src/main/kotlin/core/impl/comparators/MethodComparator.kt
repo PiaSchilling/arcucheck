@@ -95,14 +95,14 @@ class MethodComparator {
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         val deviatingMethodsMap = deviatingMethods.associateBy { it.name }
-        val implementationClassMap = implementationClass.methods.associateBy { it.name }
-        val designClassMap = designClass.methods.associateBy { it.name }
+        val implementationMethodsMap = implementationClass.methods.associateBy { it.name }
+        val designMethodsMap = designClass.methods.associateBy { it.name }
 
         deviatingMethodsMap.forEach { method ->
             val match = when (deviationType) {
-                DeviationType.ABSENCE -> implementationClassMap[method.key]
-                DeviationType.UNEXPECTED -> designClassMap[method.key]
-                else -> implementationClassMap[method.key]
+                DeviationType.ABSENCE -> implementationMethodsMap[method.key]
+                DeviationType.UNEXPECTED -> designMethodsMap[method.key]
+                else -> implementationMethodsMap[method.key]
             }
             match?.let {
                 // prevent bidirectional/duplicate adding of deviations -> only execute block below if match is a designClass

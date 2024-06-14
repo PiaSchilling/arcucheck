@@ -15,7 +15,7 @@ class TypesComparator {
      * @param implementationClasses the classes as they exist in the implementation
      * @param designClasses the same classes as present in the design
      * @return a list of all detected deviations between design and implementation. Could either be the absence of a class,
-     * a unexpected class or a class placed in the wrong package.
+     * an unexpected class or a class placed in the wrong package.
      */
     fun comparePUMLTypes(
         implementationClasses: List<PUMLType>,
