@@ -9,20 +9,19 @@ import core.model.puml.PUMLType
 
 class TypesComparator {
 
-    val methodComparator = MethodComparator()
-
     /**
-     * TODO (compare PUML classes regarding to thier existence (makro level) and implementation (mikro level)
-     * @param implementationClasses
-     * @param designClasses
-     * @return
+     * Compare the provided classes according to their existence and package placement.
+     *
+     * @param implementationClasses the classes as they exist in the implementation
+     * @param designClasses the same classes as present in the design
+     * @return a list of all detected deviations between design and implementation. Could either be the absence of a class,
+     * a unexpected class or a class placed in the wrong package.
      */
     fun comparePUMLTypes(
         implementationClasses: List<PUMLType>,
         designClasses: List<PUMLType>,
     ): List<Deviation> {
-
-        return checkTypesExistence(implementationClasses, designClasses)
+        return checkTypes(implementationClasses, designClasses)
     }
 
 
@@ -33,7 +32,7 @@ class TypesComparator {
      * @param designClasses the classes/interfaces expected by the design
      * @return a list of all detected deviations between the design and implementation classes/interfaces
      */
-    private fun checkTypesExistence(
+    private fun checkTypes(
         implementationClasses: List<PUMLType>,
         designClasses: List<PUMLType>
     ): List<Deviation> {
