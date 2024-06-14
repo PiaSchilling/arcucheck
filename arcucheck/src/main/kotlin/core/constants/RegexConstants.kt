@@ -53,7 +53,7 @@ object Patterns {
      * - group 5: method name
      * - group 6: method parameters
      */
-    const val EXTRACT_METHOD = """([+\-#])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)\((.*?)\))"""
+    const val EXTRACT_METHOD = """([+\-#~])\s*(\{(?:static|abstract)?})?\s*((\w+)\s+(\w+)\((.*?)\))"""
 
     /**
      * Pattern to extract the class name with optional "abstract" modifier from a PlantUML class string
