@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add detection of absent and unexpected relations" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add interface method comparison">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/ConstructorComparator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +19,16 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -52,6 +67,7 @@
       <recent name="$PROJECT_DIR$/libs" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="core.impl.comparators" />
       <recent name="core.model.PUML" />
       <recent name="core.model.deviation" />
     </key>
@@ -311,7 +327,70 @@
       <option name="project" value="LOCAL" />
       <updated>1717839088211</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="feat: begin adding method checking&#10;&#10;Not yet working but code needs refactoring, save the current state">
+      <created>1718277465235</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1718277465235</updated>
+    </task>
+    <task id="LOCAL-00026" summary="refactor: split up PUMLComparatorImpl into sub-comparators">
+      <created>1718278032349</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1718278032349</updated>
+    </task>
+    <task id="LOCAL-00027" summary="feat: work on method comparison&#10;&#10;Method deviations still buggy">
+      <created>1718282926826</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1718282926826</updated>
+    </task>
+    <task id="LOCAL-00028" summary="feat: fix bug in method deviation detection">
+      <created>1718284568898</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1718284568898</updated>
+    </task>
+    <task id="LOCAL-00029" summary="todo: add todos">
+      <created>1718284661605</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1718284661605</updated>
+    </task>
+    <task id="LOCAL-00030" summary="feat: comment and clean up MethodComparator">
+      <created>1718375124836</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1718375124836</updated>
+    </task>
+    <task id="LOCAL-00031" summary="feat: add FieldComparator">
+      <created>1718376922043</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1718376922043</updated>
+    </task>
+    <task id="LOCAL-00032" summary="feat: comment and clean up">
+      <created>1718377107642</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1718377107642</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feat: add interface method comparison">
+      <created>1718381648366</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1718381648366</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -393,13 +472,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor: migrate from maven to gradle" />
-    <MESSAGE value="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised" />
-    <MESSAGE value="chore: add dependency lib jars (plantuml-parser)" />
-    <MESSAGE value="chore: remove guice&#10;&#10;It caused problems that cant be fixed quickly" />
-    <MESSAGE value="feat: add Koin di" />
-    <MESSAGE value="feat: wire up CodeParserImpl" />
-    <MESSAGE value="feat: add PUML data classes to model diagrams" />
     <MESSAGE value="feat: edit class name matching so all class names are extracted" />
     <MESSAGE value="feat: split uml files into classes&#10;&#10;Not yet finished" />
     <MESSAGE value="feat: add differentiation between abstract and non-abstract classes" />
@@ -416,7 +488,16 @@
     <MESSAGE value="feat: format String representation of Deviation class" />
     <MESSAGE value="refactor: rename package to lowercase" />
     <MESSAGE value="feat: add detection of absent and unexpected relations" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add detection of absent and unexpected relations" />
+    <MESSAGE value="feat: begin adding method checking&#10;&#10;Not yet working but code needs refactoring, save the current state" />
+    <MESSAGE value="refactor: split up PUMLComparatorImpl into sub-comparators" />
+    <MESSAGE value="feat: work on method comparison&#10;&#10;Method deviations still buggy" />
+    <MESSAGE value="feat: fix bug in method deviation detection" />
+    <MESSAGE value="todo: add todos" />
+    <MESSAGE value="feat: comment and clean up MethodComparator" />
+    <MESSAGE value="feat: add FieldComparator" />
+    <MESSAGE value="feat: comment and clean up" />
+    <MESSAGE value="feat: add interface method comparison" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add interface method comparison" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -426,9 +507,19 @@
           <option name="timeStamp" value="1" />
         </breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt</url>
-          <line>13</line>
-          <option name="timeStamp" value="11" />
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
+          <line>101</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
+          <line>111</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
+          <line>151</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

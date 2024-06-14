@@ -12,6 +12,7 @@ class PUMLComparatorImpl {
         val packageComparator = PackageComparator()
         val methodComparator = MethodComparator()
         val fieldComparator = FieldComparator()
+        val constructorComparator = ConstructorComparator()
 
         val classDeviations = typesComparator.comparePUMLTypes(implementationDiagram.classes, designDiagram.classes)
         val interfaceDeviations =
@@ -25,9 +26,10 @@ class PUMLComparatorImpl {
         val interfaceMethodDeviations =
             methodComparator.comparePUMLMethdos(implementationDiagram.interfaces, designDiagram.interfaces)
         val fieldDeviations = fieldComparator.comparePUMLFields(implementationDiagram.classes, designDiagram.classes)
-
+        val constructorDeviations =
+            constructorComparator.comparePUMLConstructors(implementationDiagram.classes, designDiagram.classes)
         val result =
-            classDeviations + relationDeviations + packageDeviations + interfaceDeviations + classMethodDeviations + interfaceMethodDeviations + fieldDeviations
+            classDeviations + relationDeviations + packageDeviations + interfaceDeviations + classMethodDeviations + interfaceMethodDeviations + fieldDeviations + constructorDeviations
         if (result.isEmpty()) {
             println("No deviations between implementation and design found")
         } else {

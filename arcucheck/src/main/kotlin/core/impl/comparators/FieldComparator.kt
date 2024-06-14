@@ -80,11 +80,11 @@ class FieldComparator {
     }
 
     /**
-     * Find the deviation cause of fields: Deviation could be caused by absent method, unexpected method or wrong implemented method
+     * Find the deviation cause of fields: Deviation could be caused by absent field, unexpected field or wrong implemented field
      *
      * @param deviatingFields a list of fields which deviate from the design, that need to be checked
-     * @param implementationClass the implemented class containing the deviating methods
-     * @param designClass the design of the class containing the deviating methods
+     * @param implementationClass the implemented class containing the deviating fields
+     * @param designClass the design of the class containing the deviating fields
      * @param deviationType fields can either be suspected to be ABSENT or UNEXPECTED, deviationType controls the behavior of this function
      * @return a list containing all detected deviations
      */
@@ -138,6 +138,7 @@ class FieldComparator {
         return deviations
     }
 
+    // TODO comment
     private fun checkDeviationArea(
         implementationField: PUMLField,
         designField: PUMLField
