@@ -79,12 +79,12 @@ class MethodComparator {
     }
 
     /**
-     * Check why methods deviate: Deviation could be caused by absent method, unexpected method or wrong implemented method
+     * Find the deviation cause of methods: Deviation could be caused by absent method, unexpected method or wrong implemented method
      *
      * @param deviatingMethods a list of methods which deviate from the design, that need to be checked
      * @param implementationClass the implemented class containing the deviating methods
      * @param designClass the design of the class containing the deviating methods
-     * @param deviationType methods can either be suspected to be ABSENT or UNEXPECTED, parameter controls behavior of this function
+     * @param deviationType methods can either be suspected to be ABSENT or UNEXPECTED, deviationType controls the  behavior of this function
      * @return a list containing all detected deviations
      */
     private fun checkDeviatingMethods(

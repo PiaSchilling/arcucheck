@@ -9,6 +9,14 @@ import core.model.puml.PUMLField
 
 class FieldComparator {
 
+    /**
+     * Compare all fields contained in the provided classes to detect any deviations.
+     * Only fields for "correct" classes are compared. Correct means, that class signatures don't have any deviations.
+     *
+     * @param implementationClasses the classes as they exist in the implementation
+     * @param designClasses the same classes as present in the design
+     * @return a list of all detected deviations between the design and implementation classes fields
+     */
     fun comparePUMLFields(
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
@@ -33,6 +41,13 @@ class FieldComparator {
         return deviations
     }
 
+    /**
+     * Check if any fields of the provided classes are unexpected, absent of wrongly implemented
+     *
+     * @param implementationClass a class as it exists in the implementation
+     * @param designClass the same class as is present in the design
+     * @return a list of all detected deviations between the design and implementation classes fields
+     */
     private fun checkFields(
         implementationClass: PUMLClass,
         designClass: PUMLClass
@@ -64,6 +79,15 @@ class FieldComparator {
         return deviations
     }
 
+    /**
+     * Find the deviation cause of fields: Deviation could be caused by absent method, unexpected method or wrong implemented method
+     *
+     * @param deviatingFields a list of fields which deviate from the design, that need to be checked
+     * @param implementationClass the implemented class containing the deviating methods
+     * @param designClass the design of the class containing the deviating methods
+     * @param deviationType fields can either be suspected to be ABSENT or UNEXPECTED, deviationType controls the behavior of this function
+     * @return a list containing all detected deviations
+     */
     private fun checkDeviatingFields(
         deviatingFields: List<PUMLField>,
         implementationClass: PUMLClass,
