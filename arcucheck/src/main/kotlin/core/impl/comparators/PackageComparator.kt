@@ -5,6 +5,7 @@ import core.model.deviation.DeviationArea
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLClass
+import core.model.puml.PUMLType
 
 class PackageComparator {
     /**
@@ -15,8 +16,8 @@ class PackageComparator {
      * @return a list of all detected deviations between the design and implementation packages
      */
     fun comparePUMLPackages(
-        implementationClasses: List<PUMLClass>,
-        designClasses: List<PUMLClass>
+        implementationClasses: List<PUMLType>,
+        designClasses: List<PUMLType>
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         val implPackages = implementationClasses.map { pumlClass -> pumlClass.pumlPackage }.distinct()

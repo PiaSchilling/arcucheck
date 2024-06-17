@@ -20,7 +20,10 @@ class PUMLComparatorImpl {
         val relationDeviations =
             relationComparator.comparePUMLRelations(implementationDiagram.relations, designDiagram.relations)
         val packageDeviations =
-            packageComparator.comparePUMLPackages(implementationDiagram.classes, designDiagram.classes)
+            packageComparator.comparePUMLPackages(
+                implementationDiagram.classes + implementationDiagram.interfaces,
+                designDiagram.classes + designDiagram.interfaces
+            )
         val classMethodDeviations =
             methodComparator.comparePUMLMethdos(implementationDiagram.classes, designDiagram.classes)
         val interfaceMethodDeviations =
