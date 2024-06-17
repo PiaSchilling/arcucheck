@@ -94,7 +94,7 @@ class TypesComparator {
         val foundClassNames = maybeAbsentClassesMap.keys.intersect(codeClassesMap.keys)
         val foundClasses = maybeAbsentClassesMap.filterKeys { it in foundClassNames }
 
-        // TODO extract duplicate code
+        // TODO extract duplicate code -> if description of misimplemented deviation is altered the logic changes -> PROBLEM!
         foundClasses.forEach { existingDesignClass ->
             val wrongImplClass = codeClassesMap[existingDesignClass.key]
             val typeKeyword = if (wrongImplClass is PUMLClass) "Class" else "Interface"
@@ -104,9 +104,10 @@ class TypesComparator {
                     DeviationArea.PROPERTY,
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingDesignClass.value.name),
-                    "$typeKeyword maybe in wrong package", // TODO maybe add "maybe" keyword, es könnte ja immernoch sein, dass es klassen mit dem gleichen namen gibt
-                    "$typeKeyword \"${existingDesignClass.value.name}\" is expected to be placed in the package ${existingDesignClass.value.pumlPackage.fullName}" +
-                            " but is placed in the package ${wrongImplClass?.pumlPackage?.fullName}."
+                    "$typeKeyword maybe in wrong package",
+                    "$typeKeyword \"${existingDesignClass.value.name}\" is absent in the package " +
+                            "\"${existingDesignClass.value.pumlPackage.fullName}\". However, the package " +
+                            "\"${wrongImplClass?.pumlPackage?.fullName}\" contains a class with the same name. It might be placed in the wrong package."
                 )
             )
         }
@@ -164,8 +165,9 @@ class TypesComparator {
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingImplClass.value.name),
                     "$typeKeyword maybe in wrong package",
-                    "$typeKeyword \"${existingImplClass.value.name}\" is expected to be placed in the package ${correctDesignClass?.pumlPackage?.fullName}" +
-                            " but is placed in the package ${existingImplClass.value.pumlPackage.fullName}." // TODO revise message
+                    "$typeKeyword \"${existingImplClass.value.name}\" is absent in the package " +
+                            "\"${correctDesignClass?.pumlPackage?.fullName}\". However, the package " +
+                            "\"${existingImplClass.value.pumlPackage.fullName}\" contains a class with the same name. It might be placed in the wrong package."
                 )
             )
         }
