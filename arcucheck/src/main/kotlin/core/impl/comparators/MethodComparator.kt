@@ -115,20 +115,28 @@ class MethodComparator {
                             DeviationArea.BEHAVIOR, // TODO behavior is bad wording
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
-                            "Maybe wrong implemented method", // TODO clean up message
-                            "Method ${method.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
+                            "Deviating method implementation",
+                            "Implementation of method \"${method.value.name}\" in class \"${designClass.pumlPackage.fullName}.${designClass.name}\" deviates from " +
+                                    "the design: $deviationCauses"
                         )
                     )
                 }
             } ?: run {
+                val deviationLocation =
+                    "Method \"${method.value.name}\" in class \"${designClass.pumlPackage.fullName}.${designClass.name}\""
+
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
                         DeviationLevel.MIKRO,
                         DeviationArea.BEHAVIOR, // TODO behavior is bad wording
                         deviationType,
                         listOf(designClass.name),
-                        "$deviationType method", // TODO fix messages!!!
-                        "Method ${method.value.name} in class ${designClass.name} is $deviationType"
+                        "${deviationType.name.lowercase()} method", // TODO fix "absence method" and first letter uppercase
+                        when (deviationType) {
+                            DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
+                            DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
+                            else -> ""
+                        }
                     )
                 )
             }
@@ -150,36 +158,39 @@ class MethodComparator {
         designMethod: PUMLMethod
     ): List<String> {
         val methodWarnings = mutableListOf<String>()
+
         if (implementationMethod.isAbstract && !designMethod.isAbstract) {
-            methodWarnings.add("Method ${designMethod.name} is marked as abstract but should not be abstract according to the design") // TODO revise text
+            methodWarnings.add("Method ${designMethod.name} is marked as abstract in the implementation but should not be abstract according to the design.");
         } else if (!implementationMethod.isAbstract && designMethod.isAbstract) {
-            methodWarnings.add("Method ${designMethod.name} should be abstract according to the design but it not in the impl.")
+            methodWarnings.add("Method ${designMethod.name} should be abstract according to the design but is not abstract in the implementation.");
         }
 
+
+
         if (implementationMethod.isStatic && !designMethod.isStatic) {
-            methodWarnings.add("Method ${designMethod.name} is marked as static but should not be static according to the design") // TODO revise text
+            methodWarnings.add("Method \"${designMethod.name}\" is marked as static in the implementation but should not be static according to the design.") // TODO revise text
         } else if (!implementationMethod.isStatic && designMethod.isStatic) {
-            methodWarnings.add("Method ${designMethod.name} should be static according to the design but it not in the impl.")
+            methodWarnings.add("Method \"${designMethod.name}\" should be static according to the design but is not static in the implementation.")
         }
 
         if (implementationMethod.visibility != designMethod.visibility) {
             methodWarnings.add(
-                "Method ${designMethod.name} should have the Visbility ${designMethod.visibility} but has the " +
-                        "visibility ${implementationMethod.visibility}"
+                "Method \"${designMethod.name}\" should have the visibility \"${designMethod.visibility}\" according to the design but has the " +
+                        "visibility \"${implementationMethod.visibility}\" in the implementation."
             )
         }
 
         if (implementationMethod.returnType != designMethod.returnType) {
             methodWarnings.add(
-                "Method ${designMethod.name} should have the return type ${designMethod.returnType} but has the " +
-                        "return type ${implementationMethod.returnType}"
+                "Method \"${designMethod.name}\" should have the return type \"${designMethod.returnType}\" according to the design but has the " +
+                        "return type \"${implementationMethod.returnType}\" in the implementation."
             )
         }
 
         if (implementationMethod.parameterTypes != designMethod.parameterTypes) {
             methodWarnings.add(
-                "Method ${designMethod.name} should have the parameter types  ${designMethod.parameterTypes} but has the " +
-                        "parameter types ${implementationMethod.parameterTypes}"
+                "Method \"${designMethod.name}\" should have the parameter types ${designMethod.parameterTypes} according to the design but has the " +
+                        "parameter types ${implementationMethod.parameterTypes} in the implementation."
             )
         }
 
