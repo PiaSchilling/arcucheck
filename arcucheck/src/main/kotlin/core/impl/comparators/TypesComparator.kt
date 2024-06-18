@@ -1,9 +1,7 @@
 package core.impl.comparators
 
-import core.model.deviation.Deviation
-import core.model.deviation.DeviationArea
-import core.model.deviation.DeviationLevel
-import core.model.deviation.DeviationType
+import core.impl.WarningBuilder
+import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLType
 
@@ -77,15 +75,16 @@ class TypesComparator {
         val absentClassesNames = maybeAbsentClassesMap.keys.subtract(codeClassesMap.keys)
         val absentClasses = maybeAbsentClassesMap.filterKeys { it in absentClassesNames }
         absentClasses.forEach { absentClass ->
-            val typeKeyword = if (absentClass.value is PUMLClass) "class" else "interface"
+            val subject = if (absentClass.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
             deviations.add(
-                Deviation(
-                    DeviationLevel.MAKRO,
-                    DeviationArea.PROPERTY,
-                    DeviationType.ABSENCE,
-                    listOf(absentClass.value.name),
-                    "Absent $typeKeyword",
-                    "$typeKeyword \"${absentClass.value.name}\" is expected in the design but missing in the implementation." // TODO extract string to some kind of error message builder
+                WarningBuilder.buildUnexpectedAbsentDeviation(
+                    level = DeviationLevel.MAKRO,
+                    area = DeviationArea.PROPERTY,
+                    type = DeviationType.ABSENCE,
+                    affectedClassesNames = listOf(absentClass.value.name),
+                    subject = subject,
+                    subjectName = absentClass.value.name,
+                    classLocation = absentClass.value.pumlPackage.fullName
                 )
             )
         }
@@ -138,15 +137,16 @@ class TypesComparator {
         val unexpectedClassesNames = maybeUnexpectedClassesMap.keys.subtract(designClassesMap.keys)
         val unexpectedClasses = maybeUnexpectedClassesMap.filterKeys { it in unexpectedClassesNames }
         unexpectedClasses.forEach { unexpectedClass ->
-            val typeKeyword = if (unexpectedClass.value is PUMLClass) "class" else "interface"
+            val subject = if (unexpectedClass.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
             deviations.add(
-                Deviation(
-                    DeviationLevel.MAKRO,
-                    DeviationArea.PROPERTY,
-                    DeviationType.UNEXPECTED,
-                    listOf(unexpectedClass.value.name),
-                    "Unexpected $typeKeyword",
-                    "$typeKeyword \"${unexpectedClass.value.name}\" is not expected in the design but present in the implementation."
+                WarningBuilder.buildUnexpectedAbsentDeviation(
+                    level = DeviationLevel.MAKRO,
+                    area = DeviationArea.PROPERTY,
+                    type = DeviationType.UNEXPECTED,
+                    affectedClassesNames = listOf(unexpectedClass.value.name),
+                    subject = subject,
+                    subjectName = unexpectedClass.value.name,
+                    classLocation = unexpectedClass.value.pumlPackage.fullName
                 )
             )
         }

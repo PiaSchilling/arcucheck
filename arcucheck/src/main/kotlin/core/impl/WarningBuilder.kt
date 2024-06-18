@@ -12,10 +12,10 @@ class WarningBuilder {
             classLocation: String
         ): String {
             val deviationLocation =
-                "${deviationSubject.asString} \"${subjectName}\" in the class \"${classLocation}\""
+                "${deviationSubject.asString} \"${subjectName}\" located in \"${classLocation}\""
             return when (deviationType) {
                 DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
-                DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
+                DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation." // TODO revise message: man kommt durcheinander was jetzt design klassen sind und was impl klassen sind
                 else -> ""
             }
         }

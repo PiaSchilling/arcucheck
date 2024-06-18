@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: clean up warning messages">
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" afterDir="false" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: introduce WarningBuilder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/TypesComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/TypesComparator.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -406,7 +405,14 @@
       <option name="project" value="LOCAL" />
       <updated>1718698477671</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="feat: introduce WarningBuilder">
+      <created>1718703325193</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1718703325193</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -488,7 +494,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add differentiation between abstract and non-abstract classes" />
     <MESSAGE value="feat: add interface mapping" />
     <MESSAGE value="feat: extent PUMLDiagram with classes and interfaces" />
     <MESSAGE value="feat: add models for relation mapping" />
@@ -513,7 +518,8 @@
     <MESSAGE value="feat: add interface method comparison" />
     <MESSAGE value="feat: add ConstructorComparator" />
     <MESSAGE value="feat: clean up warning messages" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: clean up warning messages" />
+    <MESSAGE value="feat: introduce WarningBuilder" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: introduce WarningBuilder" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
