@@ -1,13 +1,12 @@
 package core.impl.comparators
 
-import core.model.deviation.Deviation
-import core.model.deviation.DeviationArea
-import core.model.deviation.DeviationLevel
-import core.model.deviation.DeviationType
+import core.impl.WarningBuilder
+import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLField
 
 class FieldComparator {
+
 
     /**
      * Compare all fields contained in the provided classes to detect any deviations.
@@ -110,35 +109,29 @@ class FieldComparator {
                 // prevent bidirectional/duplicate adding of deviations -> only execute block below if match is a designClass
                 // -> match is designClass if the type is UNEXPECTED
                 if (deviationType == DeviationType.UNEXPECTED) {
-                    val deviationCauses = checkDeviationArea(field.value, match)
+                    val deviationCauses = findDeviatonCauses(field.value, match)
                     deviations.add(
-                        Deviation(
-                            DeviationLevel.MIKRO,
-                            DeviationArea.PROPERTY,
-                            DeviationType.MISIMPLEMENTED,
-                            listOf(designClass.name),
-                            "Deviating field implementation",
-                            "Implementation of field \"${field.value.name}\" in class \"${designClass.fullName}\" " +
-                                    "deviates from the design: $deviationCauses"
+                        WarningBuilder.buildMisimplementedDeviation(
+                            level = DeviationLevel.MIKRO,
+                            area = DeviationArea.PROPERTY,
+                            affectedClassesNames = listOf(designClass.name),
+                            subject = DeviationSubject.FIELD,
+                            subjectName = field.value.name,
+                            classLocation = designClass.fullName,
+                            causes = deviationCauses
                         )
                     )
                 }
             } ?: run {
-                val deviationLocation =
-                    "Field \"${field.value.name}\" in the class \"${designClass.fullName}\""
-
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
-                    Deviation(
-                        DeviationLevel.MIKRO,
-                        DeviationArea.PROPERTY,
-                        deviationType,
-                        listOf(designClass.name),
-                        "${deviationType.asAdjective} field",
-                        when (deviationType) {
-                            DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
-                            DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
-                            else -> ""
-                        }
+                    WarningBuilder.buildUnexpectedAbsentDeviation(
+                        level = DeviationLevel.MIKRO,
+                        area = DeviationArea.PROPERTY,
+                        type = deviationType,
+                        affectedClassesNames = listOf(designClass.name),
+                        subject = DeviationSubject.FIELD,
+                        subjectName = field.value.name,
+                        classLocation = designClass.fullName
                     )
                 )
             }
@@ -154,7 +147,7 @@ class FieldComparator {
      * @param designField intended design of the field (should-state)
      * @return a list containing all detected deviations
      */
-    private fun checkDeviationArea(
+    private fun findDeviatonCauses(
         implementationField: PUMLField,
         designField: PUMLField
     ): List<String> {

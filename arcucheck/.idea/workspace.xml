@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add ConstructorComparator">
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: clean up warning messages">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/ConstructorComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/ConstructorComparator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/FieldComparator.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationType.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,8 +36,9 @@
       <list>
         <option value="Kotlin Sealed Class" />
         <option value="Kotlin Data Class" />
-        <option value="Kotlin Enum" />
+        <option value="Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin Enum" />
       </list>
     </option>
   </component>
@@ -398,7 +399,14 @@
       <option name="project" value="LOCAL" />
       <updated>1718385292710</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="feat: clean up warning messages">
+      <created>1718698477671</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1718698477671</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -480,7 +488,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: split uml files into classes&#10;&#10;Not yet finished" />
     <MESSAGE value="feat: add differentiation between abstract and non-abstract classes" />
     <MESSAGE value="feat: add interface mapping" />
     <MESSAGE value="feat: extent PUMLDiagram with classes and interfaces" />
@@ -505,7 +512,8 @@
     <MESSAGE value="feat: comment and clean up" />
     <MESSAGE value="feat: add interface method comparison" />
     <MESSAGE value="feat: add ConstructorComparator" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add ConstructorComparator" />
+    <MESSAGE value="feat: clean up warning messages" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: clean up warning messages" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -516,17 +524,17 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>101</line>
+          <line>99</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>111</line>
+          <line>109</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>159</line>
+          <line>151</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
