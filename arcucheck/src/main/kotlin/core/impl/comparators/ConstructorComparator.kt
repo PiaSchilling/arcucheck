@@ -116,21 +116,29 @@ class ConstructorComparator {
                             DeviationArea.PROPERTY,
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
-                            "Wrong implemented constructor", // TODO clean up message
-                            "Constructor in class ${designClass.name} is implemented incorrectly: Constructor " +
-                                    "should be ${match.visibility} but is ${constructor.value.visibility}"
+                            "Deviating constructor implementation",
+                            "Implementation of constructor in class ${designClass.fullName}" +
+                                    " deviates from the design: Constructor should have the visibility ${match.visibility} according to " +
+                                    "the design but has the visibility ${constructor.value.visibility} in the implementation"
                         )
                     )
                 }
             } ?: run {
+                val deviationLocation =
+                    "Constructor with the parameters ${constructor.value.parameterTypes} in the class \"${designClass.fullName}\""
+
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
                         DeviationLevel.MIKRO,
                         DeviationArea.PROPERTY,
                         deviationType,
                         listOf(designClass.name),
-                        "$deviationType constructor", // TODO fix messages!!!
-                        "Constructor with parameters ${constructor.value.parameterTypes} in class ${designClass.name} is $deviationType"
+                        "${deviationType.asAdjective} constructor",
+                        when (deviationType) {
+                            DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
+                            DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
+                            else -> ""
+                        }
                     )
                 )
             }

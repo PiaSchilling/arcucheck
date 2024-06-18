@@ -117,20 +117,28 @@ class FieldComparator {
                             DeviationArea.PROPERTY,
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
-                            "Wrong implemented field", // TODO clean up message
-                            "Field ${field.value.name} in class ${designClass.name} is implemented incorrectly: $deviationCauses"
+                            "Deviating field implementation",
+                            "Implementation of field \"${field.value.name}\" in class \"${designClass.fullName}\" " +
+                                    "deviates from the design: $deviationCauses"
                         )
                     )
                 }
             } ?: run {
+                val deviationLocation =
+                    "Field \"${field.value.name}\" in the class \"${designClass.fullName}\""
+
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
                         DeviationLevel.MIKRO,
                         DeviationArea.PROPERTY,
                         deviationType,
                         listOf(designClass.name),
-                        "$deviationType field", // TODO fix messages!!!
-                        "Field ${field.value.name} in class ${designClass.name} is $deviationType"
+                        "${deviationType.asAdjective} field",
+                        when (deviationType) {
+                            DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
+                            DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
+                            else -> ""
+                        }
                     )
                 )
             }
@@ -138,7 +146,14 @@ class FieldComparator {
         return deviations
     }
 
-    // TODO comment
+    /**
+     * Check in which area a field deviates from the design (wrong visibility, missing abstract or static modifier)
+     * Could also be multiple areas (e.g. wrong visibility and missing abstract modifier)
+     *
+     * @param implementationField the implemented field (is-state)
+     * @param designField intended design of the field (should-state)
+     * @return a list containing all detected deviations
+     */
     private fun checkDeviationArea(
         implementationField: PUMLField,
         designField: PUMLField
@@ -147,27 +162,25 @@ class FieldComparator {
 
         if (implementationField.dataType != designField.dataType) {
             fieldWarnings.add(
-                "Field ${designField.name} should have the data type ${designField.dataType} but has the" +
-                        "data type ${implementationField.dataType}"
+                "Field ${designField.name} should have the data type ${designField.dataType} according to the design but has the" +
+                        "data type ${implementationField.dataType} in the implementation."
             )
         }
 
         if (implementationField.visibility != designField.visibility) {
             fieldWarnings.add(
-                "Field ${designField.name} should have the visibility ${designField.visibility} but has the" +
-                        "visibility ${implementationField.visibility}"
+                "Field ${designField.name} should have the visibility ${designField.visibility} according to the design but has the" +
+                        "visibility ${implementationField.visibility} in the implementation."
             )
         }
 
         if (implementationField.isStatic && !designField.isStatic) {
             fieldWarnings.add(
-                "Field ${designField.name} should not be static according to the design but is static in " +
-                        "the implementation"
+                "Field \"${designField.name}\" is marked as static in the implementation but should not be static according to the design."
             )
         } else if (!implementationField.isStatic && designField.isStatic) {
             fieldWarnings.add(
-                "Field ${designField.name} should be static according to the design but is not static in the " +
-                        "implementation"
+                "Field \"${designField.name}\" should be static according to the design but is not marked as static in the implementation."
             )
         }
 

@@ -116,14 +116,14 @@ class MethodComparator {
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
                             "Deviating method implementation",
-                            "Implementation of method \"${method.value.name}\" in class \"${designClass.pumlPackage.fullName}.${designClass.name}\" deviates from " +
+                            "Implementation of method \"${method.value.name}\" in class \"${designClass.fullName}\" deviates from " +
                                     "the design: $deviationCauses"
                         )
                     )
                 }
             } ?: run {
                 val deviationLocation =
-                    "Method \"${method.value.name}\" in class \"${designClass.pumlPackage.fullName}.${designClass.name}\""
+                    "Method \"${method.value.name}\" in the class \"${designClass.fullName}\""
 
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
@@ -131,7 +131,7 @@ class MethodComparator {
                         DeviationArea.BEHAVIOR, // TODO behavior is bad wording
                         deviationType,
                         listOf(designClass.name),
-                        "${deviationType.name.lowercase()} method", // TODO fix "absence method" and first letter uppercase
+                        "${deviationType.asAdjective} method",
                         when (deviationType) {
                             DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
                             DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
@@ -160,17 +160,17 @@ class MethodComparator {
         val methodWarnings = mutableListOf<String>()
 
         if (implementationMethod.isAbstract && !designMethod.isAbstract) {
-            methodWarnings.add("Method ${designMethod.name} is marked as abstract in the implementation but should not be abstract according to the design.");
+            methodWarnings.add("Method \"${designMethod.name}\" is marked as abstract in the implementation but should not be abstract according to the design.")
         } else if (!implementationMethod.isAbstract && designMethod.isAbstract) {
-            methodWarnings.add("Method ${designMethod.name} should be abstract according to the design but is not abstract in the implementation.");
+            methodWarnings.add("Method \"${designMethod.name}\" should be abstract according to the design but is not marked as abstract in the implementation.")
         }
 
 
 
         if (implementationMethod.isStatic && !designMethod.isStatic) {
-            methodWarnings.add("Method \"${designMethod.name}\" is marked as static in the implementation but should not be static according to the design.") // TODO revise text
+            methodWarnings.add("Method \"${designMethod.name}\" is marked as static in the implementation but should not be static according to the design.")
         } else if (!implementationMethod.isStatic && designMethod.isStatic) {
-            methodWarnings.add("Method \"${designMethod.name}\" should be static according to the design but is not static in the implementation.")
+            methodWarnings.add("Method \"${designMethod.name}\" should be static according to the design but is not marked as static in the implementation.")
         }
 
         if (implementationMethod.visibility != designMethod.visibility) {

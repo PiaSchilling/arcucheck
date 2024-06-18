@@ -1,18 +1,18 @@
 package core.model.deviation
 
-enum class DeviationType {
+enum class DeviationType(val asAdjective:String) {
     /**
      * Missing in the implementation, but expected in the design
      */
-    ABSENCE,
+    ABSENCE("Absent"),
 
     /**
      * Present in the implementation, but not expected in the design
      */
-    UNEXPECTED,
+    UNEXPECTED("Unexpected"),
 
     /**
      * Present in the implementation, and expected in the design but wrongly implemented
      */
-    MISIMPLEMENTED
+    MISIMPLEMENTED("Misimplemented")
 }
