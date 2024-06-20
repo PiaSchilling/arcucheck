@@ -43,11 +43,25 @@ class TypesComparator {
 
         if (maybeAbsentClassesNames.isNotEmpty()) {
             val maybeAbsentClasses = designClassesMap.filterKeys { it in maybeAbsentClassesNames }.values.toList()
-            deviations.addAll(checkMaybeAbsentTypes(maybeAbsentClasses, implementationClasses))
+            deviations.addAll(
+                checkDeviatingTypes(
+                    maybeAbsentClasses,
+                    implementationClasses,
+                    designClasses,
+                    DeviationType.ABSENCE
+                )
+            )
         }
         if (maybeUnexpectedClassesNames.isNotEmpty()) {
             val maybeUnexpectedClasses = implClassesMap.filterKeys { it in maybeUnexpectedClassesNames }.values.toList()
-            deviations.addAll(checkMaybeUnexpectedClasses(maybeUnexpectedClasses, designClasses))
+            deviations.addAll(
+                checkDeviatingTypes(
+                    maybeUnexpectedClasses,
+                    implementationClasses,
+                    designClasses,
+                    DeviationType.UNEXPECTED
+                )
+            )
         }
         return deviations.distinct()
     }
@@ -56,46 +70,58 @@ class TypesComparator {
      * Checks for types (classes or interfaces) that are either absent (present in the design but not in the implementation) or are placed
      * in the incorrect package.
      *
-     * @param maybeAbsentClasses Classes or interfaces expected in the design but not found in the implementation, needing verification.
+     * @param deviatingClasses Classes or interfaces expected in the design but not found in the implementation, needing verification.
      * @param implementationClasses All classes or interfaces present in the implementation.
      * @return A list of detected deviations, categorized as "class/interface in wrong package" if the class/interface
      * should have been placed in another package according to the design, or "absent class/interface" if the class/interface
      * cannot be found anywhere in the implementation.
      */
-    private fun checkMaybeAbsentTypes(
-        maybeAbsentClasses: List<PUMLType>,
+    private fun checkDeviatingTypes(
+        deviatingClasses: List<PUMLType>,
         implementationClasses: List<PUMLType>,
+        designClasses: List<PUMLType>,
+        deviationType: DeviationType,
     ): List<Deviation> {
         val deviations = mutableListOf<Deviation>()
         // Check classes only by using the class name without the package name
-        val maybeAbsentClassesMap = maybeAbsentClasses.associateBy { it.name }
-        val codeClassesMap = implementationClasses.associateBy { it.name }
+        val deviatingClassesMap = deviatingClasses.associateBy { it.name }
+        val designClassesMap = designClasses.associateBy { it.name }
+        val implClassesMap = implementationClasses.associateBy { it.name }
+
+        var notFoundClasses = emptyMap<String, PUMLType>()
+        if (deviationType == DeviationType.ABSENCE) {
+            val absentClassesNames = deviatingClassesMap.keys.subtract(implClassesMap.keys)
+            notFoundClasses = deviatingClassesMap.filterKeys { it in absentClassesNames }
+        } else if (deviationType == DeviationType.UNEXPECTED) {
+            val unexpectedClassNames = deviatingClassesMap.keys.subtract(designClassesMap.keys)
+            notFoundClasses = deviatingClassesMap.filterKeys { it in unexpectedClassNames }
+        }
+
+        var foundClasses = emptyMap<String, PUMLType>()
+        if (deviationType == DeviationType.ABSENCE) {
+            val notFoundClassNames = deviatingClassesMap.keys.intersect(implClassesMap.keys)
+            foundClasses = deviatingClassesMap.filterKeys { it in notFoundClassNames }
+        }
 
         // If class still can not be found, it is absent
-        val absentClassesNames = maybeAbsentClassesMap.keys.subtract(codeClassesMap.keys)
-        val absentClasses = maybeAbsentClassesMap.filterKeys { it in absentClassesNames }
-        absentClasses.forEach { absentClass ->
-            val subject = if (absentClass.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
+        notFoundClasses.forEach { type ->
+            val subject = if (type.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
             deviations.add(
                 WarningBuilder.buildUnexpectedAbsentDeviation(
                     level = DeviationLevel.MAKRO,
                     area = DeviationArea.PROPERTY,
-                    type = DeviationType.ABSENCE,
-                    affectedClassesNames = listOf(absentClass.value.name),
+                    type = deviationType,
+                    affectedClassesNames = listOf(type.value.name),
                     subject = subject,
-                    subjectName = absentClass.value.name,
-                    classLocation = absentClass.value.pumlPackage.fullName
+                    subjectName = type.value.name,
+                    classLocation = type.value.pumlPackage.fullName
                 )
             )
         }
 
-        // If class now can  be found, it is just placed in the wrong package
-        val foundClassNames = maybeAbsentClassesMap.keys.intersect(codeClassesMap.keys)
-        val foundClasses = maybeAbsentClassesMap.filterKeys { it in foundClassNames }
-
-        // TODO extract duplicate code -> if description of misimplemented deviation is altered the logic changes -> PROBLEM!
+        // If class now can be found, it might be just placed in the wrong package (or two classes with same name exist)
         foundClasses.forEach { existingDesignClass ->
-            val wrongImplClass = codeClassesMap[existingDesignClass.key]
+            val wrongImplClass = implClassesMap[existingDesignClass.key]
             val typeKeyword = if (wrongImplClass is PUMLClass) "Class" else "Interface"
             deviations.add(
                 Deviation(
@@ -104,75 +130,14 @@ class TypesComparator {
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingDesignClass.value.name),
                     "$typeKeyword maybe in wrong package",
-                    "$typeKeyword \"${existingDesignClass.value.name}\" is absent in the package " +
-                            "\"${existingDesignClass.value.pumlPackage.fullName}\". However, the package " +
-                            "\"${wrongImplClass?.pumlPackage?.fullName}\" contains a class with the same name. It might be placed in the wrong package."
+                    "According to the design, the $typeKeyword \"${existingDesignClass.value.name}\" is expected " +
+                            "in the package \"${existingDesignClass.value.pumlPackage.fullName}\", but it is absent in the " +
+                            "implementation. Instead, a class with the same name is found in the package \"${wrongImplClass?.pumlPackage?.fullName}\". " +
+                            "It may be in the wrong package."
                 )
             )
         }
         return deviations
-    }
-
-    /**
-     * Checks for types (classes or interfaces) that are either unexpected (present in the implementation but not in the
-     * design) or are placed in the incorrect package.
-     *
-     * @param maybeUnexpectedClasses Classes/interfaces found in the implementation but not in the design, needing verification.
-     * @param designClasses All classes/interfaces expected by the design.
-     * @return A list of detected deviations, categorized as "class/interface in wrong package" if the class/interface
-     * should have been placed in another package according to the design, or "unexpected class/interface" if the class/interface
-     * cannot be found anywhere in the design.
-     */
-    private fun checkMaybeUnexpectedClasses(
-        maybeUnexpectedClasses: List<PUMLType>,
-        designClasses: List<PUMLType>,
-    ): List<Deviation> {
-        val deviations = mutableListOf<Deviation>()
-
-        // Check classes only by using the class name without the package name
-        val maybeUnexpectedClassesMap = maybeUnexpectedClasses.associateBy { it.name }
-        val designClassesMap = designClasses.associateBy { it.name }
-
-        // If class still can not be found, it is unexpected
-        val unexpectedClassesNames = maybeUnexpectedClassesMap.keys.subtract(designClassesMap.keys)
-        val unexpectedClasses = maybeUnexpectedClassesMap.filterKeys { it in unexpectedClassesNames }
-        unexpectedClasses.forEach { unexpectedClass ->
-            val subject = if (unexpectedClass.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
-            deviations.add(
-                WarningBuilder.buildUnexpectedAbsentDeviation(
-                    level = DeviationLevel.MAKRO,
-                    area = DeviationArea.PROPERTY,
-                    type = DeviationType.UNEXPECTED,
-                    affectedClassesNames = listOf(unexpectedClass.value.name),
-                    subject = subject,
-                    subjectName = unexpectedClass.value.name,
-                    classLocation = unexpectedClass.value.pumlPackage.fullName
-                )
-            )
-        }
-
-        // If class now can  be found, it might be placed in the wrong package
-        val foundClassesNames = maybeUnexpectedClassesMap.keys.intersect(designClassesMap.keys)
-        val foundClasses = maybeUnexpectedClassesMap.filterKeys { it in foundClassesNames }
-
-        foundClasses.forEach { existingImplClass ->
-            val correctDesignClass = designClassesMap[existingImplClass.key]
-            val typeKeyword = if (correctDesignClass is PUMLClass) "Class" else "Interface"
-            deviations.add(
-                Deviation(
-                    DeviationLevel.MAKRO,
-                    DeviationArea.PROPERTY,
-                    DeviationType.MISIMPLEMENTED,
-                    listOf(existingImplClass.value.name),
-                    "$typeKeyword maybe in wrong package",
-                    "$typeKeyword \"${existingImplClass.value.name}\" is absent in the package " +
-                            "\"${correctDesignClass?.pumlPackage?.fullName}\". However, the package " +
-                            "\"${existingImplClass.value.pumlPackage.fullName}\" contains a class with the same name. It might be placed in the wrong package."
-                )
-            )
-        }
-        return deviations
-
     }
 
 }

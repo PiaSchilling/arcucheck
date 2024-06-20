@@ -4,7 +4,6 @@ import core.model.deviation.Deviation
 import core.model.deviation.DeviationArea
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
-import core.model.puml.PUMLClass
 import core.model.puml.PUMLType
 
 class PackageComparator {
@@ -36,7 +35,7 @@ class PackageComparator {
                         DeviationType.ABSENCE,
                         listOf(absentPackage.fullName),
                         "Missing package",
-                        "Package \"${absentPackage.fullName}\" is expected in the design but missing in the implementation."
+                        "Package \"${absentPackage.fullName}\" is expected according to the design but missing in the implementation."
                     )
                 )
             }
@@ -50,7 +49,7 @@ class PackageComparator {
                         DeviationType.UNEXPECTED,
                         listOf(unexpectedPackage.fullName),
                         "Unexpected package",
-                        "Package \"${unexpectedPackage.fullName}\" is not expected in the design but present in the implementation."
+                        "Package \"${unexpectedPackage.fullName}\" is not expected according to the design but present in the implementation."
                     )
                 )
             }
