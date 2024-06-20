@@ -15,9 +15,13 @@ class FileHandler {
          * @return a list of .puml files
          */
         fun readDirectoryPumlFilePaths(directoryPath: String): List<File> {
-            return File(directoryPath).walkTopDown()
-                .filter { file -> file.extension == "puml" }
-                .toList()
+            val directory = File(directoryPath)
+            if(directory.isDirectory){
+                return directory.walkTopDown()
+                    .filter { file -> file.extension == "puml" }
+                    .toList()
+            }
+            throw FileNotFoundException("Specified path $directoryPath is not a directory")
         }
 
         /**
