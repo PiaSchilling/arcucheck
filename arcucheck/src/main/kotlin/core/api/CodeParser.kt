@@ -1,6 +1,5 @@
 package core.api
 
-import java.nio.file.Path
 
 interface CodeParser {
     /**
@@ -11,6 +10,4 @@ interface CodeParser {
      */
     fun parseCode(codePath: String): String
 
-    // TODO only temporary here
-    fun readFileIntoString(path: Path): String
 }

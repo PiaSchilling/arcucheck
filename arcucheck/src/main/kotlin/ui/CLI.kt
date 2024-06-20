@@ -16,19 +16,55 @@ class CLI : Callable<Int>, KoinComponent {
     private val controller: Controller by inject()
 
     @CommandLine.Option(
+        names = ["-d", "--directory"], paramLabel = "DIRECTORY",
+        description = ["Use a directory containing puml files as input."]
+    )
+    private var isDirectory = false;
+
+    @CommandLine.Option(
+        names = ["-f", "--file"], paramLabel = "FILE",
+        description = ["Use a single file as input."]
+    )
+    private var isFile = false;
+
+    @CommandLine.Option(
         names = ["-cp", "--codePath"], paramLabel = "CODE_PATH",
         description = ["the path to the code (is state of the system)"]
     )
     private var codePath: String = ""
 
     @CommandLine.Option(
-        names = ["-dp", "--diagramPath"], paramLabel = "DIAGRAM_PATH",
-        description = ["the path to the diagram (intended state of the system)"]
+        names = ["-dfp", "--diagramFilePath"], paramLabel = "DIAGRAM_FILE_PATH",
+        description = ["the path to a single plant uml diagram (intended state of the system)"]
     )
-    private var diagramPath: String = ""
-    override fun call(): Int {
+    private var diagramFilePath: String = ""
 
-        controller.onExecuteCommand(listOf(codePath, diagramPath))
+    @CommandLine.Option(
+        names = ["-ddp", "--diagramDirectoryPath"], paramLabel = "DIAGRAM_DIRECTORY_PATH",
+        description = ["the path to a directory of plant uml diagrams (intended state of the system)"]
+    )
+    private var diagramDirectoryPath: String = ""
+    override fun call(): Int {
+        if (isFile) {
+            if (diagramFilePath.isEmpty()) {
+                println("You have to specify the path to the design diagram (-dfp)")
+                return 1
+            }
+            if (codePath.isEmpty()) {
+                println("You have to specify the path to the code (-cp)")
+                return 1
+            }
+            controller.onExecuteCommandSingleFile(listOf(codePath, diagramFilePath))
+        } else if (isDirectory) {
+            if (diagramDirectoryPath.isEmpty()) {
+                println("You have to specify the path to the directory containing the design diagrams (-ddp)")
+                return 1
+            }
+            controller.onExecuteCommandDirectory(diagramDirectoryPath)
+        } else {
+            println("You have to specify one of the following options: -f or -d. Type --help for usage information.")
+        }
+
         return 0
     }
 }

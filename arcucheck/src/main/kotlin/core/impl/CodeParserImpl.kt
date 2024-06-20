@@ -19,9 +19,9 @@ import kotlin.io.path.absolutePathString
 class CodeParserImpl : CodeParser {
 
     override fun parseCode(codePath: String): String {
-        val tempFilePath = createTempFile()
+        val tempFilePath = FileHandler.createTempFile()
         generateDiagram(codePath, tempFilePath.absolutePathString())
-        return readFileIntoString(tempFilePath)
+        return FileHandler.readFileIntoString(File(tempFilePath.toUri()))
     }
 
     /**
@@ -69,27 +69,4 @@ class CodeParserImpl : CodeParser {
         }
     }
 
-    /**
-     * Create a temporary empty file
-     *
-     * @return the path to the temporary file
-     */
-    private fun createTempFile(): Path {
-        return kotlin.io.path.createTempFile(prefix = "codeDiagram", suffix = ".tmp")
-    }
-
-    /**
-     * Read the content of a file into a single string
-     *
-     * @param path path to the file which should be read
-     * @return the whole content of the file as a string
-     */ // TODO extract to separate class
-    override fun readFileIntoString(path: Path): String {
-        try {
-            return File(path.toUri()).readText()
-        } catch (exception: FileNotFoundException) {
-            println("File \"${path.fileName}\" at path ${path.absolutePathString()} does not exist. Returning empty String.")
-        }
-        return ""
-    }
 }
