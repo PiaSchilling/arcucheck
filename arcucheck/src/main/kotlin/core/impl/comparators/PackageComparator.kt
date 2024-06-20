@@ -6,7 +6,17 @@ import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLType
 
-class PackageComparator {
+/**
+ * Compares the design of packages to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class PackageComparator(private val designDiagramPath: String, private val implPath: String) {
     /**
      * Check if any packages are absent or unexpected
      *
@@ -35,7 +45,9 @@ class PackageComparator {
                         DeviationType.ABSENCE,
                         listOf(absentPackage.fullName),
                         "Missing package",
-                        "Package \"${absentPackage.fullName}\" is expected according to the design but missing in the implementation."
+                        "Package \"${absentPackage.fullName}\" is expected according to the design but missing in the implementation.",
+                        designDiagramPath,
+                        implPath,
                     )
                 )
             }
@@ -49,7 +61,9 @@ class PackageComparator {
                         DeviationType.UNEXPECTED,
                         listOf(unexpectedPackage.fullName),
                         "Unexpected package",
-                        "Package \"${unexpectedPackage.fullName}\" is not expected according to the design but present in the implementation."
+                        "Package \"${unexpectedPackage.fullName}\" is not expected according to the design but present in the implementation.",
+                        designDiagramPath,
+                        implPath,
                     )
                 )
             }

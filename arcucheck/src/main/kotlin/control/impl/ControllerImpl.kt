@@ -24,8 +24,8 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
         println("- - - - - - - - - - - - - -- - - - - - -  ")
 
         if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
-            val codePUMLDiagram = PUMLMapper.mapDiagram(codeDiagram)
-            val designPUMLDiagram = PUMLMapper.mapDiagram(designDiagram)
+            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0],codeDiagram)
+            val designPUMLDiagram = PUMLMapper.mapDiagram(args[1],designDiagram) // TODO implement mapping based on design diagram name
 
             val comparator = PUMLComparatorImpl() // TODO inject
             comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
@@ -52,9 +52,9 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
             }.toMutableMap()
 
             val pumlDesignDiagrams =
-                textDesignDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.value) }
+                textDesignDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.key,textDiagram.value) }
             val pumlImplDiagrams =
-                textImplDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.value) }
+                textImplDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.key,textDiagram.value) }
 
             val comparator = PUMLComparatorImpl() // TODO inject
 

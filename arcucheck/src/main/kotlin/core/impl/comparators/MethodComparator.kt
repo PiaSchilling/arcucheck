@@ -5,7 +5,17 @@ import core.model.deviation.*
 import core.model.puml.PUMLMethod
 import core.model.puml.PUMLType
 
-class MethodComparator {
+/**
+ * Compares the design of Methods to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class MethodComparator(private val designDiagramPath: String, private val implPath: String) {
 
     /**
      * Compare all methods contained in the provided classes to detect any deviations.
@@ -115,7 +125,9 @@ class MethodComparator {
                             subject = DeviationSubject.METHOD,
                             subjectName = method.value.name,
                             classLocation = designClass.fullName,
-                            causes = deviationCauses
+                            causes = deviationCauses,
+                            designDiagramPath = designDiagramPath,
+                            implPath = implPath,
                         )
                     )
                 }
@@ -128,7 +140,9 @@ class MethodComparator {
                         affectedClassName = designClass.name,
                         subject = DeviationSubject.METHOD,
                         subjectName = method.value.name,
-                        classLocation = designClass.fullName
+                        classLocation = designClass.fullName,
+                        designDiagramPath = designDiagramPath,
+                        implPath = implPath,
                     )
                 )
             }

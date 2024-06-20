@@ -5,7 +5,17 @@ import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLField
 
-class FieldComparator {
+/**
+ * Compares the design of Fields to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class FieldComparator(private val designDiagramPath: String, private val implPath: String) {
 
 
     /**
@@ -118,7 +128,9 @@ class FieldComparator {
                             subject = DeviationSubject.FIELD,
                             subjectName = field.value.name,
                             classLocation = designClass.fullName,
-                            causes = deviationCauses
+                            causes = deviationCauses,
+                            designDiagramPath = designDiagramPath,
+                            implPath = implPath,
                         )
                     )
                 }
@@ -131,7 +143,9 @@ class FieldComparator {
                         affectedClassName = designClass.name,
                         subject = DeviationSubject.FIELD,
                         subjectName = field.value.name,
-                        classLocation = designClass.fullName
+                        classLocation = designClass.fullName,
+                        designDiagramPath = designDiagramPath,
+                        implPath = implPath,
                     )
                 )
             }

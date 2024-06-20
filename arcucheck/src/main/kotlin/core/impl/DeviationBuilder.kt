@@ -49,7 +49,9 @@ class DeviationBuilder {
             affectedClassName: String,
             subject: DeviationSubject,
             subjectName: String,
-            classLocation: String
+            classLocation: String,
+            designDiagramPath: String,
+            implPath: String,
         ): Deviation {
             return Deviation(
                 level,
@@ -62,7 +64,9 @@ class DeviationBuilder {
                     subject,
                     subjectName,
                     classLocation
-                )
+                ),
+                designDiagramPath,
+                implPath
             )
         }
 
@@ -106,7 +110,9 @@ class DeviationBuilder {
             subject: DeviationSubject,
             subjectName: String,
             classLocation: String,
-            causes: List<String>
+            causes: List<String>,
+            designDiagramPath: String,
+            implPath: String,
         ): Deviation {
             val type = DeviationType.MISIMPLEMENTED
             return Deviation(
@@ -115,8 +121,11 @@ class DeviationBuilder {
                 type,
                 listOf(affectedClassName),
                 "Deviating ${subject.name.lowercase()} implementation",
-                buildMisimplementedDescription(subject, subjectName, classLocation, causes)
+                buildMisimplementedDescription(subject, subjectName, classLocation, causes),
+                designDiagramPath,
+                implPath
             )
+
         }
 
     }

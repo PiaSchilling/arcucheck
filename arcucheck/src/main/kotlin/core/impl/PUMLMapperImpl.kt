@@ -7,7 +7,7 @@ import core.model.puml.*
 
 class PUMLMapperImpl : PUMLMapper {
 
-    override fun mapDiagram(umlText: String): PUMLDiagram {
+    override fun mapDiagram(diagramName: String, umlText: String): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
         val pumlTypes = mapTypes(umlTextClasses)
         val umlTextRelations = splitUMLTextRelations(umlText)
@@ -15,7 +15,7 @@ class PUMLMapperImpl : PUMLMapper {
 
         val pumlClasses = pumlTypes.filterIsInstance<PUMLClass>()
         val pumlInterfaces = pumlTypes.filterIsInstance<PUMLInterface>()
-        return PUMLDiagram("Test", pumlClasses, pumlInterfaces, pumlRelations) // TODO remove hardcoded name
+        return PUMLDiagram(diagramName, pumlClasses, pumlInterfaces, pumlRelations)
     }
 
     /**

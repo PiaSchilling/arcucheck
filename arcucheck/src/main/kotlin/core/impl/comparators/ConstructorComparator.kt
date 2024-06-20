@@ -7,7 +7,17 @@ import core.model.deviation.DeviationType
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLConstructor
 
-class ConstructorComparator {
+/**
+ * Compares the design of the constructors to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class ConstructorComparator(private val designDiagramPath: String, private val implPath: String) {
     /**
      * Compare all constructors contained in the provided classes to detect any deviations.
      * Only constructors for "correct" classes are compared. Correct means, that class signatures don't have any deviations.
@@ -119,7 +129,9 @@ class ConstructorComparator {
                             "Deviating constructor implementation",
                             "Implementation of constructor in class ${designClass.fullName}" +
                                     " deviates from the design: Constructor should have the visibility ${match.visibility} according to " +
-                                    "the design but has the visibility ${constructor.value.visibility} in the implementation"
+                                    "the design but has the visibility ${constructor.value.visibility} in the implementation",
+                            designDiagramPath,
+                            implPath,
                         )
                     )
                 }
@@ -138,7 +150,9 @@ class ConstructorComparator {
                             DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
                             DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
                             else -> ""
-                        }
+                        },
+                        designDiagramPath,
+                        implPath,
                     )
                 )
             }

@@ -6,7 +6,17 @@ import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLRelation
 
-class RelationComparator {
+/**
+ * Compares the design of PUMLClasses and PUMLInterfaces to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class RelationComparator(private val designDiagramPath: String, private val implPath: String) {
 
     /**
      * Compare the in the design expected relations to the in the implementation present relations and detect any deviations
@@ -34,7 +44,9 @@ class RelationComparator {
                         "Absent relation",
                         "Relation of type ${absentRelation.relationType} between source class " +
                                 "\"${absentRelation.sourceClass}\" and destination class \"${absentRelation.destinationClass}\" " +
-                                "is expected in the design but missing in the implementation."
+                                "is expected according to the design but missing in the implementation.",
+                        designDiagramPath,
+                        implPath,
                     )
                 )
             }
@@ -51,7 +63,9 @@ class RelationComparator {
                         "Unexpected relation",
                         "Relation of type ${unexpectedRelation.relationType} between source class " +
                                 "\"${unexpectedRelation.sourceClass}\" and destination class \"${unexpectedRelation.destinationClass}\" " +
-                                "is not expected in the design but present in the implementation."
+                                "is not expected according to the design but present in the implementation.",
+                        designDiagramPath,
+                        implPath,
                     )
                 )
             }

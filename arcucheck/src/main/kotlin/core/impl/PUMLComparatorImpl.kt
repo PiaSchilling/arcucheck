@@ -6,13 +6,15 @@ import core.model.puml.*
 class PUMLComparatorImpl {
 
     fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
+        val designDiagramPath = designDiagram.name
+        val implPath = implementationDiagram.name
 
-        val typesComparator = TypesComparator()
-        val relationComparator = RelationComparator()
-        val packageComparator = PackageComparator()
-        val methodComparator = MethodComparator()
-        val fieldComparator = FieldComparator()
-        val constructorComparator = ConstructorComparator()
+        val typesComparator = TypesComparator(designDiagramPath,implPath)
+        val relationComparator = RelationComparator(designDiagramPath,implPath)
+        val packageComparator = PackageComparator(designDiagramPath,implPath)
+        val methodComparator = MethodComparator(designDiagramPath,implPath)
+        val fieldComparator = FieldComparator(designDiagramPath,implPath)
+        val constructorComparator = ConstructorComparator(designDiagramPath,implPath)
 
         val classDeviations = typesComparator.comparePUMLTypes(implementationDiagram.classes, designDiagram.classes)
         val interfaceDeviations =

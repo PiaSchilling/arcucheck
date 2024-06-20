@@ -5,7 +5,17 @@ import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLType
 
-class TypesComparator {
+/**
+ * Compares the design of PUMLClasses and PUMLInterfaces to the according implementation to detect any deviations
+ *
+ * @constructor just initializes fields, those are only necessary, so they can be added to the
+ * output for more precise warnings
+ *
+ *
+ * @param designDiagramPath the path to the diagram representing the design
+ * @param implPath the path to the implementation which is compared to the design
+ */
+class TypesComparator(private val designDiagramPath: String, private val implPath: String) {
 
     /**
      * Compare the provided classes according to their existence and package placement.
@@ -114,7 +124,9 @@ class TypesComparator {
                     affectedClassName = type.value.name,
                     subject = subject,
                     subjectName = type.value.name,
-                    classLocation = type.value.pumlPackage.fullName
+                    classLocation = type.value.pumlPackage.fullName,
+                    designDiagramPath = designDiagramPath,
+                    implPath = implPath,
                 )
             )
         }
@@ -133,7 +145,9 @@ class TypesComparator {
                     "According to the design, the $typeKeyword \"${existingDesignClass.value.name}\" is expected " +
                             "in the package \"${existingDesignClass.value.pumlPackage.fullName}\", but it is absent in the " +
                             "implementation. Instead, a class with the same name is found in the package \"${wrongImplClass?.pumlPackage?.fullName}\". " +
-                            "It may be in the wrong package."
+                            "It may be in the wrong package.",
+                    designDiagramPath,
+                    implPath,
                 )
             )
         }
