@@ -1,6 +1,6 @@
 package core.impl.comparators
 
-import core.impl.WarningBuilder
+import core.impl.DeviationBuilder
 import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLType
@@ -107,11 +107,11 @@ class TypesComparator {
         notFoundClasses.forEach { type ->
             val subject = if (type.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
             deviations.add(
-                WarningBuilder.buildUnexpectedAbsentDeviation(
+                DeviationBuilder.buildUnexpectedAbsentDeviation(
                     level = DeviationLevel.MAKRO,
                     area = DeviationArea.PROPERTY,
                     type = deviationType,
-                    affectedClassesNames = listOf(type.value.name),
+                    affectedClassName = type.value.name,
                     subject = subject,
                     subjectName = type.value.name,
                     classLocation = type.value.pumlPackage.fullName

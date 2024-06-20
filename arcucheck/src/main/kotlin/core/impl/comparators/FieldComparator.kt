@@ -1,6 +1,6 @@
 package core.impl.comparators
 
-import core.impl.WarningBuilder
+import core.impl.DeviationBuilder
 import core.model.deviation.*
 import core.model.puml.PUMLClass
 import core.model.puml.PUMLField
@@ -111,10 +111,10 @@ class FieldComparator {
                 if (deviationType == DeviationType.UNEXPECTED) {
                     val deviationCauses = findDeviatonCauses(field.value, match)
                     deviations.add(
-                        WarningBuilder.buildMisimplementedDeviation(
+                        DeviationBuilder.buildMisimplementedDeviation(
                             level = DeviationLevel.MIKRO,
                             area = DeviationArea.PROPERTY,
-                            affectedClassesNames = listOf(designClass.name),
+                            affectedClassName = designClass.name,
                             subject = DeviationSubject.FIELD,
                             subjectName = field.value.name,
                             classLocation = designClass.fullName,
@@ -124,11 +124,11 @@ class FieldComparator {
                 }
             } ?: run {
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
-                    WarningBuilder.buildUnexpectedAbsentDeviation(
+                    DeviationBuilder.buildUnexpectedAbsentDeviation(
                         level = DeviationLevel.MIKRO,
                         area = DeviationArea.PROPERTY,
                         type = deviationType,
-                        affectedClassesNames = listOf(designClass.name),
+                        affectedClassName = designClass.name,
                         subject = DeviationSubject.FIELD,
                         subjectName = field.value.name,
                         classLocation = designClass.fullName

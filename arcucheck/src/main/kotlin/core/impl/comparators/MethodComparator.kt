@@ -1,6 +1,6 @@
 package core.impl.comparators
 
-import core.impl.WarningBuilder
+import core.impl.DeviationBuilder
 import core.model.deviation.*
 import core.model.puml.PUMLMethod
 import core.model.puml.PUMLType
@@ -108,10 +108,10 @@ class MethodComparator {
                 if (deviationType == DeviationType.UNEXPECTED) {
                     val deviationCauses = findDeviationCauses(method.value, match)
                     deviations.add(
-                        WarningBuilder.buildMisimplementedDeviation(
+                        DeviationBuilder.buildMisimplementedDeviation(
                             level = DeviationLevel.MIKRO,
                             area = DeviationArea.BEHAVIOR, // TODO rename behavior
-                            affectedClassesNames = listOf(designClass.name),
+                            affectedClassName = designClass.name,
                             subject = DeviationSubject.METHOD,
                             subjectName = method.value.name,
                             classLocation = designClass.fullName,
@@ -121,11 +121,11 @@ class MethodComparator {
                 }
             } ?: run {
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
-                    WarningBuilder.buildUnexpectedAbsentDeviation(
+                    DeviationBuilder.buildUnexpectedAbsentDeviation(
                         level = DeviationLevel.MIKRO,
                         area = DeviationArea.BEHAVIOR, // TODO behavior is bad wording
                         type = deviationType,
-                        affectedClassesNames = listOf(designClass.name),
+                        affectedClassName = designClass.name,
                         subject = DeviationSubject.METHOD,
                         subjectName = method.value.name,
                         classLocation = designClass.fullName
