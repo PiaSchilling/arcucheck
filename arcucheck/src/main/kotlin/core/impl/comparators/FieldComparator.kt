@@ -109,7 +109,7 @@ class FieldComparator {
                 // prevent bidirectional/duplicate adding of deviations -> only execute block below if match is a designClass
                 // -> match is designClass if the type is UNEXPECTED
                 if (deviationType == DeviationType.UNEXPECTED) {
-                    val deviationCauses = findDeviatonCauses(field.value, match)
+                    val deviationCauses = findDeviationCauses(field.value, match)
                     deviations.add(
                         DeviationBuilder.buildMisimplementedDeviation(
                             level = DeviationLevel.MIKRO,
@@ -147,7 +147,7 @@ class FieldComparator {
      * @param designField intended design of the field (should-state)
      * @return a list containing all detected deviations
      */
-    private fun findDeviatonCauses(
+    private fun findDeviationCauses(
         implementationField: PUMLField,
         designField: PUMLField
     ): List<String> {
