@@ -24,8 +24,9 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
         println("- - - - - - - - - - - - - -- - - - - - -  ")
 
         if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
-            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0],codeDiagram)
-            val designPUMLDiagram = PUMLMapper.mapDiagram(args[1],designDiagram) // TODO implement mapping based on design diagram name
+            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0], codeDiagram,null) // TODO remove null
+            val designPUMLDiagram =
+                PUMLMapper.mapDiagram(args[1], designDiagram,null) // TODO implement mapping based on design diagram name
 
             val comparator = PUMLComparatorImpl() // TODO inject
             comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
@@ -37,24 +38,35 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
         try {
             val pumlFiles = FileHandler.readDirectoryPumlFilePaths(directoryPath)
 
-            val textDesignDiagrams = pumlFiles.associate { pumlFile ->
-                val fileName = pumlFile.nameWithoutExtension
+            val textDesignDiagrams = pumlFiles.associateWith { pumlFile ->
                 val textDiagram = FileHandler.readFileIntoString(pumlFile)
-                fileName to textDiagram
+                textDiagram
             }.toMutableMap()
 
-            val textImplDiagrams = pumlFiles.associate { pumlFile ->
-                val fileName = pumlFile.nameWithoutExtension
-                // fileName serves as path to the related code part. Kotlin replaces "/" into ":", so it has to be changed
-                // back to have a valid path
-                val textDiagram = codeParser.parseCode(fileName.replace(":","/"))
-                fileName to textDiagram
-            }.toMutableMap()
+            val textImplDiagrams =
+                pumlFiles.associateWith { pumlFile -> // fileName serves as path to the related code part. Kotlin replaces "/" into ":", so it has to be changed
+                    // back to have a valid path
+                    val textDiagram = codeParser.parseCode(pumlFile.nameWithoutExtension.replace(":", "/"))
+                    textDiagram
+                }.toMutableMap()
+
 
             val pumlDesignDiagrams =
-                textDesignDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.key,textDiagram.value) }
+                textDesignDiagrams.mapValues { textDiagram ->
+                    PUMLMapper.mapDiagram(
+                        sourcePath = directoryPath, // TODO fix
+                        umlText = textDiagram.value,
+                        diagramName = textDiagram.key.name
+                    )
+                }
             val pumlImplDiagrams =
-                textImplDiagrams.mapValues { textDiagram -> PUMLMapper.mapDiagram(textDiagram.key,textDiagram.value) }
+                textImplDiagrams.mapValues { textDiagram ->
+                    PUMLMapper.mapDiagram(
+                        sourcePath = textDiagram.key.nameWithoutExtension,
+                        umlText = textDiagram.value,
+                        diagramName = null
+                    )
+                }
 
             val comparator = PUMLComparatorImpl() // TODO inject
 

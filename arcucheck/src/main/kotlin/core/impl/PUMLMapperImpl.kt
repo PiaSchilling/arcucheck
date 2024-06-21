@@ -7,7 +7,7 @@ import core.model.puml.*
 
 class PUMLMapperImpl : PUMLMapper {
 
-    override fun mapDiagram(diagramName: String, umlText: String): PUMLDiagram {
+    override fun mapDiagram(sourcePath: String, umlText: String, diagramName: String?): PUMLDiagram {
         val umlTextClasses = splitUMLTextClasses(umlText)
         val pumlTypes = mapTypes(umlTextClasses)
         val umlTextRelations = splitUMLTextRelations(umlText)
@@ -15,7 +15,13 @@ class PUMLMapperImpl : PUMLMapper {
 
         val pumlClasses = pumlTypes.filterIsInstance<PUMLClass>()
         val pumlInterfaces = pumlTypes.filterIsInstance<PUMLInterface>()
-        return PUMLDiagram(diagramName, pumlClasses, pumlInterfaces, pumlRelations)
+        return PUMLDiagram(
+            sourcePath = sourcePath,
+            classes = pumlClasses,
+            interfaces = pumlInterfaces,
+            relations = pumlRelations,
+            diagramName = diagramName,
+        )
     }
 
     /**

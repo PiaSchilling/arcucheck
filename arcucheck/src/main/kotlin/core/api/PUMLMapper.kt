@@ -9,6 +9,7 @@ interface PUMLMapper {
      *
      * @param umlText the PlantUML diagram as plain text (string representation)
      * @return the PlantUML diagram as a PUMLDiagram model
+     * // TODO comment params (diagram name optinal bc only design has it)
      */
-    fun mapDiagram(diagramName: String, umlText: String): PUMLDiagram
+    fun mapDiagram(sourcePath: String, umlText: String, diagramName: String?): PUMLDiagram
 }
