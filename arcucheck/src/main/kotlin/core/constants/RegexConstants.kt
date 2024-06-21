@@ -74,4 +74,6 @@ object Patterns {
      * - group 3: constructor parameters
      */
     const val EXTRACT_CONSTRUCTORS = """([+\-#])\s*<<Create>>\s+(\w+)\((.*?)\)"""
+
+    const val EXTRACT_IMPL_PATH = """'implementation_path=\[(.+)\]"""
 }

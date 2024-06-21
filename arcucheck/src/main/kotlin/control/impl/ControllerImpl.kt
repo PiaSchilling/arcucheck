@@ -43,10 +43,19 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
                 textDiagram
             }.toMutableMap()
 
+            val implFiles = textDesignDiagrams.entries.associate { diagram ->
+                val value = FileHandler.extractImplementationPath(
+                    diagram.value,
+                    diagram.key.path
+                )
+                val key = diagram.key
+                key to value
+            }
+
             val textImplDiagrams =
-                pumlFiles.associateWith { pumlFile -> // fileName serves as path to the related code part.
-                    val textDiagram = codeParser.parseCode(pumlFile.nameWithoutExtension.replace(",", "/"))
-                    textDiagram
+                implFiles.entries.associate { implFile ->
+                    val textDiagram = codeParser.parseCode(implFile.value)
+                    implFile.key to textDiagram
                 }.toMutableMap()
 
 
@@ -62,7 +71,7 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
             val pumlImplDiagrams =
                 textImplDiagrams.mapValues { textDiagram ->
                     PUMLMapper.mapDiagram(
-                        sourcePath = textDiagram.key.nameWithoutExtension.replace(",","/"),
+                        sourcePath = textDiagram.key.nameWithoutExtension.replace(",", "/"),
                         umlText = textDiagram.value,
                     )
                 }

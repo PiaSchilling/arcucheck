@@ -11,14 +11,22 @@ import org.apache.commons.cli.DefaultParser
 import org.apache.commons.cli.Options
 import java.io.File
 import java.io.FileNotFoundException
-import java.nio.file.Path
 import java.util.function.Consumer
 import kotlin.io.path.absolutePathString
 
 
 class CodeParserImpl : CodeParser {
 
+    /**
+     * Parse the code located at the provided path into a PlantUML diagram
+     *
+     * @param codePath the path to the code which should be parsed
+     * @return a string containing the whole PlantUML diagram representing the code
+     */
     override fun parseCode(codePath: String): String {
+        if(!File(codePath).exists()){
+            throw FileNotFoundException("Code file at \"$codePath\" does not exist.")
+        }
         val tempFilePath = FileHandler.createTempFile()
         generateDiagram(codePath, tempFilePath.absolutePathString())
         return FileHandler.readFileIntoString(File(tempFilePath.toUri()))
