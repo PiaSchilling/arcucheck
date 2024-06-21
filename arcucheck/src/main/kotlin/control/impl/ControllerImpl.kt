@@ -24,9 +24,9 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
         println("- - - - - - - - - - - - - -- - - - - - -  ")
 
         if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
-            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0], codeDiagram,null) // TODO remove null
+            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0], codeDiagram) // TODO remove null
             val designPUMLDiagram =
-                PUMLMapper.mapDiagram(args[1], designDiagram,null) // TODO implement mapping based on design diagram name
+                PUMLMapper.mapDiagram(args[1], designDiagram) // TODO implement mapping based on design diagram name
 
             val comparator = PUMLComparatorImpl() // TODO inject
             comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
@@ -44,27 +44,26 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
             }.toMutableMap()
 
             val textImplDiagrams =
-                pumlFiles.associateWith { pumlFile -> // fileName serves as path to the related code part. Kotlin replaces "/" into ":", so it has to be changed
-                    // back to have a valid path
-                    val textDiagram = codeParser.parseCode(pumlFile.nameWithoutExtension.replace(":", "/"))
+                pumlFiles.associateWith { pumlFile -> // fileName serves as path to the related code part.
+                    val textDiagram = codeParser.parseCode(pumlFile.nameWithoutExtension.replace(",", "/"))
                     textDiagram
                 }.toMutableMap()
 
 
             val pumlDesignDiagrams =
-                textDesignDiagrams.mapValues { textDiagram ->
-                    PUMLMapper.mapDiagram(
-                        sourcePath = directoryPath, // TODO fix
-                        umlText = textDiagram.value,
-                        diagramName = textDiagram.key.name
+                textDesignDiagrams.entries.associate { entry ->
+                    val value = PUMLMapper.mapDiagram(
+                        sourcePath = entry.key.path,
+                        umlText = entry.value,
                     )
+                    val key = entry.key
+                    key to value
                 }
             val pumlImplDiagrams =
                 textImplDiagrams.mapValues { textDiagram ->
                     PUMLMapper.mapDiagram(
-                        sourcePath = textDiagram.key.nameWithoutExtension,
+                        sourcePath = textDiagram.key.nameWithoutExtension.replace(",","/"),
                         umlText = textDiagram.value,
-                        diagramName = null
                     )
                 }
 

@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: introduce WarningBuilder">
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="fix: fix typo in method name">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/WarningBuilder.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/TypesComparator.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/TypesComparator.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/deviation/DeviationSubject.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/api/PUMLMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/api/PUMLMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/FileHandlerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/FileHandlerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLComparatorImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLMapperImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/PUMLMapperImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/model/puml/PUMLDiagram.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/model/puml/PUMLDiagram.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +76,7 @@
       <recent name="core.model.deviation" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.MainKt">
+  <component name="RunManager" selected="Kotlin.MaintKt_Directory">
     <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -126,6 +129,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MaintKt_Directory" type="JetRunConfigurationType">
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="arcucheck.main" />
+      <option name="PROGRAM_PARAMETERS" value="-ddp $USER_HOME$/Desktop/DemoDocs/ -d" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UMLMapperImplKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="core.impl.UMLMapperImplKt" />
       <module name="arcucheck.main" />
@@ -136,6 +148,7 @@
     <list>
       <item itemvalue="Gradle.arcucheck [clean build]" />
       <item itemvalue="Gradle.arcucheck [dependencies]" />
+      <item itemvalue="Kotlin.MaintKt_Directory" />
       <item itemvalue="Kotlin.MainKt" />
       <item itemvalue="Kotlin.UMLMapperImplKt" />
     </list>
@@ -412,7 +425,35 @@
       <option name="project" value="LOCAL" />
       <updated>1718703325193</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="feat: make TypesComparator use WarningBuilder">
+      <created>1718704165472</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1718704165472</updated>
+    </task>
+    <task id="LOCAL-00038" summary="fix: fix duplicate adding of wrong package deviations">
+      <created>1718877422005</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1718877422005</updated>
+    </task>
+    <task id="LOCAL-00039" summary="feat: clean up DeviationBuilder">
+      <created>1718878350887</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1718878350887</updated>
+    </task>
+    <task id="LOCAL-00040" summary="fix: fix typo in method name">
+      <created>1718878484172</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1718878484172</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -494,10 +535,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add interface mapping" />
-    <MESSAGE value="feat: extent PUMLDiagram with classes and interfaces" />
-    <MESSAGE value="feat: add models for relation mapping" />
-    <MESSAGE value="feat: add fromString method" />
     <MESSAGE value="feat: prevent empty classes" />
     <MESSAGE value="feat: wire up codeParser and umlMapper&#10;&#10;Still needs refactoring" />
     <MESSAGE value="feat: finish wiring up CodeParser and UMLMapper" />
@@ -519,7 +556,11 @@
     <MESSAGE value="feat: add ConstructorComparator" />
     <MESSAGE value="feat: clean up warning messages" />
     <MESSAGE value="feat: introduce WarningBuilder" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: introduce WarningBuilder" />
+    <MESSAGE value="feat: make TypesComparator use WarningBuilder" />
+    <MESSAGE value="fix: fix duplicate adding of wrong package deviations" />
+    <MESSAGE value="feat: clean up DeviationBuilder" />
+    <MESSAGE value="fix: fix typo in method name" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: fix typo in method name" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -530,18 +571,23 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>99</line>
+          <line>109</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>109</line>
+          <line>119</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>151</line>
+          <line>165</line>
           <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/DeviationBuilder.kt</url>
+          <line>68</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

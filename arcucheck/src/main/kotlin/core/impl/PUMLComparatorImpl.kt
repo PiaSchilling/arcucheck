@@ -6,8 +6,8 @@ import core.model.puml.*
 class PUMLComparatorImpl {
 
     fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
-        val designDiagramPath = designDiagram.sourcePath + (designDiagram.diagramName ?: "")
-        val implPath = implementationDiagram.sourcePath.replace(":", "/")
+        val designDiagramPath = designDiagram.sourcePath
+        val implPath = implementationDiagram.sourcePath
 
         val typesComparator = TypesComparator(designDiagramPath, implPath)
         val relationComparator = RelationComparator(designDiagramPath, implPath)

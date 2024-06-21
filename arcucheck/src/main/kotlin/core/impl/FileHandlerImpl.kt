@@ -9,14 +9,25 @@ class FileHandler {
     companion object {
 
         /**
+         * Correct the provided path into a valid path format by replacing all | into /
+         *
+         * @param pathToCorrect a path which contains | instead of the required / as path separators
+         * @return the corrected path
+         */
+        private fun correctPathSeparators(pathToCorrect: String): String {
+            return pathToCorrect.replace(",", "/")
+        }
+
+        /**
          * Read all files with file extension .puml of a directory into a list
          *
          * @param directoryPath the path to the directory potentially containing .puml files
          * @return a list of .puml files
          */
         fun readDirectoryPumlFilePaths(directoryPath: String): List<File> {
-            val directory = File(directoryPath)
-            if(directory.isDirectory){
+            val correctedPath = correctPathSeparators(directoryPath)
+            val directory = File(correctedPath)
+            if (directory.isDirectory) {
                 return directory.walkTopDown()
                     .filter { file -> file.extension == "puml" }
                     .toList()
