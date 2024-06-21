@@ -3,6 +3,7 @@ package control.impl
 import control.api.Controller
 import core.api.CodeParser
 import core.api.PUMLMapper
+import core.exceptions.MissingImplPathException
 import core.impl.FileHandler
 import core.impl.PUMLComparatorImpl
 import java.io.File
@@ -36,10 +37,10 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
 
     override fun onExecuteCommandDirectory(directoryPath: String) {
         try {
-            val pumlFiles = FileHandler.readDirectoryPumlFilePaths(directoryPath)
+            val designFiles = FileHandler.readDirectoryPumlFilePaths(directoryPath)
 
-            val textDesignDiagrams = pumlFiles.associateWith { pumlFile ->
-                val textDiagram = FileHandler.readFileIntoString(pumlFile)
+            val textDesignDiagrams = designFiles.associateWith { designFile ->
+                val textDiagram = FileHandler.readFileIntoString(designFile)
                 textDiagram
             }.toMutableMap()
 
@@ -55,7 +56,7 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
             val textImplDiagrams =
                 implFiles.entries.associate { implFile ->
                     val textDiagram = codeParser.parseCode(implFile.value)
-                    implFile.key to textDiagram
+                    implFile.key to Pair(textDiagram, implFile.value)
                 }.toMutableMap()
 
 
@@ -68,11 +69,12 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
                     val key = entry.key
                     key to value
                 }
+
             val pumlImplDiagrams =
                 textImplDiagrams.mapValues { textDiagram ->
                     PUMLMapper.mapDiagram(
-                        sourcePath = textDiagram.key.nameWithoutExtension.replace(",", "/"),
-                        umlText = textDiagram.value,
+                        sourcePath = textDiagram.value.second,
+                        umlText = textDiagram.value.first,
                     )
                 }
 
@@ -84,8 +86,10 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
                     comparator.comparePUMLDiagrams(implDiagram, designDiagram.value)
                 }
             }
-        } catch (e: FileNotFoundException) {
-            println(e)
+        } catch (fileNotFound: FileNotFoundException) {
+            println(fileNotFound)
+        } catch (missingCodePath: MissingImplPathException) {
+            println(missingCodePath)
         }
 
     }
