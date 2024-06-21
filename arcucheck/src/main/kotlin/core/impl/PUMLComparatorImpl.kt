@@ -1,14 +1,16 @@
 package core.impl
 
 import core.impl.comparators.*
+import core.model.deviation.Deviation
 import core.model.puml.*
 
 class PUMLComparatorImpl {
 
-    fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram) {
+    fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram): List<Deviation> {
         val designDiagramPath = designDiagram.sourcePath
         val implPath = implementationDiagram.sourcePath
 
+        // TODO extract from this method, Single resp prinzip!
         val typesComparator = TypesComparator(designDiagramPath, implPath)
         val relationComparator = RelationComparator(designDiagramPath, implPath)
         val packageComparator = PackageComparator(designDiagramPath, implPath)
@@ -33,13 +35,15 @@ class PUMLComparatorImpl {
         val fieldDeviations = fieldComparator.comparePUMLFields(implementationDiagram.classes, designDiagram.classes)
         val constructorDeviations =
             constructorComparator.comparePUMLConstructors(implementationDiagram.classes, designDiagram.classes)
-        val result =
-            classDeviations + relationDeviations + packageDeviations + interfaceDeviations + classMethodDeviations + interfaceMethodDeviations + fieldDeviations + constructorDeviations
-        if (result.isEmpty()) {
-            println("No deviations between implementation and design found")
-        } else {
-            println(result)
-        }
+
+        return classDeviations +
+                relationDeviations +
+                packageDeviations +
+                interfaceDeviations +
+                classMethodDeviations +
+                interfaceMethodDeviations +
+                fieldDeviations +
+                constructorDeviations
     }
 
 }

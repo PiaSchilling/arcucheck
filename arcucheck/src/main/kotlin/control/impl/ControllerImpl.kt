@@ -6,6 +6,7 @@ import core.api.PUMLMapper
 import core.exceptions.MissingImplPathException
 import core.impl.FileHandler
 import core.impl.PUMLComparatorImpl
+import core.model.deviation.Deviation
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -30,11 +31,18 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
                 PUMLMapper.mapDiagram(args[1], designDiagram) // TODO implement mapping based on design diagram name
 
             val comparator = PUMLComparatorImpl() // TODO inject
-            comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
+            val deviations = comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
+
+            if (deviations.isEmpty()) {
+                println("No deviations between design and implementation found")
+            } else {
+                println(deviations)
+            }
         }
 
     }
 
+    // TODO split up methods
     override fun onExecuteCommandDirectory(directoryPath: String) {
         try {
             val designFiles = FileHandler.readDirectoryPumlFilePaths(directoryPath)
@@ -79,12 +87,19 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
                 }
 
             val comparator = PUMLComparatorImpl() // TODO inject
+            val deviations = mutableListOf<Deviation>()
 
             pumlDesignDiagrams.forEach { designDiagram ->
                 val implDiagram = pumlImplDiagrams[designDiagram.key]
                 implDiagram?.let {
-                    comparator.comparePUMLDiagrams(implDiagram, designDiagram.value)
+                    deviations.addAll(comparator.comparePUMLDiagrams(implDiagram, designDiagram.value))
                 }
+            }
+            if (deviations.isEmpty()) {
+                println("No deviations between design and implementation found") // TODO maybe revise
+            } else {
+                println("${deviations.size} deviation(s) between design and implementation detected:") // todo maybe add stats e.g how many makro, mikro etc.
+                println(deviations)
             }
         } catch (fileNotFound: FileNotFoundException) {
             println(fileNotFound)
