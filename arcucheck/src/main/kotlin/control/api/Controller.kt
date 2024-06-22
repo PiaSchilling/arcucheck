@@ -2,16 +2,18 @@ package control.api
 
 interface Controller {
     /**
-     * Execute the command for a single design puml diagram
+     * Execute the command for a single design PlantUML diagram
      *
-     * @param args containing the path to the single design puml diagram and the code // todo adjust once 2nd parameter fällt weg
+     * @param implementationPath the path to the implementation
+     * @param designPath the path to the design PlantUML diagram
      */
-    fun onExecuteCommandSingleFile(args: List<String>)
+    fun onExecuteCommandSingleFile(implementationPath: String, designPath: String)
 
     /**
      * Execute the command for a directory of design puml diagrams
      *
-     * @param directoryPath the path to the design puml diagram directory
+     * @param directoryPath the path to the directory containing multiple design diagrams (note: the design diagrams
+     * have to include the 'implementation_path= comment at the top to specify the related paths to the implementations)
      */
     fun onExecuteCommandDirectory(directoryPath: String)
 }

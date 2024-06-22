@@ -19,13 +19,13 @@ class CLI : Callable<Int>, KoinComponent {
         names = ["-d", "--directory"], paramLabel = "DIRECTORY",
         description = ["Use a directory containing puml files as input."]
     )
-    private var isDirectory = false;
+    private var isDirectory = false
 
     @CommandLine.Option(
         names = ["-f", "--file"], paramLabel = "FILE",
         description = ["Use a single file as input."]
     )
-    private var isFile = false;
+    private var isFile = false
 
     @CommandLine.Option(
         names = ["-cp", "--codePath"], paramLabel = "CODE_PATH",
@@ -54,7 +54,7 @@ class CLI : Callable<Int>, KoinComponent {
                 println("You have to specify the path to the code (-cp)")
                 return 1
             }
-            controller.onExecuteCommandSingleFile(listOf(codePath, diagramFilePath))
+            controller.onExecuteCommandSingleFile(codePath, diagramFilePath)
         } else if (isDirectory) {
             if (diagramDirectoryPath.isEmpty()) {
                 println("You have to specify the path to the directory containing the design diagrams (-ddp)")
