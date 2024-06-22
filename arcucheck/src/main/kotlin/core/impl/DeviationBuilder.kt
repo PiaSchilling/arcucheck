@@ -22,10 +22,12 @@ class DeviationBuilder {
             classLocation: String
         ): String {
             val deviationLocation =
-                "${subject.asString} \"${subjectName}\" located in \"${classLocation}\""
+                "${subject.asString} \"${subjectName}\" found in \"${classLocation}\""
+            val deviationLocation2 =
+                "${subject.asString} \"${subjectName}\" is expected in \"${classLocation}\""
             return when (deviationType) {
-                DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
-                DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation." // TODO revise message: man kommt durcheinander was jetzt design klassen sind und was impl klassen sind
+                DeviationType.UNEXPECTED -> " $deviationLocation is present in the implementation, but not expected according to the design."
+                DeviationType.ABSENCE -> " $deviationLocation2 according to the design, but not found in the implementation."
                 else -> ""
             }
         }
