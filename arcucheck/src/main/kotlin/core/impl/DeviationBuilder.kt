@@ -1,6 +1,7 @@
 package core.impl
 
 import core.model.deviation.*
+import util.extensions.concatOverlap
 
 class DeviationBuilder {
 
@@ -68,7 +69,7 @@ class DeviationBuilder {
                     classLocation
                 ),
                 designDiagramPath,
-                implPath
+                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName .java")
             )
         }
 
@@ -125,7 +126,7 @@ class DeviationBuilder {
                 "Deviating ${subject.name.lowercase()} implementation",
                 buildMisimplementedDescription(subject, subjectName, classLocation, causes),
                 designDiagramPath,
-                implPath
+                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName .java")
             )
 
         }
