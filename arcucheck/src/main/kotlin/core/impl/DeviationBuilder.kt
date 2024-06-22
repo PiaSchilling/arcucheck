@@ -69,7 +69,7 @@ class DeviationBuilder {
                     classLocation
                 ),
                 designDiagramPath,
-                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName .java")
+                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName.java")
             )
         }
 
@@ -126,7 +126,7 @@ class DeviationBuilder {
                 "Deviating ${subject.name.lowercase()} implementation",
                 buildMisimplementedDescription(subject, subjectName, classLocation, causes),
                 designDiagramPath,
-                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName .java")
+                implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName.java")
             )
 
         }
