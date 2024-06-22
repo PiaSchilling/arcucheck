@@ -2,6 +2,7 @@ package control.impl
 
 import control.api.Controller
 import core.api.CodeParser
+import core.api.PUMLComparator
 import core.api.PUMLMapper
 import core.exceptions.MissingImplPathException
 import core.impl.FileHandler
@@ -11,27 +12,22 @@ import java.io.File
 import java.io.FileNotFoundException
 
 
-class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper: PUMLMapper) : Controller {
+class ControllerImpl(
+    private val codeParser: CodeParser,
+    private val pumlMapper: PUMLMapper,
+    private val pumlComparator: PUMLComparator
+) : Controller {
 
     override fun onExecuteCommandSingleFile(args: List<String>) {
-        println("On exec command")
-        val codeDiagram =
-            codeParser.parseCode(args[0]) // TODO this is risky, add error handling (maybe create model class for programm args) model class contains then codePath, diagramPath, ... and errors can be catched while creating this model
-        println("code diagram - - - - - - - - - - - - - ")
-        println(codeDiagram)
-
+        val codeDiagram = codeParser.parseCode(args[0])
         val designDiagram = FileHandler.readFileIntoString(File(args[1]))
-        println("design diagram - - - - - - - - - - - - - -")
-        println(designDiagram)
-        println("- - - - - - - - - - - - - -- - - - - - -  ")
 
         if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
-            val codePUMLDiagram = PUMLMapper.mapDiagram(args[0], codeDiagram) // TODO remove null
+            val codePUMLDiagram = pumlMapper.mapDiagram(args[0], codeDiagram)
             val designPUMLDiagram =
-                PUMLMapper.mapDiagram(args[1], designDiagram) // TODO implement mapping based on design diagram name
+                pumlMapper.mapDiagram(args[1], designDiagram)
 
-            val comparator = PUMLComparatorImpl() // TODO inject
-            val deviations = comparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
+            val deviations = pumlComparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
 
             if (deviations.isEmpty()) {
                 println("No deviations between design and implementation found")
@@ -70,7 +66,7 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
 
             val pumlDesignDiagrams =
                 textDesignDiagrams.entries.associate { entry ->
-                    val value = PUMLMapper.mapDiagram(
+                    val value = pumlMapper.mapDiagram(
                         sourcePath = entry.key.path,
                         umlText = entry.value,
                     )
@@ -80,19 +76,18 @@ class ControllerImpl(private val codeParser: CodeParser, private val PUMLMapper:
 
             val pumlImplDiagrams =
                 textImplDiagrams.mapValues { textDiagram ->
-                    PUMLMapper.mapDiagram(
+                    pumlMapper.mapDiagram(
                         sourcePath = textDiagram.value.second,
                         umlText = textDiagram.value.first,
                     )
                 }
 
-            val comparator = PUMLComparatorImpl() // TODO inject
             val deviations = mutableListOf<Deviation>()
 
             pumlDesignDiagrams.forEach { designDiagram ->
                 val implDiagram = pumlImplDiagrams[designDiagram.key]
                 implDiagram?.let {
-                    deviations.addAll(comparator.comparePUMLDiagrams(implDiagram, designDiagram.value))
+                    deviations.addAll(pumlComparator.comparePUMLDiagrams(implDiagram, designDiagram.value))
                 }
             }
             if (deviations.isEmpty()) {

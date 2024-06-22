@@ -1,12 +1,14 @@
 package core.impl
 
+import core.api.PUMLComparator
 import core.impl.comparators.*
 import core.model.deviation.Deviation
 import core.model.puml.*
 
-class PUMLComparatorImpl {
+class PUMLComparatorImpl : PUMLComparator {
 
-    fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram): List<Deviation> {
+
+    override fun comparePUMLDiagrams(implementationDiagram: PUMLDiagram, designDiagram: PUMLDiagram): List<Deviation> {
         val designDiagramPath = designDiagram.sourcePath
         val implPath = implementationDiagram.sourcePath
 
