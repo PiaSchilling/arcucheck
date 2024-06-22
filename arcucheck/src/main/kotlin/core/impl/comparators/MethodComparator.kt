@@ -196,7 +196,7 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
         if (implementationMethod.parameterTypes != designMethod.parameterTypes) {
             methodWarnings.add(
                 "Method \"${designMethod.name}\" should have the parameter types ${designMethod.parameterTypes} according to the design but has the " +
-                        "parameter types ${implementationMethod.parameterTypes} in the implementation."
+                        "parameter types ${implementationMethod.parameterTypes} in the implementation." // TODO shorten descriptions
             )
         }
 

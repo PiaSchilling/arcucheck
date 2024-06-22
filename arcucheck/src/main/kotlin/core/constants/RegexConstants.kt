@@ -42,7 +42,7 @@ object Patterns {
      * - group 3: field data type
      * - group 4: field name
      */
-    const val EXTRACT_FIELDS = """([+\-#])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!${'$'}\()(?!\()${'$'}"""
+    const val EXTRACT_FIELDS = """([+\-#~])\s*(\{(?:static)?})?\s*(\w+)\s+(\w+)(?!${'$'}\()(?!\()${'$'}"""
 
     /**
      * Pattern to extract method character groups from PlantUML class string

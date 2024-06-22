@@ -1,6 +1,7 @@
 package core.model.deviation
 
 enum class DeviationArea {
+    // TODO add FIELD; METHOD; etc.
     /**
      * Deviations in relations
      *

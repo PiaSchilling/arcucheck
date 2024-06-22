@@ -24,7 +24,7 @@ class DeviationBuilder {
             val deviationLocation =
                 "${subject.asString} \"${subjectName}\" found in \"${classLocation}\""
             val deviationLocation2 =
-                "${subject.asString} \"${subjectName}\" is expected in \"${classLocation}\""
+                "${subject.asString} \"${subjectName}\" is expected in \"${classLocation}\"" // TODO rename
             return when (deviationType) {
                 DeviationType.UNEXPECTED -> " $deviationLocation is present in the implementation, but not expected according to the design."
                 DeviationType.ABSENCE -> " $deviationLocation2 according to the design, but not found in the implementation."
@@ -36,7 +36,7 @@ class DeviationBuilder {
          * Build deviations that are caused by absent or unexpected subjects
          *
          * @param level deviation level (Makro for architecture level, mikro for code level)
-         * @param area the area affected (todo fix)
+         * @param area the area affected
          * @param type either unexpected or absent
          * @param affectedClassName the names of the affected classes
          * @param subject the affected subject (e.g. field, class, method,...)

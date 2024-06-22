@@ -3,6 +3,7 @@ import core.di.coreModule
 import org.koin.core.context.startKoin
 import picocli.CommandLine
 import ui.CLI
+import kotlin.system.exitProcess
 
 
 fun main(args: Array<String>) {
@@ -10,5 +11,5 @@ fun main(args: Array<String>) {
         modules(coreModule, controlModule)
     }
 
-    System.exit(CommandLine(CLI()).execute(*args))
+    exitProcess(CommandLine(CLI()).execute(*args))
 }
