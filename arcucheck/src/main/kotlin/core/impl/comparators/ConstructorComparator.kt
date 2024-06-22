@@ -30,7 +30,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
         implementationClasses: List<PUMLClass>,
         designClasses: List<PUMLClass>
     ): List<Deviation> {
-        val deviations = mutableListOf<Deviation>() // TODO duplicate code in method comparator
+        val deviations = mutableListOf<Deviation>()
 
         val implClassesMap = implementationClasses.associateBy { it.fullName }
         val designClassesMap = designClasses.associateBy { it.fullName }

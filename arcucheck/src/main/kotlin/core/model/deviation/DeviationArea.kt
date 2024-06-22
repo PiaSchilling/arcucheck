@@ -15,5 +15,5 @@ enum class DeviationArea {
     /**
      * Deviations in behavior
      */
-    BEHAVIOR
+    BEHAVIOR // TODO rename
 }
