@@ -1,7 +1,6 @@
 package core.model.deviation
 
 enum class DeviationArea {
-    // TODO add FIELD; METHOD; etc.
     /**
      * Deviations in relations
      *
@@ -9,12 +8,38 @@ enum class DeviationArea {
     RELATION,
 
     /**
-     * Deviations in properties
+     * Deviations in packages
+     *
      */
-    PROPERTY,
+    PACKAGE,
+
+
 
     /**
-     * Deviations in behavior
+     * Deviations in classes
+     *
      */
-    BEHAVIOR // TODO rename
+    CLASS,
+
+    /**
+     * Deviations in interfaces
+     *
+     */
+    INTERFACE,
+
+    /**
+     * Deviations in methods
+     *
+     */
+    METHOD,
+
+    /**
+     * Deviations in constructors
+     */
+    CONSTRUCTOR,
+
+    /**
+     * Deviations in fields
+     */
+    FIELD,
 }

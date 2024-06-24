@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: change path extraction from file name to puml comment">
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" afterDir="false" />
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: revise deviations output">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -461,7 +461,21 @@
       <option name="project" value="LOCAL" />
       <updated>1718965830854</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="feat: fix code path">
+      <created>1718966575469</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1718966575469</updated>
+    </task>
+    <task id="LOCAL-00044" summary="feat: revise deviations output">
+      <created>1718967290939</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1718967290939</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -543,8 +557,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: finish wiring up CodeParser and UMLMapper" />
-    <MESSAGE value="refactor: rename classes" />
     <MESSAGE value="feat: add first deviation detection &#10;&#10;Absent and unexpected classes can now be detected" />
     <MESSAGE value="refactor: move PUMLModels to subpackage" />
     <MESSAGE value="feat: format String representation of Deviation class" />
@@ -568,7 +580,9 @@
     <MESSAGE value="fix: fix typo in method name" />
     <MESSAGE value="feat: fix paths" />
     <MESSAGE value="feat: change path extraction from file name to puml comment" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: change path extraction from file name to puml comment" />
+    <MESSAGE value="feat: fix code path" />
+    <MESSAGE value="feat: revise deviations output" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: revise deviations output" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -596,11 +610,6 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/DeviationBuilder.kt</url>
           <line>68</line>
           <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt</url>
-          <line>39</line>
-          <option name="timeStamp" value="32" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -41,7 +41,7 @@ class PackageComparator(private val designDiagramPath: String, private val implP
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.PROPERTY,
+                        DeviationArea.PACKAGE,
                         DeviationType.ABSENCE,
                         listOf(absentPackage.fullName),
                         "Missing package",
@@ -57,7 +57,7 @@ class PackageComparator(private val designDiagramPath: String, private val implP
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.PROPERTY,
+                        DeviationArea.PACKAGE,
                         DeviationType.UNEXPECTED,
                         listOf(unexpectedPackage.fullName),
                         "Unexpected package",

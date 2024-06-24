@@ -115,11 +115,12 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
 
         // If class still can not be found, it is absent
         notFoundClasses.forEach { type ->
-            val subject = if (type.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE
+            val subject = if (type.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE // TODO get rid of subject
+            val area =  if (type.value is PUMLClass) DeviationArea.CLASS else DeviationArea.INTERFACE
             deviations.add(
                 DeviationBuilder.buildUnexpectedAbsentDeviation(
                     level = DeviationLevel.MAKRO,
-                    area = DeviationArea.PROPERTY,
+                    area = area,
                     type = deviationType,
                     affectedClassName = type.value.name,
                     subject = subject,
@@ -135,10 +136,11 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         foundClasses.forEach { existingDesignClass ->
             val wrongImplClass = implClassesMap[existingDesignClass.key]
             val typeKeyword = if (wrongImplClass is PUMLClass) "Class" else "Interface"
+            val area =  if (wrongImplClass is PUMLClass) DeviationArea.CLASS else DeviationArea.INTERFACE
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
-                    DeviationArea.PROPERTY,
+                    area,
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingDesignClass.value.name),
                     "$typeKeyword maybe in wrong package",

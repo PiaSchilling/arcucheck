@@ -123,7 +123,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                     deviations.add(
                         Deviation(
                             DeviationLevel.MIKRO,
-                            DeviationArea.PROPERTY,
+                            DeviationArea.CONSTRUCTOR,
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
                             "Deviating constructor implementation",
@@ -142,7 +142,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
                         DeviationLevel.MIKRO,
-                        DeviationArea.PROPERTY,
+                        DeviationArea.CONSTRUCTOR,
                         deviationType,
                         listOf(designClass.name),
                         "${deviationType.asAdjective} constructor",
