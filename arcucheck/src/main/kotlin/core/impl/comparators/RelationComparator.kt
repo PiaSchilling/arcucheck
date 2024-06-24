@@ -1,7 +1,7 @@
 package core.impl.comparators
 
 import core.model.deviation.Deviation
-import core.model.deviation.DeviationArea
+import core.model.deviation.DeviationSubjectType
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLRelation
@@ -38,7 +38,7 @@ class RelationComparator(private val designDiagramPath: String, private val impl
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.RELATION,
+                        DeviationSubjectType.RELATION,
                         DeviationType.ABSENCE,
                         listOf(absentRelation.sourceClass, absentRelation.destinationClass),
                         "Absent relation",
@@ -57,7 +57,7 @@ class RelationComparator(private val designDiagramPath: String, private val impl
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.RELATION,
+                        DeviationSubjectType.RELATION,
                         DeviationType.UNEXPECTED,
                         listOf(unexpectedRelation.sourceClass, unexpectedRelation.destinationClass),
                         "Unexpected relation",

@@ -1,7 +1,7 @@
 package core.impl.comparators
 
 import core.model.deviation.Deviation
-import core.model.deviation.DeviationArea
+import core.model.deviation.DeviationSubjectType
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLType
@@ -41,7 +41,7 @@ class PackageComparator(private val designDiagramPath: String, private val implP
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.PACKAGE,
+                        DeviationSubjectType.PACKAGE,
                         DeviationType.ABSENCE,
                         listOf(absentPackage.fullName),
                         "Missing package",
@@ -57,7 +57,7 @@ class PackageComparator(private val designDiagramPath: String, private val implP
                 deviations.add(
                     Deviation(
                         DeviationLevel.MAKRO,
-                        DeviationArea.PACKAGE,
+                        DeviationSubjectType.PACKAGE,
                         DeviationType.UNEXPECTED,
                         listOf(unexpectedPackage.fullName),
                         "Unexpected package",

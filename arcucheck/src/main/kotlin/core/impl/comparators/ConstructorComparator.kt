@@ -1,7 +1,7 @@
 package core.impl.comparators
 
 import core.model.deviation.Deviation
-import core.model.deviation.DeviationArea
+import core.model.deviation.DeviationSubjectType
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationType
 import core.model.puml.PUMLClass
@@ -123,7 +123,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                     deviations.add(
                         Deviation(
                             DeviationLevel.MIKRO,
-                            DeviationArea.CONSTRUCTOR,
+                            DeviationSubjectType.CONSTRUCTOR,
                             DeviationType.MISIMPLEMENTED,
                             listOf(designClass.name),
                             "Deviating constructor implementation",
@@ -142,7 +142,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     Deviation(
                         DeviationLevel.MIKRO,
-                        DeviationArea.CONSTRUCTOR,
+                        DeviationSubjectType.CONSTRUCTOR,
                         deviationType,
                         listOf(designClass.name),
                         "${deviationType.asAdjective} constructor",

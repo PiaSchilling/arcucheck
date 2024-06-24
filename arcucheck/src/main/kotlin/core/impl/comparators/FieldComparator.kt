@@ -123,9 +123,8 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
                     deviations.add(
                         DeviationBuilder.buildMisimplementedDeviation(
                             level = DeviationLevel.MIKRO,
-                            area = DeviationArea.FIELD,
+                            subjectType = DeviationSubjectType.FIELD,
                             affectedClassName = designClass.name,
-                            subject = DeviationSubject.FIELD,
                             subjectName = field.value.name,
                             classLocation = designClass.pumlPackage.fullName,
                             causes = deviationCauses,
@@ -138,10 +137,9 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     DeviationBuilder.buildUnexpectedAbsentDeviation(
                         level = DeviationLevel.MIKRO,
-                        area = DeviationArea.FIELD,
-                        type = deviationType,
+                        subjectType = DeviationSubjectType.FIELD,
+                        deviationType = deviationType,
                         affectedClassName = designClass.name,
-                        subject = DeviationSubject.FIELD,
                         subjectName = field.value.name,
                         classLocation = designClass.pumlPackage.fullName,
                         designDiagramPath = designDiagramPath,

@@ -115,15 +115,13 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
 
         // If class still can not be found, it is absent
         notFoundClasses.forEach { type ->
-            val subject = if (type.value is PUMLClass) DeviationSubject.CLASS else DeviationSubject.INTERFACE // TODO get rid of subject
-            val area =  if (type.value is PUMLClass) DeviationArea.CLASS else DeviationArea.INTERFACE
+            val subjectType =  if (type.value is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
             deviations.add(
                 DeviationBuilder.buildUnexpectedAbsentDeviation(
                     level = DeviationLevel.MAKRO,
-                    area = area,
-                    type = deviationType,
+                    subjectType = subjectType,
+                    deviationType = deviationType,
                     affectedClassName = type.value.name,
-                    subject = subject,
                     subjectName = type.value.name,
                     classLocation = type.value.pumlPackage.fullName,
                     designDiagramPath = designDiagramPath,
@@ -135,16 +133,15 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         // If class now can be found, it might be just placed in the wrong package (or two classes with same name exist)
         foundClasses.forEach { existingDesignClass ->
             val wrongImplClass = implClassesMap[existingDesignClass.key]
-            val typeKeyword = if (wrongImplClass is PUMLClass) "Class" else "Interface"
-            val area =  if (wrongImplClass is PUMLClass) DeviationArea.CLASS else DeviationArea.INTERFACE
+            val subjectType =  if (wrongImplClass is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
-                    area,
+                    subjectType,
                     DeviationType.MISIMPLEMENTED,
                     listOf(existingDesignClass.value.name),
-                    "$typeKeyword maybe in wrong package",
-                    "According to the design, the $typeKeyword \"${existingDesignClass.value.name}\" is expected " +
+                    "${subjectType.asString} maybe in wrong package",
+                    "According to the design, the ${subjectType.asString} \"${existingDesignClass.value.name}\" is expected " +
                             "in the package \"${existingDesignClass.value.pumlPackage.fullName}\", but it is absent in the " +
                             "implementation. Instead, a class with the same name is found in the package \"${wrongImplClass?.pumlPackage?.fullName}\". " +
                             "It may be in the wrong package.",

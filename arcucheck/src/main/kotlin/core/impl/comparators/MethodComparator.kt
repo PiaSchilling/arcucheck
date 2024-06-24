@@ -120,9 +120,8 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
                     deviations.add(
                         DeviationBuilder.buildMisimplementedDeviation(
                             level = DeviationLevel.MIKRO,
-                            area = DeviationArea.METHOD,
+                            subjectType = DeviationSubjectType.METHOD,
                             affectedClassName = designClass.name,
-                            subject = DeviationSubject.METHOD,
                             subjectName = method.value.name,
                             classLocation = designClass.pumlPackage.fullName,
                             causes = deviationCauses,
@@ -135,10 +134,9 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
                 deviations.add( // If method still can not be found, then it will be marked as absent/unexpected
                     DeviationBuilder.buildUnexpectedAbsentDeviation(
                         level = DeviationLevel.MIKRO,
-                        area = DeviationArea.METHOD,
-                        type = deviationType,
+                        subjectType = DeviationSubjectType.METHOD,
+                        deviationType = deviationType,
                         affectedClassName = designClass.name,
-                        subject = DeviationSubject.METHOD,
                         subjectName = method.value.name,
                         classLocation = designClass.pumlPackage.fullName,
                         designDiagramPath = designDiagramPath,
