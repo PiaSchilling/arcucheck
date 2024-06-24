@@ -4,6 +4,8 @@ package core.model.deviation
  * Enum representing different types of subjects considered in deviation analysis. Each type corresponds to a specific
  * aspect of software architecture.
  *
+ * Available subject types are: `RELATION, PACKAGE, CLASS, INTERFACE, CONSTRUCTOR, METHOD, FIELD`
+ *
  * @property asString  first letter uppercase string representation of the subject type.
  */
 enum class DeviationSubjectType(val asString: String) {

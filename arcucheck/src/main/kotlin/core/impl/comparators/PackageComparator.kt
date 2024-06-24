@@ -42,7 +42,7 @@ class PackageComparator(private val designDiagramPath: String, private val implP
                     Deviation(
                         DeviationLevel.MAKRO,
                         DeviationSubjectType.PACKAGE,
-                        DeviationType.ABSENCE,
+                        DeviationType.ABSENT,
                         listOf(absentPackage.fullName),
                         "Missing package",
                         "Package \"${absentPackage.fullName}\" is expected according to the design but missing in the implementation.",

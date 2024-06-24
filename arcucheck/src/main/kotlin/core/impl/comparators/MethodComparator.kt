@@ -70,7 +70,7 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
                 maybeAbsentMethods.toList(),
                 implementationClass,
                 designClass,
-                DeviationType.ABSENCE
+                DeviationType.ABSENT
             )
             deviations.addAll(absentDeviations)
         }
@@ -108,7 +108,7 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
 
         deviatingMethodsMap.forEach { method ->
             val match = when (deviationType) {
-                DeviationType.ABSENCE -> implementationMethodsMap[method.key]
+                DeviationType.ABSENT -> implementationMethodsMap[method.key]
                 DeviationType.UNEXPECTED -> designMethodsMap[method.key]
                 else -> implementationMethodsMap[method.key]
             }

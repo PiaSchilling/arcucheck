@@ -71,7 +71,7 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
                 maybeAbsentFields.toList(),
                 implementationClass,
                 designClass,
-                DeviationType.ABSENCE
+                DeviationType.ABSENT
             )
             deviations.addAll(absentOrWrongFields)
         }
@@ -111,7 +111,7 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
 
         deviatingFieldsMap.forEach { field ->
             val match = when (deviationType) {
-                DeviationType.ABSENCE -> implementationFieldsMap[field.key]
+                DeviationType.ABSENT -> implementationFieldsMap[field.key]
                 DeviationType.UNEXPECTED -> designFieldsMap[field.key]
                 else -> implementationFieldsMap[field.key]
             }

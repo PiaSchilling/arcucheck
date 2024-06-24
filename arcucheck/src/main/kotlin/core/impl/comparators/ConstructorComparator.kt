@@ -71,7 +71,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                 maybeAbsentConstructors.toList(),
                 implementationClass,
                 designClass,
-                DeviationType.ABSENCE
+                DeviationType.ABSENT
             )
             deviations.addAll(absentOrWrongFields)
         }
@@ -112,7 +112,7 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
 
         deviatingConstructorsMap.forEach { constructor ->
             val match = when (deviationType) {
-                DeviationType.ABSENCE -> implementationConstructorsMap[constructor.key]
+                DeviationType.ABSENT -> implementationConstructorsMap[constructor.key]
                 DeviationType.UNEXPECTED -> designConstructorMap[constructor.key]
                 else -> implementationConstructorsMap[constructor.key]
             }
@@ -145,10 +145,10 @@ class ConstructorComparator(private val designDiagramPath: String, private val i
                         DeviationSubjectType.CONSTRUCTOR,
                         deviationType,
                         listOf(designClass.name),
-                        "${deviationType.asAdjective} constructor",
+                        "${deviationType.asString} constructor",
                         when (deviationType) {
                             DeviationType.UNEXPECTED -> "$deviationLocation is not expected according to the design but present in the implementation."
-                            DeviationType.ABSENCE -> "$deviationLocation is expected according to the design but not present in the implementation."
+                            DeviationType.ABSENT -> "$deviationLocation is expected according to the design but not present in the implementation."
                             else -> ""
                         },
                         designDiagramPath,

@@ -39,7 +39,7 @@ class RelationComparator(private val designDiagramPath: String, private val impl
                     Deviation(
                         DeviationLevel.MAKRO,
                         DeviationSubjectType.RELATION,
-                        DeviationType.ABSENCE,
+                        DeviationType.ABSENT,
                         listOf(absentRelation.sourceClass, absentRelation.destinationClass),
                         "Absent relation",
                         "Relation of type ${absentRelation.relationType} between source class " +

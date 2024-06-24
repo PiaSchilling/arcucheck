@@ -33,7 +33,7 @@ class DeviationBuilder {
                 "${subjectType.asString} \"${subjectName}\" is expected in \"${location}\""
             return when (deviationType) {
                 DeviationType.UNEXPECTED -> " $unexpectedDeviationLocation is present in the implementation, but not expected according to the design."
-                DeviationType.ABSENCE -> " $absentDeviationLocation according to the design, but not found in the implementation."
+                DeviationType.ABSENT -> " $absentDeviationLocation according to the design, but not found in the implementation."
                 else -> ""
             }
         }
@@ -64,7 +64,7 @@ class DeviationBuilder {
                 subjectType,
                 deviationType,
                 listOf(affectedClassName),
-                "${deviationType.asAdjective} ${subjectType.name.lowercase()}",
+                "${deviationType.asString} ${subjectType.name.lowercase()}",
                 buildUnexpectedAbsentDescription(
                     deviationType,
                     subjectType,

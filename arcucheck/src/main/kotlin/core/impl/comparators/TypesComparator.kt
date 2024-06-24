@@ -58,7 +58,7 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
                     maybeAbsentClasses,
                     implementationClasses,
                     designClasses,
-                    DeviationType.ABSENCE
+                    DeviationType.ABSENT
                 )
             )
         }
@@ -99,7 +99,7 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         val implClassesMap = implementationClasses.associateBy { it.name }
 
         var notFoundClasses = emptyMap<String, PUMLType>()
-        if (deviationType == DeviationType.ABSENCE) {
+        if (deviationType == DeviationType.ABSENT) {
             val absentClassesNames = deviatingClassesMap.keys.subtract(implClassesMap.keys)
             notFoundClasses = deviatingClassesMap.filterKeys { it in absentClassesNames }
         } else if (deviationType == DeviationType.UNEXPECTED) {
@@ -108,7 +108,7 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         }
 
         var foundClasses = emptyMap<String, PUMLType>()
-        if (deviationType == DeviationType.ABSENCE) {
+        if (deviationType == DeviationType.ABSENT) {
             val notFoundClassNames = deviatingClassesMap.keys.intersect(implClassesMap.keys)
             foundClasses = deviatingClassesMap.filterKeys { it in notFoundClassNames }
         }
