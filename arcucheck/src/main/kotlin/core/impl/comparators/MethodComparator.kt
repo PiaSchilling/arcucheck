@@ -164,37 +164,37 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
         val methodWarnings = mutableListOf<String>()
 
         if (implementationMethod.isAbstract && !designMethod.isAbstract) {
-            methodWarnings.add("Method \"${designMethod.name}\" is marked as abstract in the implementation but should not be abstract according to the design.")
+            methodWarnings.add("Is marked as abstract in the implementation but should not be abstract according to the design.")
         } else if (!implementationMethod.isAbstract && designMethod.isAbstract) {
-            methodWarnings.add("Method \"${designMethod.name}\" should be abstract according to the design but is not marked as abstract in the implementation.")
+            methodWarnings.add("Should be abstract according to the design but is not marked as abstract in the implementation.")
         }
 
 
 
         if (implementationMethod.isStatic && !designMethod.isStatic) {
-            methodWarnings.add("Method \"${designMethod.name}\" is marked as static in the implementation but should not be static according to the design.")
+            methodWarnings.add("Is marked as static in the implementation but should not be static according to the design.")
         } else if (!implementationMethod.isStatic && designMethod.isStatic) {
-            methodWarnings.add("Method \"${designMethod.name}\" should be static according to the design but is not marked as static in the implementation.")
+            methodWarnings.add("Should be static according to the design but is not marked as static in the implementation.")
         }
 
         if (implementationMethod.visibility != designMethod.visibility) {
             methodWarnings.add(
-                "Method \"${designMethod.name}\" should have the visibility \"${designMethod.visibility}\" according to the design but has the " +
+                "Should have the visibility \"${designMethod.visibility}\" according to the design but has the " +
                         "visibility \"${implementationMethod.visibility}\" in the implementation."
             )
         }
 
         if (implementationMethod.returnType != designMethod.returnType) {
             methodWarnings.add(
-                "Method \"${designMethod.name}\" should have the return type \"${designMethod.returnType}\" according to the design but has the " +
+                "Should have the return type \"${designMethod.returnType}\" according to the design but has the " +
                         "return type \"${implementationMethod.returnType}\" in the implementation."
             )
         }
 
         if (implementationMethod.parameterTypes != designMethod.parameterTypes) {
             methodWarnings.add(
-                "Method \"${designMethod.name}\" should have the parameter types ${designMethod.parameterTypes} according to the design but has the " +
-                        "parameter types ${implementationMethod.parameterTypes} in the implementation." // TODO shorten descriptions
+                "Should have the parameter types ${designMethod.parameterTypes} according to the design but has the " +
+                        "parameter types ${implementationMethod.parameterTypes} in the implementation."
             )
         }
 

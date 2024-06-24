@@ -167,25 +167,25 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
 
         if (implementationField.dataType != designField.dataType) {
             fieldWarnings.add(
-                "Field ${designField.name} should have the data type ${designField.dataType} according to the design but has the" +
+                "Should have the data type ${designField.dataType} according to the design but has the" +
                         "data type ${implementationField.dataType} in the implementation."
             )
         }
 
         if (implementationField.visibility != designField.visibility) {
             fieldWarnings.add(
-                "Field ${designField.name} should have the visibility ${designField.visibility} according to the design but has the" +
+                "Should have the visibility ${designField.visibility} according to the design but has the" +
                         "visibility ${implementationField.visibility} in the implementation."
             )
         }
 
         if (implementationField.isStatic && !designField.isStatic) {
             fieldWarnings.add(
-                "Field \"${designField.name}\" is marked as static in the implementation but should not be static according to the design."
+                "Is marked as static in the implementation but should not be static according to the design."
             )
         } else if (!implementationField.isStatic && designField.isStatic) {
             fieldWarnings.add(
-                "Field \"${designField.name}\" should be static according to the design but is not marked as static in the implementation."
+                "Should be static according to the design but is not marked as static in the implementation."
             )
         }
 

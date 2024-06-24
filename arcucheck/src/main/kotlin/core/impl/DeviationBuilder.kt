@@ -95,7 +95,7 @@ class DeviationBuilder {
             causes: List<String>,
             affectedClassName: String,
         ): String {
-            return "Implementation of ${subjectType.name.lowercase()} \"$subjectName\" located in \"$classLocation.$affectedClassName\" " + // TODO maybe add "locatd in interface/class
+            return "Implementation of ${subjectType.name.lowercase()} \"$subjectName\" located in \"$classLocation.$affectedClassName\" " +
                     "deviates from the design: $causes"
         }
 
