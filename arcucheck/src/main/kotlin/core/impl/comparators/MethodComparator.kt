@@ -124,7 +124,7 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
                             affectedClassName = designClass.name,
                             subject = DeviationSubject.METHOD,
                             subjectName = method.value.name,
-                            classLocation = designClass.fullName,
+                            classLocation = designClass.pumlPackage.fullName,
                             causes = deviationCauses,
                             designDiagramPath = designDiagramPath,
                             implPath = implPath,
@@ -140,7 +140,7 @@ class MethodComparator(private val designDiagramPath: String, private val implPa
                         affectedClassName = designClass.name,
                         subject = DeviationSubject.METHOD,
                         subjectName = method.value.name,
-                        classLocation = designClass.fullName,
+                        classLocation = designClass.pumlPackage.fullName,
                         designDiagramPath = designDiagramPath,
                         implPath = implPath,
                     )

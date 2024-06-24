@@ -20,15 +20,20 @@ class DeviationBuilder {
             deviationType: DeviationType,
             subject: DeviationSubject,
             subjectName: String,
-            classLocation: String
-        ): String {
-            val deviationLocation =
-                "${subject.asString} \"${subjectName}\" found in \"${classLocation}\""
-            val deviationLocation2 =
-                "${subject.asString} \"${subjectName}\" is expected in \"${classLocation}\"" // TODO rename
+            classLocation: String,
+            affectedClassName: String,
+            ): String {
+            var location = classLocation
+            if(subject == DeviationSubject.FIELD || subject == DeviationSubject.METHOD){
+                location = "$classLocation.$affectedClassName"
+            }
+            val unexpectedDeviationLocation =
+                "${subject.asString} \"${subjectName}\" found in \"${location}\""
+            val absentDeviationLocation =
+                "${subject.asString} \"${subjectName}\" is expected in \"${location}\""
             return when (deviationType) {
-                DeviationType.UNEXPECTED -> " $deviationLocation is present in the implementation, but not expected according to the design."
-                DeviationType.ABSENCE -> " $deviationLocation2 according to the design, but not found in the implementation."
+                DeviationType.UNEXPECTED -> " $unexpectedDeviationLocation is present in the implementation, but not expected according to the design."
+                DeviationType.ABSENCE -> " $absentDeviationLocation according to the design, but not found in the implementation."
                 else -> ""
             }
         }
@@ -66,7 +71,8 @@ class DeviationBuilder {
                     type,
                     subject,
                     subjectName,
-                    classLocation
+                    classLocation,
+                    affectedClassName
                 ),
                 designDiagramPath,
                 implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName.java")
@@ -88,9 +94,10 @@ class DeviationBuilder {
             subject: DeviationSubject,
             subjectName: String,
             classLocation: String,
-            causes: List<String>
+            causes: List<String>,
+            affectedClassName: String,
         ): String {
-            return "Implementation of ${subject.name.lowercase()} \"$subjectName\" in class \"$classLocation\" " +
+            return "Implementation of ${subject.name.lowercase()} \"$subjectName\" located in \"$classLocation.$affectedClassName\" " + // TODO maybe add "locatd in interface/class
                     "deviates from the design: $causes"
         }
 
@@ -124,7 +131,7 @@ class DeviationBuilder {
                 type,
                 listOf(affectedClassName),
                 "Deviating ${subject.name.lowercase()} implementation",
-                buildMisimplementedDescription(subject, subjectName, classLocation, causes),
+                buildMisimplementedDescription(subject, subjectName, classLocation, causes, affectedClassName),
                 designDiagramPath,
                 implPath.concatOverlap("${classLocation.replace(".", "/")}/$affectedClassName.java")
             )

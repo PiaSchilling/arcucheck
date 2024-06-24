@@ -127,7 +127,7 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
                             affectedClassName = designClass.name,
                             subject = DeviationSubject.FIELD,
                             subjectName = field.value.name,
-                            classLocation = designClass.fullName,
+                            classLocation = designClass.pumlPackage.fullName,
                             causes = deviationCauses,
                             designDiagramPath = designDiagramPath,
                             implPath = implPath,
@@ -143,7 +143,7 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
                         affectedClassName = designClass.name,
                         subject = DeviationSubject.FIELD,
                         subjectName = field.value.name,
-                        classLocation = designClass.fullName,
+                        classLocation = designClass.pumlPackage.fullName,
                         designDiagramPath = designDiagramPath,
                         implPath = implPath,
                     )
