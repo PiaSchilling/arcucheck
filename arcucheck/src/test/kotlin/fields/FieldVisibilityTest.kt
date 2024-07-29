@@ -31,8 +31,8 @@ internal class FieldVisibilityTest : KoinTest {
     @Test
     fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA =  controller.onExecuteCommandTest(implPrivateField, designPublicField)
-        val resultDeviationsB =  controller.onExecuteCommandTest(implPublicField, designPrivateField)
+        val resultDeviationsA = controller.onExecuteCommandTest(implPrivateField, designPublicField)
+        val resultDeviationsB = controller.onExecuteCommandTest(implPublicField, designPrivateField)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -44,12 +44,13 @@ internal class FieldVisibilityTest : KoinTest {
         assert(resultDeviationA.subjectType == DeviationSubjectType.FIELD)
         assert(resultDeviationA.level == DeviationLevel.MIKRO)
         assert(resultDeviationA.affectedClassesNames.contains(testClassName))
+        assert(resultDeviationA.description.contains("visibility"))
 
         assert(resultDeviationB.deviationType == DeviationType.MISIMPLEMENTED)
         assert(resultDeviationB.subjectType == DeviationSubjectType.FIELD)
         assert(resultDeviationB.level == DeviationLevel.MIKRO)
         assert(resultDeviationB.affectedClassesNames.contains(testClassName))
-
+        assert(resultDeviationB.description.contains("visibility"))
     }
 
     @Test
