@@ -62,7 +62,7 @@ internal class FieldDataTypeTest : KoinTest {
     companion object {
         @JvmStatic
         @BeforeAll
-        fun startKoinForTest(): Unit {
+        fun startKoinForTest() {
             startKoin {
                 modules(coreModule, controlModule)
             }

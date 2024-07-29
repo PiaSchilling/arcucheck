@@ -1,0 +1,5 @@
+@startuml
+class FieldStaticLabel {
+- {static} String field
+}
+@enduml
