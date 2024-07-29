@@ -2,6 +2,7 @@ package constructors
 
 import control.api.Controller
 import control.di.controlModule
+import core.constants.TEST
 import core.di.coreModule
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationSubjectType
@@ -29,8 +30,8 @@ internal class ConstructorParameterTypesTest : KoinTest {
     @Test
     fun divergentParameterTypes_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB)
-        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA)
+        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA, TEST)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -54,8 +55,8 @@ internal class ConstructorParameterTypesTest : KoinTest {
     @Test
     fun divergentParameterTypes_reportsDeviation_ofTypeUnexpectedAndAbsent() {
 
-        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB)
-        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA)
+        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA, TEST)
 
         assert(resultDeviationsA.size == 2)
         assert(resultDeviationsB.size == 2)
@@ -75,8 +76,8 @@ internal class ConstructorParameterTypesTest : KoinTest {
 
     @Test
     fun convergentParameterTypes_reportsNoDeviation() {
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorA, designConstructorA))
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorB, designConstructorB))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorA, designConstructorA, TEST))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorB, designConstructorB, TEST))
     }
 
 

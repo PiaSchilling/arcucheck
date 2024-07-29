@@ -2,6 +2,7 @@ package fields
 
 import control.api.Controller
 import control.di.controlModule
+import core.constants.TEST
 import core.di.coreModule
 import core.model.deviation.Deviation
 import core.model.deviation.DeviationLevel
@@ -31,8 +32,8 @@ internal class FieldVisibilityTest : KoinTest {
     @Test
     fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA = controller.onExecuteCommandTest(implPrivateField, designPublicField)
-        val resultDeviationsB = controller.onExecuteCommandTest(implPublicField, designPrivateField)
+        val resultDeviationsA = controller.onExecuteCommandTest(implPrivateField, designPublicField, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implPublicField, designPrivateField, TEST)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -55,8 +56,8 @@ internal class FieldVisibilityTest : KoinTest {
 
     @Test
     fun convergentVisibility_reportsNoDeviation() {
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implPrivateField, designPrivateField))
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implPublicField, designPublicField))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implPrivateField, designPrivateField, TEST))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implPublicField, designPublicField, TEST))
     }
 
 

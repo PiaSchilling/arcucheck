@@ -8,6 +8,6 @@ interface CodeParser {
      * @param codePath the path to the code for which the diagram should be generated
      * @return a string containing a PlantUML diagram that represents the entire code
      */
-    fun parseCode(codePath: String): String
+    fun parseCode(codePath: String,config:String): String
 
 }

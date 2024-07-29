@@ -2,6 +2,7 @@ package fields
 
 import control.api.Controller
 import control.di.controlModule
+import core.constants.TEST
 import core.di.coreModule
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationSubjectType
@@ -29,8 +30,8 @@ internal class FieldDataTypeTest : KoinTest {
     @Test
     fun divergentDataType_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA =  controller.onExecuteCommandTest(implFieldA, designFieldB)
-        val resultDeviationsB =  controller.onExecuteCommandTest(implFieldB, designFieldA)
+        val resultDeviationsA = controller.onExecuteCommandTest(implFieldA, designFieldB, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implFieldB, designFieldA, TEST)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -54,8 +55,8 @@ internal class FieldDataTypeTest : KoinTest {
 
     @Test
     fun convergentDataType_reportsNoDeviation() {
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldA, designFieldA))
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldB, designFieldB))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldA, designFieldA, TEST))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldB, designFieldB, TEST))
     }
 
 

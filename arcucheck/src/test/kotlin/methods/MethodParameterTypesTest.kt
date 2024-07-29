@@ -2,6 +2,7 @@ package methods
 
 import control.api.Controller
 import control.di.controlModule
+import core.constants.TEST
 import core.di.coreModule
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationSubjectType
@@ -29,8 +30,8 @@ internal class MethodParameterTypesTest : KoinTest {
     @Test
     fun divergentReturnType_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA =  controller.onExecuteCommandTest(implMethodA, designMethodB)
-        val resultDeviationsB =  controller.onExecuteCommandTest(implMethodB, designMethodA)
+        val resultDeviationsA =  controller.onExecuteCommandTest(implMethodA, designMethodB, TEST)
+        val resultDeviationsB =  controller.onExecuteCommandTest(implMethodB, designMethodA, TEST)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -54,8 +55,8 @@ internal class MethodParameterTypesTest : KoinTest {
 
     @Test
     fun convergentReturnType_reportsNoDeviation() {
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodA, designMethodA))
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodB, designMethodB))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodA, designMethodA, TEST))
+        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodB, designMethodB, TEST))
     }
 
 
