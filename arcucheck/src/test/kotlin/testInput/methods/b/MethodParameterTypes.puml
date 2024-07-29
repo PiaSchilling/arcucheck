@@ -1,0 +1,6 @@
+
+@startuml
+class MethodParameterTypes {
+- void method(String,int)
+}
+@enduml
