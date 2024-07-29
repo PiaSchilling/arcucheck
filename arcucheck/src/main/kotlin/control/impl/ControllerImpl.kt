@@ -33,6 +33,20 @@ class ControllerImpl(
 
     }
 
+    override fun onExecuteCommandTest(implementationPath: String, designPath: String): List<Deviation> {
+        val codeDiagram = codeParser.parseCode(implementationPath)
+        val designDiagram = FileHandler.readFileIntoString(File(designPath))
+
+        if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
+            val codePUMLDiagram = pumlMapper.mapDiagram(implementationPath, codeDiagram)
+            val designPUMLDiagram =
+                pumlMapper.mapDiagram(designPath, designDiagram)
+
+            return pumlComparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
+        }
+        return emptyList();
+    }
+
 
     override fun onExecuteCommandDirectory(directoryPath: String) {
         try {

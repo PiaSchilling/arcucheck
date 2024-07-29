@@ -1,0 +1,4 @@
+package fields
+
+class FieldDataTypeTest {
+}

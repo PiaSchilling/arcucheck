@@ -53,8 +53,8 @@ class CodeParserImpl : CodeParser {
             "-mpub", //--method_public       Add public methods
             "-mpro", //--method_protected    Add protected methods
             "-sctr", //--show_constructors   Show constructors
-            "-spkg", //--show_package        Show package
-        )
+            //"-spkg", //--show_package        Show package
+        ) // TODO das in config file auslagern -> test config ohne spkg erstellen
 
         try {
             val options: Options = CliOptionsHolder.createOptions()
