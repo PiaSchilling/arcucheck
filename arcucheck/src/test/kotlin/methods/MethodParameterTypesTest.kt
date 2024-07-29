@@ -28,7 +28,7 @@ internal class MethodParameterTypesTest : KoinTest {
     private val designMethodB = "src/test/kotlin/testInput/methods/b/$testClassName.puml"
 
     @Test
-    fun divergentReturnType_reportsDeviation_ofTypeMisimplemented() {
+    fun divergentParameterTypes_reportsDeviation_ofTypeMisimplemented() {
 
         val resultDeviationsA =  controller.onExecuteCommandTest(implMethodA, designMethodB, TEST)
         val resultDeviationsB =  controller.onExecuteCommandTest(implMethodB, designMethodA, TEST)
@@ -54,7 +54,7 @@ internal class MethodParameterTypesTest : KoinTest {
     }
 
     @Test
-    fun convergentReturnType_reportsNoDeviation() {
+    fun convergentParameterTypes_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodA, designMethodA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodB, designMethodB, TEST))
     }
