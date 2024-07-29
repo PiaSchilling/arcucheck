@@ -74,7 +74,7 @@ internal class ConstructorParameterTypesTest : KoinTest {
     }
 
     @Test
-    fun convergentVisibility_reportsNoDeviation() {
+    fun convergentParameterTypes_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorA, designConstructorA))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorB, designConstructorB))
     }

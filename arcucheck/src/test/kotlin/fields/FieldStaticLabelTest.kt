@@ -27,10 +27,10 @@ internal class FieldStaticLabelTest : KoinTest {
     private val designFieldB = "src/test/kotlin/testInput/fields/b/$testClassName.puml"
 
     @Test
-    fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
+    fun divergentStaticLabel_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA =  controller.onExecuteCommandTest(implFieldA, designFieldB)
-        val resultDeviationsB =  controller.onExecuteCommandTest(implFieldB, designFieldA)
+        val resultDeviationsA = controller.onExecuteCommandTest(implFieldA, designFieldB)
+        val resultDeviationsB = controller.onExecuteCommandTest(implFieldB, designFieldA)
 
         assert(resultDeviationsA.size == 1)
         assert(resultDeviationsB.size == 1)
@@ -53,7 +53,7 @@ internal class FieldStaticLabelTest : KoinTest {
     }
 
     @Test
-    fun convergentVisibility_reportsNoDeviation() {
+    fun convergentStaticLabel_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldA, designFieldA))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldB, designFieldB))
     }

@@ -27,7 +27,7 @@ internal class FieldDataTypeTest : KoinTest {
     private val designFieldB = "src/test/kotlin/testInput/fields/b/$testClassName.puml"
 
     @Test
-    fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
+    fun divergentDataType_reportsDeviation_ofTypeMisimplemented() {
 
         val resultDeviationsA =  controller.onExecuteCommandTest(implFieldA, designFieldB)
         val resultDeviationsB =  controller.onExecuteCommandTest(implFieldB, designFieldA)
@@ -53,7 +53,7 @@ internal class FieldDataTypeTest : KoinTest {
     }
 
     @Test
-    fun convergentVisibility_reportsNoDeviation() {
+    fun convergentDataType_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldA, designFieldA))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implFieldB, designFieldB))
     }

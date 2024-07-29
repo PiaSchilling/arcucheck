@@ -61,7 +61,7 @@ internal class ConstructorVisibilityTest : KoinTest {
     companion object {
         @JvmStatic
         @BeforeAll
-        fun startKoinForTest(): Unit {
+        fun startKoinForTest() {
             startKoin {
                 modules(coreModule, controlModule)
             }
