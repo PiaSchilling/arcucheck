@@ -15,10 +15,10 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 
-internal class ConstructorVisibilityTest : KoinTest {
+internal class ConstructorParameterTypesTest : KoinTest {
     private val controller by inject<Controller>()
 
-    private val testClassName = "ConstructorVisibility"
+    private val testClassName = "ConstructorParameterTypes"
 
     private val implConstructorA = "src/test/kotlin/testInput/constructors/a/$testClassName.java"
     private val implConstructorB = "src/test/kotlin/testInput/constructors/b/$testClassName.java"
@@ -27,7 +27,7 @@ internal class ConstructorVisibilityTest : KoinTest {
     private val designConstructorB = "src/test/kotlin/testInput/constructors/b/${testClassName}.puml"
 
     @Test
-    fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
+    fun divergentParameterTypes_reportsDeviation_ofTypeMisimplemented() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB)
         val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA)
@@ -42,13 +42,35 @@ internal class ConstructorVisibilityTest : KoinTest {
         assert(resultDeviationA.subjectType == DeviationSubjectType.CONSTRUCTOR)
         assert(resultDeviationA.level == DeviationLevel.MIKRO)
         assert(resultDeviationA.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("visibility"))
+        assert(resultDeviationA.description.contains("parameter types"))
 
         assert(resultDeviationB.deviationType == DeviationType.MISIMPLEMENTED)
         assert(resultDeviationB.subjectType == DeviationSubjectType.CONSTRUCTOR)
         assert(resultDeviationB.level == DeviationLevel.MIKRO)
         assert(resultDeviationB.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationB.description.contains("visibility"))
+        assert(resultDeviationB.description.contains("parameter types"))
+    }
+
+    @Test
+    fun divergentParameterTypes_reportsDeviation_ofTypeUnexpectedAndAbsent() {
+
+        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB)
+        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA)
+
+        assert(resultDeviationsA.size == 2)
+        assert(resultDeviationsB.size == 2)
+
+        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
+        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
+        assert(resultDeviationsA.all { deviation -> deviation.subjectType == DeviationSubjectType.CONSTRUCTOR })
+        assert(resultDeviationsA.all { deviation -> deviation.level == DeviationLevel.MIKRO })
+        assert(resultDeviationsA.all { deviation -> deviation.affectedClassesNames.contains(testClassName)})
+
+        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
+        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
+        assert(resultDeviationsB.all { deviation -> deviation.subjectType == DeviationSubjectType.CONSTRUCTOR })
+        assert(resultDeviationsB.all { deviation -> deviation.level == DeviationLevel.MIKRO })
+        assert(resultDeviationsB.all { deviation -> deviation.affectedClassesNames.contains(testClassName)})
     }
 
     @Test
@@ -61,7 +83,7 @@ internal class ConstructorVisibilityTest : KoinTest {
     companion object {
         @JvmStatic
         @BeforeAll
-        fun startKoinForTest(): Unit {
+        fun startKoinForTest() {
             startKoin {
                 modules(coreModule, controlModule)
             }
