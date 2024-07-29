@@ -174,7 +174,7 @@ class FieldComparator(private val designDiagramPath: String, private val implPat
 
         if (implementationField.visibility != designField.visibility) {
             fieldWarnings.add(
-                "Should have the visibility ${designField.visibility} according to the design but has the" +
+                "Should have the visibility ${designField.visibility} according to the design but has the " +
                         "visibility ${implementationField.visibility} in the implementation."
             )
         }
