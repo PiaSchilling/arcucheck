@@ -22,11 +22,11 @@ internal class FieldVisibilityTest : KoinTest {
 
     private val testClassName = "FieldVisibility"
 
-    private val implPublicField = "src/test/kotlin/testInput/fields/pub/$testClassName.java"
-    private val implPrivateField = "src/test/kotlin/testInput/fields/priv/$testClassName.java"
+    private val implPublicField = "src/test/kotlin/testInput/fields/b/$testClassName.java"
+    private val implPrivateField = "src/test/kotlin/testInput/fields/a/$testClassName.java"
 
-    private val designPublicField = "src/test/kotlin/testInput/fields/${testClassName}Public.puml"
-    private val designPrivateField = "src/test/kotlin/testInput/fields/${testClassName}Private.puml"
+    private val designPublicField = "src/test/kotlin/testInput/fields/b/${testClassName}B.puml"
+    private val designPrivateField = "src/test/kotlin/testInput/fields/a/${testClassName}A.puml"
 
     @Test
     fun divergentVisibility_reportsDeviation_ofTypeMisimplemented() {
