@@ -1,0 +1,4 @@
+@startuml
+class testInput.klasses.b.ClassPackageContainment {
+}
+@enduml
