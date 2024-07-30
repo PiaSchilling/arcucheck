@@ -17,36 +17,36 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 
-internal class PackageHierarchyTest : KoinTest {
+internal class PackageOccurrenceTest : KoinTest {
     private val controller by inject<Controller>()
 
-    private val testClassName = "PackageHierarchy"
+    private val testClassName = "PackageOccurrence"
 
-    private val implClassA = "src/test/kotlin/testInput/packages/a/$testClassName.java"
+    private val implClassA = "src/test/kotlin/testInput/packages/a/packageOccurrence/$testClassName.java"
     private val implClassB = "src/test/kotlin/testInput/packages/b/$testClassName.java"
 
-    private val designClassA = "src/test/kotlin/testInput/packages/a/$testClassName.puml"
+    private val designClassA = "src/test/kotlin/testInput/packages/a/packageOccurrence/$testClassName.puml"
     private val designClassB = "src/test/kotlin/testInput/packages/b/$testClassName.puml"
 
     @Test
-    fun divergentPackageHierarchy_reportsDeviation_ofTypeMisimplemented() {
+    fun divergentPackageOccurrence_reportsDeviation_ofTypeAbsentOrUnexpected() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, RELEASE)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, RELEASE)
 
-        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
+        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
         assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.PACKAGE })
         assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MAKRO })
-        assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains("${testClassName}B")})
+        assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
 
-        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
+        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
         assert(resultDeviationsB.any { deviation -> deviation.subjectType == DeviationSubjectType.PACKAGE })
         assert(resultDeviationsB.any { deviation -> deviation.level == DeviationLevel.MAKRO })
-        assert(resultDeviationsB.any { deviation -> deviation.affectedClassesNames.contains("${testClassName}B")})
+        assert(resultDeviationsB.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
     }
 
     @Test
-    fun convergentPackageHierarchy_reportsNoDeviation() {
+    fun convergentPackageOccurrence_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, RELEASE))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, RELEASE))
     }
