@@ -29,7 +29,64 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         implementationClasses: List<PUMLType>,
         designClasses: List<PUMLType>,
     ): List<Deviation> {
-        return checkTypes(implementationClasses, designClasses)
+        val castedImplClasses = implementationClasses.filterIsInstance<PUMLClass>()
+        val casteDesignClasses = designClasses.filterIsInstance<PUMLClass>()
+        val signatureDeviations = checkClassSignatures(castedImplClasses,casteDesignClasses)
+
+        return checkTypes(implementationClasses, designClasses) + signatureDeviations
+    }
+
+    /**
+     * Check if class signatures have any deviations (if the abstract modifier is missing)
+     *
+     * @param implementationClasses the classes present in the implementation
+     * @param designClasses the classes expected by the design
+     * @return a list of all detected deviations between the design and implementation classes
+     */
+    private fun checkClassSignatures(
+        implementationClasses: List<PUMLClass>,
+        designClasses: List<PUMLClass>
+    ): List<Deviation> {
+        if(implementationClasses.isEmpty() || designClasses.isEmpty()){
+            return emptyList()
+        }
+
+        val deviations = mutableListOf<Deviation>()
+        val implClassesMap = implementationClasses.associateBy { it.fullName }
+
+        designClasses.forEach { designClass ->
+            val match = implClassesMap[designClass.fullName]
+            match?.let {
+                if (designClass.isAbstract && !it.isAbstract) {
+                    deviations.add(
+                        Deviation(
+                            level = DeviationLevel.MAKRO,
+                            subjectType = DeviationSubjectType.CLASS,
+                            deviationType = DeviationType.MISIMPLEMENTED,
+                            affectedClassesNames = listOf(it.name),
+                            title = "Missing abstract modifier",
+                            description = "Class \"${it.name}\" is expected to be marked as abstract according to the design but is not in the implementation.",
+                            affectedImplementationPath = implPath,
+                            affectedDesignDiagramPath = designDiagramPath
+                        )
+                    )
+                } else if (!designClass.isAbstract && it.isAbstract) {
+                    deviations.add(
+                        Deviation(
+                            level = DeviationLevel.MAKRO,
+                            subjectType = DeviationSubjectType.CLASS,
+                            deviationType = DeviationType.MISIMPLEMENTED,
+                            affectedClassesNames = listOf(it.name),
+                            title = "Unexpected abstract modifier",
+                            description = "Class \"${it.name}\" is marked as abstract in the implementation but is not expected to be abstract according to the design.",
+                            affectedImplementationPath = implPath,
+                            affectedDesignDiagramPath = designDiagramPath
+                        )
+                    )
+                }
+            }
+        }
+        return deviations
     }
 
 
@@ -115,7 +172,8 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
 
         // If class still can not be found, it is absent
         notFoundClasses.forEach { type ->
-            val subjectType =  if (type.value is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
+            val subjectType =
+                if (type.value is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
             deviations.add(
                 DeviationBuilder.buildUnexpectedAbsentDeviation(
                     level = DeviationLevel.MAKRO,
@@ -133,7 +191,8 @@ class TypesComparator(private val designDiagramPath: String, private val implPat
         // If class now can be found, it might be just placed in the wrong package (or two classes with same name exist)
         foundClasses.forEach { existingDesignClass ->
             val wrongImplClass = implClassesMap[existingDesignClass.key]
-            val subjectType =  if (wrongImplClass is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
+            val subjectType =
+                if (wrongImplClass is PUMLClass) DeviationSubjectType.CLASS else DeviationSubjectType.INTERFACE
             deviations.add(
                 Deviation(
                     DeviationLevel.MAKRO,
