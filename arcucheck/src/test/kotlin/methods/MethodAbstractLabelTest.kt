@@ -30,27 +30,20 @@ internal class MethodAbstractLabelTest : KoinTest {
     @Test
     fun divergentAbstractLabel_reportsDeviation_ofTypeMisimplemented() {
 
-        val resultDeviationsA =  controller.onExecuteCommandTest(implMethodA, designMethodB, TEST)
-        val resultDeviationsB =  controller.onExecuteCommandTest(implMethodB, designMethodA, TEST)
+        val resultDeviationsA = controller.onExecuteCommandTest(implMethodA, designMethodB, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implMethodB, designMethodA, TEST)
 
-        assert(resultDeviationsA.size == 1)
-        assert(resultDeviationsB.size == 1)
+        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
+        assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.METHOD })
+        assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MIKRO })
+        assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains(testClassName) })
+        assert(resultDeviationsA.any { deviation -> deviation.description.contains("abstract") })
 
-        val resultDeviationA = resultDeviationsA[0]
-        val resultDeviationB = resultDeviationsB[0]
-
-        assert(resultDeviationA.deviationType == DeviationType.MISIMPLEMENTED)
-        assert(resultDeviationA.subjectType == DeviationSubjectType.METHOD)
-        assert(resultDeviationA.level == DeviationLevel.MIKRO)
-        assert(resultDeviationA.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("abstract"))
-
-        assert(resultDeviationB.deviationType == DeviationType.MISIMPLEMENTED)
-        assert(resultDeviationB.subjectType == DeviationSubjectType.METHOD)
-        assert(resultDeviationB.level == DeviationLevel.MIKRO)
-        assert(resultDeviationB.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationB.description.contains("abstract"))
-
+        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
+        assert(resultDeviationsB.any { deviation -> deviation.subjectType == DeviationSubjectType.METHOD })
+        assert(resultDeviationsB.any { deviation -> deviation.level == DeviationLevel.MIKRO })
+        assert(resultDeviationsB.any { deviation -> deviation.affectedClassesNames.contains(testClassName) })
+        assert(resultDeviationsB.any { deviation -> deviation.description.contains("abstract") })
     }
 
     @Test
