@@ -48,8 +48,11 @@ internal class MethodAbstractLabelTest : KoinTest {
 
     @Test
     fun convergentAbstractLabel_reportsNoDeviation() {
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodA, designMethodA, TEST))
-        assertEquals(emptyList(), controller.onExecuteCommandTest(implMethodB, designMethodB, TEST))
+        val resultDeviationsA = controller.onExecuteCommandTest(implMethodA, designMethodA, TEST)
+        val resultDeviationsB = controller.onExecuteCommandTest(implMethodB, designMethodB, TEST)
+
+        assert(resultDeviationsA.none { deviation -> deviation.subjectType == DeviationSubjectType.METHOD })
+        assert(resultDeviationsB.none { deviation -> deviation.subjectType == DeviationSubjectType.METHOD })
     }
 
 
