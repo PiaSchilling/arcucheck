@@ -1,5 +1,5 @@
 package testInput.methods.b;
 
-public class MethodAbstractLabel {
+public abstract class MethodAbstractLabel {
     public void method(){}
 }

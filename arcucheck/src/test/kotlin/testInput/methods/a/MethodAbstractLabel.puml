@@ -1,6 +1,6 @@
 
 @startuml
-class MethodAbstractLabel{
+abstract class MethodAbstractLabel{
 + {abstract} void method()
 }
 @enduml

@@ -28,7 +28,7 @@ internal class FieldOccurrenceTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/fields/b/$testClassName.puml"
 
     @Test
-    fun divergentMethods_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentFieldOccurrences_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
@@ -51,7 +51,7 @@ internal class FieldOccurrenceTest : KoinTest {
     }
 
     @Test
-    fun convergentMethods_reportsNoDeviation() {
+    fun convergentFieldOccurrences_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }
