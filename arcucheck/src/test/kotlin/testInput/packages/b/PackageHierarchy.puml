@@ -1,0 +1,4 @@
+@startuml
+class testInput.packages.b.PackageHierarchy {
+}
+@enduml

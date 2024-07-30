@@ -33,9 +33,6 @@ internal class ClassOccurrenceTest : KoinTest {
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
 
-        println(resultDeviationsA)
-        println(resultDeviationsA.first().affectedClassesNames)
-
         assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
         assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.CLASS })
         assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MAKRO })
