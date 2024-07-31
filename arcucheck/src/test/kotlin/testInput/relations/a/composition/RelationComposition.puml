@@ -1,0 +1,10 @@
+@startuml
+class RelationComposition{
+- TestReferenceClass testReferenceClass
++ <<Create>> RelationComposition()
+}
+class TestReferenceClass{}
+
+RelationComposition *-- TestReferenceClass
+
+@enduml

@@ -28,7 +28,7 @@ internal class RelationInheritanceTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/relations/b/inheritance/$testClassName.puml"
 
     @Test
-    fun divergentRealisationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentInheritanceRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
@@ -53,7 +53,7 @@ internal class RelationInheritanceTest : KoinTest {
     }
 
     @Test
-    fun convergentRealisationRelation_reportsNoDeviation() {
+    fun convergentInheritanceRelation_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }

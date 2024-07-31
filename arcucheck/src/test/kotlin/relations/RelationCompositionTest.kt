@@ -16,42 +16,40 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import kotlin.test.assertEquals
 
-internal class RelationAggregationTest : KoinTest {
+internal class RelationCompositionTest : KoinTest {
     private val controller by inject<Controller>()
 
-    private val testClassName = "RelationAggregation"
+    private val testClassName = "RelationComposition"
 
-    private val implClassA = "src/test/kotlin/testInput/relations/a/aggregation/"
-    private val implClassB = "src/test/kotlin/testInput/relations/b/aggregation/"
+    private val implClassA = "src/test/kotlin/testInput/relations/a/composition/"
+    private val implClassB = "src/test/kotlin/testInput/relations/b/composition/"
 
-    private val designClassA = "src/test/kotlin/testInput/relations/a/aggregation/$testClassName.puml"
-    private val designClassB = "src/test/kotlin/testInput/relations/b/aggregation/$testClassName.puml"
+    private val designClassA = "src/test/kotlin/testInput/relations/a/composition/$testClassName.puml"
+    private val designClassB = "src/test/kotlin/testInput/relations/b/composition/$testClassName.puml"
 
     @Test
-    fun divergentAggregationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentCompositionRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
-
-        println(resultDeviationsA)
 
         assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
         assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })
         assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MAKRO })
         assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
-        assert(resultDeviationsA.any { deviation -> deviation.description.contains("AGGREGATION")})
+        assert(resultDeviationsA.any { deviation -> deviation.description.contains("COMPOSITION")})
 
 
         assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
         assert(resultDeviationsB.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })
         assert(resultDeviationsB.any { deviation -> deviation.level == DeviationLevel.MAKRO })
         assert(resultDeviationsB.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
-        assert(resultDeviationsA.any { deviation -> deviation.description.contains("AGGREGATION")})
+        assert(resultDeviationsA.any { deviation -> deviation.description.contains("COMPOSITION")})
 
     }
 
     @Test
-    fun convergentAggregationRelation_reportsNoDeviation() {
+    fun convergentCompositionRelation_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }
