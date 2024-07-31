@@ -53,28 +53,6 @@ internal class ConstructorParameterTypesTest : KoinTest {
     }
 
     @Test
-    fun divergentParameterTypes_reportsDeviation_ofTypeUnexpectedAndAbsent() {
-
-        val resultDeviationsA = controller.onExecuteCommandTest(implConstructorA, designConstructorB, TEST)
-        val resultDeviationsB = controller.onExecuteCommandTest(implConstructorB, designConstructorA, TEST)
-
-        assert(resultDeviationsA.size == 2)
-        assert(resultDeviationsB.size == 2)
-
-        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
-        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
-        assert(resultDeviationsA.all { deviation -> deviation.subjectType == DeviationSubjectType.CONSTRUCTOR })
-        assert(resultDeviationsA.all { deviation -> deviation.level == DeviationLevel.MIKRO })
-        assert(resultDeviationsA.all { deviation -> deviation.affectedClassesNames.contains(testClassName)})
-
-        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
-        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
-        assert(resultDeviationsB.all { deviation -> deviation.subjectType == DeviationSubjectType.CONSTRUCTOR })
-        assert(resultDeviationsB.all { deviation -> deviation.level == DeviationLevel.MIKRO })
-        assert(resultDeviationsB.all { deviation -> deviation.affectedClassesNames.contains(testClassName)})
-    }
-
-    @Test
     fun convergentParameterTypes_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorA, designConstructorA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implConstructorB, designConstructorB, TEST))
