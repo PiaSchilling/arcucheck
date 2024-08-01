@@ -5,13 +5,13 @@ enum class RelationType(val pumlIdentifier: String) {
      * Class extending another class (inheritance)
      *
      */
-    EXTENSION("<|--"),
+    INHERITANCE("<|--"),
 
     /**
-     * Class implementing an interface
+     * Class implementing resp. realising an interface
      *
      */
-    IMPLEMENTATION("<|.."),
+    REALISATION("<|.."),
 
     /**
      * Class containing another class (composition). Contained class can not exist independently

@@ -43,13 +43,13 @@ internal class RelationRealisationTest : KoinTest {
         assert(resultDeviationA.subjectType == DeviationSubjectType.RELATION)
         assert(resultDeviationA.level == DeviationLevel.MAKRO)
         assert(resultDeviationA.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("IMPLEMENTATION"))
+        assert(resultDeviationA.description.contains("REALISATION"))
 
         assert(resultDeviationB.deviationType == DeviationType.ABSENT)
         assert(resultDeviationB.subjectType == DeviationSubjectType.RELATION)
         assert(resultDeviationB.level == DeviationLevel.MAKRO)
         assert(resultDeviationB.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("IMPLEMENTATION"))
+        assert(resultDeviationA.description.contains("REALISATION"))
 
     }
 

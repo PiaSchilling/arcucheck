@@ -33,14 +33,11 @@ internal class RelationAggregationTest : KoinTest {
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
 
-        println(resultDeviationsA)
-
         assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
         assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })
         assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MAKRO })
         assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
         assert(resultDeviationsA.any { deviation -> deviation.description.contains("AGGREGATION")})
-
 
         assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
         assert(resultDeviationsB.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })

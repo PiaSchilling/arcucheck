@@ -43,13 +43,13 @@ internal class RelationInheritanceTest : KoinTest {
         assert(resultDeviationA.subjectType == DeviationSubjectType.RELATION)
         assert(resultDeviationA.level == DeviationLevel.MAKRO)
         assert(resultDeviationA.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("EXTENSION"))
+        assert(resultDeviationA.description.contains("INHERITANCE"))
 
         assert(resultDeviationB.deviationType == DeviationType.ABSENT)
         assert(resultDeviationB.subjectType == DeviationSubjectType.RELATION)
         assert(resultDeviationB.level == DeviationLevel.MAKRO)
         assert(resultDeviationB.affectedClassesNames.contains(testClassName))
-        assert(resultDeviationA.description.contains("EXTENSION"))
+        assert(resultDeviationA.description.contains("INHERITANCE"))
     }
 
     @Test
