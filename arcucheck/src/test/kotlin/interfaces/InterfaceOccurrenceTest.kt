@@ -28,7 +28,7 @@ internal class InterfaceOccurrenceTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/interfazes/b/interfaceOccurrence/$testClassName.puml"
 
     @Test
-    fun divergentClassOccurrences_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentInterfaceOccurrences_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
@@ -45,7 +45,7 @@ internal class InterfaceOccurrenceTest : KoinTest {
     }
 
     @Test
-    fun convergentClassOccurrences_reportsNoDeviation() {
+    fun convergentInterfaceOccurrences_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }

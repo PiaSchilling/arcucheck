@@ -28,18 +28,18 @@ internal class RelationNavigabilityTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/relations/b/navigability/$testClassName.puml"
 
     @Test
-    fun divergentAggregationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentNavigabilityRelation_reportsDeviation_ofTypeMisimplemented() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
 
-        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.UNEXPECTED })
+        assert(resultDeviationsA.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
         assert(resultDeviationsA.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })
         assert(resultDeviationsA.any { deviation -> deviation.level == DeviationLevel.MAKRO })
         assert(resultDeviationsA.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
         assert(resultDeviationsA.any { deviation -> deviation.description.contains("NAVIGABILITY")})
 
-        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.ABSENT })
+        assert(resultDeviationsB.any { deviation -> deviation.deviationType == DeviationType.MISIMPLEMENTED })
         assert(resultDeviationsB.any { deviation -> deviation.subjectType == DeviationSubjectType.RELATION })
         assert(resultDeviationsB.any { deviation -> deviation.level == DeviationLevel.MAKRO })
         assert(resultDeviationsB.any { deviation -> deviation.affectedClassesNames.contains(testClassName)})
@@ -48,7 +48,7 @@ internal class RelationNavigabilityTest : KoinTest {
     }
 
     @Test
-    fun convergentAggregationRelation_reportsNoDeviation() {
+    fun convergentNavigabilityRelation_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }

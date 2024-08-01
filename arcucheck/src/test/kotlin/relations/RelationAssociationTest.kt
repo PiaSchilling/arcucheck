@@ -28,7 +28,7 @@ internal class RelationAssociationTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/relations/b/association/$testClassName.puml"
 
     @Test
-    fun divergentAggregationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentAssociationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
@@ -48,7 +48,7 @@ internal class RelationAssociationTest : KoinTest {
     }
 
     @Test
-    fun convergentAggregationRelation_reportsNoDeviation() {
+    fun convergentAssociationRelation_reportsNoDeviation() {
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassA, designClassA, TEST))
         assertEquals(emptyList(), controller.onExecuteCommandTest(implClassB, designClassB, TEST))
     }
