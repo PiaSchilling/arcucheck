@@ -21,11 +21,11 @@ internal class InterfaceOccurrenceTest : KoinTest {
 
     private val testClassName = "InterfaceOccurrence"
 
-    private val implClassA = "src/test/kotlin/testInput/interfaces/a/interfaceOccurrence/"
-    private val implClassB = "src/test/kotlin/testInput/interfaces/b/interfaceOccurrence/"
+    private val implClassA = "src/test/kotlin/testInput/interfazes/a/interfaceOccurrence/"
+    private val implClassB = "src/test/kotlin/testInput/interfazes/b/interfaceOccurrence/"
 
-    private val designClassA = "src/test/kotlin/testInput/interfaces/a/interfaceOccurrence/$testClassName.puml"
-    private val designClassB = "src/test/kotlin/testInput/interfaces/b/interfaceOccurrence/$testClassName.puml"
+    private val designClassA = "src/test/kotlin/testInput/interfazes/a/interfaceOccurrence/$testClassName.puml"
+    private val designClassB = "src/test/kotlin/testInput/interfazes/b/interfaceOccurrence/$testClassName.puml"
 
     @Test
     fun divergentClassOccurrences_reportsDeviation_ofTypeUnexpectedAbsent() {
