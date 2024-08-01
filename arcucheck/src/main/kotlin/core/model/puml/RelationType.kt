@@ -23,7 +23,31 @@ enum class RelationType(val pumlIdentifier: String) {
      * Class containing another class (composition). Contained class can exist independently
      *
      */
-    AGGREGATION("o--");
+    AGGREGATION("o--"),
+
+    /**
+     * Simple association between two classes
+     *
+     */
+    ASSOCIATION("--"),
+
+    /**
+     * Association that it navigable from the class of the left side of the identifier
+     *
+     */
+    LEFT_NAVIGABLE_ASSOCIATION("<--x"),
+
+    /**
+     * Association that it navigable from the class of the right side of the identifier
+     *
+     */
+    RIGHT_NAVIGABLE_ASSOCIATION("x-->"),
+
+    /**
+     * Association that it navigable in both directions
+     *
+     */
+    BIDIRECTIONAL_NAVIGABLE_ASSOCIATION("<-->");
 
     companion object {
         /**

@@ -23,7 +23,7 @@ object Patterns {
      * Pattern to split PlantUML diagram into PlantUML relations
      * - group 0: whole relation string
      */
-    const val SPLIT_RELATIONS = """^\s*[\w.]+\s*[<\-o|*.]{3,4}\s*[\w.]+\s*${'$'}"""
+    const val SPLIT_RELATIONS = """^\s*[\w.]+\s*[<>x\-o|*.]{2,4}\s*[\w.]+\s*${'$'}"""
 
     /**
      * Pattern to extract relation character groups from PlantUML relation string
@@ -32,7 +32,7 @@ object Patterns {
      * - group 2: relation type
      * - group 3: destination class of relation
      */
-    const val EXTRACT_RELATIONS = """^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}"""
+    const val EXTRACT_RELATIONS = """^\s*([\w.]+)\s*([<>x\-o|*.]{2,4})\s*([\w.]+)\s*${'$'}"""
 
     /**
      * Pattern to extract field character groups from PlantUML class string
