@@ -28,7 +28,7 @@ internal class RelationMultiplicityTest : KoinTest {
     private val designClassB = "src/test/kotlin/testInput/relations/b/multiplicity/$testClassName.puml"
 
     @Test
-    fun divergentAggregationRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
+    fun divergentMultiplicityRelation_reportsDeviation_ofTypeUnexpectedAbsent() {
 
         val resultDeviationsA = controller.onExecuteCommandTest(implClassA, designClassB, TEST)
         val resultDeviationsB = controller.onExecuteCommandTest(implClassB, designClassA, TEST)
@@ -48,7 +48,7 @@ internal class RelationMultiplicityTest : KoinTest {
     }
 
     @Test
-    fun convergentAggregationRelation_reportsNoDeviation() {
+    fun convergentMultiplicityRelation_reportsNoDeviation() {
         /**
          * Multiplicity is neither extracted from the implementation nor from the design, so it is ignored in both models,
          * resulting in convergent models. Since the test aims to verify multiplicity, it cannot be considered passed
