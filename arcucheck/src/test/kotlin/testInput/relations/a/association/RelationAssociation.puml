@@ -1,0 +1,9 @@
+@startuml
+class RelationAssociation{
+- TestClass testClass
+}
+class TestClass{
+}
+
+RelationAssociation -- TestClass
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class FieldOccurrence{
+- String fieldA
+}
+
+@enduml

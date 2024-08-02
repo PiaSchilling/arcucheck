@@ -1,0 +1,6 @@
+
+@startuml
+class MethodStaticLabel{
++ void method()
+}
+@enduml

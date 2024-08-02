@@ -1,0 +1,5 @@
+@startuml
+class ConstructorOccurrence {
++ <<Create>> ConstructorOccurrence()
+}
+@enduml

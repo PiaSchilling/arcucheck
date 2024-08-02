@@ -1,0 +1,11 @@
+@startuml
+class RelationAggregation{
+- TestReferenceClass testReferenceClass
++ void setTestReferenceClass(TestReferenceClass)
++ TestReferenceClass getTestReferenceClass()
+}
+class TestReferenceClass{}
+
+RelationAggregation o-- TestReferenceClass
+
+@enduml

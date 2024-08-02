@@ -1,0 +1,11 @@
+@startuml
+class RelationNavigability{
+- TestClass testClass
++ <<Create>> RelationNavigability(TestClass)
+}
+class TestClass{
++ <<Create>> TestClass()
+}
+
+RelationNavigability x--> TestClass
+@enduml

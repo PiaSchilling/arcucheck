@@ -1,0 +1,7 @@
+@startuml
+class TestSuperClass{}
+class RelationInheritance{}
+
+TestSuperClass <|-- RelationInheritance
+
+@enduml

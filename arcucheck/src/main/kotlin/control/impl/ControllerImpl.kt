@@ -4,6 +4,7 @@ import control.api.Controller
 import core.api.CodeParser
 import core.api.PUMLComparator
 import core.api.PUMLMapper
+import core.constants.RELEASE
 import core.exceptions.MissingImplPathException
 import core.impl.FileHandler
 import core.model.deviation.Deviation
@@ -19,7 +20,7 @@ class ControllerImpl(
 ) : Controller {
 
     override fun onExecuteCommandSingleFile(implementationPath: String, designPath: String) {
-        val codeDiagram = codeParser.parseCode(implementationPath)
+        val codeDiagram = codeParser.parseCode(implementationPath, RELEASE)
         val designDiagram = FileHandler.readFileIntoString(File(designPath))
 
         if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
@@ -31,6 +32,20 @@ class ControllerImpl(
             handleResult(1, deviations)
         }
 
+    }
+
+    override fun onExecuteCommandTest(implementationPath: String, designPath: String, config: String): List<Deviation> {
+        val codeDiagram = codeParser.parseCode(implementationPath, config)
+        val designDiagram = FileHandler.readFileIntoString(File(designPath))
+
+        if (codeDiagram.isNotBlank() && designDiagram.isNotBlank()) {
+            val codePUMLDiagram = pumlMapper.mapDiagram(implementationPath, codeDiagram)
+            val designPUMLDiagram =
+                pumlMapper.mapDiagram(designPath, designDiagram)
+
+            return pumlComparator.comparePUMLDiagrams(codePUMLDiagram, designPUMLDiagram)
+        }
+        return emptyList();
     }
 
 
@@ -111,7 +126,7 @@ class ControllerImpl(
      */
     private fun convertImplFilesInPumlString(implementationFiles: Map<File, String>): Map<File, Pair<String, String>> {
         return implementationFiles.entries.associate { implFile ->
-            val textDiagram = codeParser.parseCode(implFile.value)
+            val textDiagram = codeParser.parseCode(implFile.value, RELEASE)
             implFile.key to Pair(textDiagram, implFile.value)
         }.toMutableMap()
     }

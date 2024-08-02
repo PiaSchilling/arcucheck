@@ -1,0 +1,5 @@
+@startuml
+class ConstructorParameterTypes {
++ <<Create>> ConstructorParameterTypes(String,String)
+}
+@enduml

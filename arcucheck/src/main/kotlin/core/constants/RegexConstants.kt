@@ -23,7 +23,7 @@ object Patterns {
      * Pattern to split PlantUML diagram into PlantUML relations
      * - group 0: whole relation string
      */
-    const val SPLIT_RELATIONS = """^\s*[\w.]+\s*[<\-o|*.]{3,4}\s*[\w.]+\s*${'$'}"""
+    const val SPLIT_RELATIONS = """^\s*[\w.]+\s*[<>x\-o|*.]{2,4}\s*[\w.]+\s*${'$'}"""
 
     /**
      * Pattern to extract relation character groups from PlantUML relation string
@@ -32,7 +32,7 @@ object Patterns {
      * - group 2: relation type
      * - group 3: destination class of relation
      */
-    const val EXTRACT_RELATIONS = """^\s*([\w.]+)\s*([<\-o|*.]{3,4})\s*([\w.]+)\s*${'$'}"""
+    const val EXTRACT_RELATIONS = """^\s*([\w.]+)\s*([<>x\-o|*.]{2,4})\s*([\w.]+)\s*${'$'}"""
 
     /**
      * Pattern to extract field character groups from PlantUML class string
@@ -67,13 +67,13 @@ object Patterns {
 
 
     /**
-     * Pattern to extract constructor character groups from PlantUML class string
-     * - group 0: whole constructor signature
-     * - group 1: constructor visibility
-     * - group 2: constructor name
-     * - group 3: constructor parameters
+     * Pattern to extract constructors character groups from PlantUML class string
+     * - group 0: whole constructors signature
+     * - group 1: constructors visibility
+     * - group 2: constructors name
+     * - group 3: constructors parameters
      */
-    const val EXTRACT_CONSTRUCTORS = """([+\-#])\s*<<Create>>\s+(\w+)\((.*?)\)"""
+    const val EXTRACT_CONSTRUCTORS = """([+\-#~])\s*<<Create>>\s+(\w+)\((.*?)\)"""
 
     const val EXTRACT_IMPL_PATH = """'implementation_path=\[(.+)\]"""
 }

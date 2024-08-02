@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: revise deviations output">
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add ResultPrinter">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DsmViewSettings">
+    <option name="flattenPackages" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -34,32 +37,51 @@
         <option value="Kotlin Data Class" />
         <option value="Class" />
         <option value="Kotlin Enum" />
+        <option value="Kotlin File" />
         <option value="Kotlin Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="dev" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
   <component name="ProjectId" id="2goYUfsfRXw5X63Ae8MZ0a20X3S" />
   <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  },
+  "keyToStringList": {
+    "kotlin-gradle-user-dirs": [
+      "/Users/piaschilling/.gradle"
+    ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/libs" />
@@ -91,6 +113,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="arcucheck [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -112,6 +135,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
@@ -132,6 +156,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="StringExtensionsKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="util.extensions.StringExtensionsKt" />
+      <module name="arcucheck.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="UMLMapperImplKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="core.impl.UMLMapperImplKt" />
       <module name="arcucheck.main" />
@@ -143,17 +174,26 @@
       <item itemvalue="Gradle.arcucheck [clean build]" />
       <item itemvalue="Gradle.arcucheck [dependencies]" />
       <item itemvalue="Kotlin.MaintKt_Directory" />
+      <item itemvalue="Kotlin.StringExtensionsKt" />
       <item itemvalue="Kotlin.MainKt" />
       <item itemvalue="Kotlin.UMLMapperImplKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Kotlin.StringExtensionsKt" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.UMLMapperImplKt" />
         <item itemvalue="Gradle.arcucheck [clean build]" />
         <item itemvalue="Gradle.arcucheck [dependencies]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -166,34 +206,10 @@
       <workItem from="1716365416271" duration="6126000" />
       <workItem from="1716886858580" duration="661000" />
       <workItem from="1716887541941" duration="6629000" />
-    </task>
-    <task id="LOCAL-00001" summary="refactor: migrate from maven to gradle">
-      <created>1716365776719</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1716365776719</updated>
-    </task>
-    <task id="LOCAL-00002" summary="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised">
-      <created>1716367712467</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1716367712467</updated>
-    </task>
-    <task id="LOCAL-00003" summary="feat: get plantUML parser running&#10;&#10;Very prototypical state which has to be revised">
-      <created>1716369202064</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1716369202064</updated>
-    </task>
-    <task id="LOCAL-00004" summary="chore: add dependency lib jars (plantuml-parser)">
-      <created>1716885007797</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1716885007797</updated>
+      <workItem from="1719075925030" duration="20695000" />
+      <workItem from="1721474823692" duration="615000" />
+      <workItem from="1721653110226" duration="4175000" />
+      <workItem from="1722220503971" duration="336000" />
     </task>
     <task id="LOCAL-00005" summary="chore: remove guice&#10;&#10;It caused problems that cant be fixed quickly">
       <created>1716892748008</created>
@@ -475,7 +491,70 @@
       <option name="project" value="LOCAL" />
       <updated>1718967290939</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="feat: adjust path in DeviationBuilder to point to class instead of module">
+      <created>1719082238772</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1719082238772</updated>
+    </task>
+    <task id="LOCAL-00046" summary="fix: fix white space in path">
+      <created>1719082348459</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1719082348459</updated>
+    </task>
+    <task id="LOCAL-00047" summary="fix: fix paths for mikro deviations">
+      <created>1719235502442</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1719235502442</updated>
+    </task>
+    <task id="LOCAL-00048" summary="feat: adjust DeviationArea">
+      <created>1719237819861</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1719237819861</updated>
+    </task>
+    <task id="LOCAL-00049" summary="feat: merge DeviationArea and DeviationSubject to DeviationSubjectType">
+      <created>1719238699494</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1719238699494</updated>
+    </task>
+    <task id="LOCAL-00050" summary="feat: rename DeviationType.ABSENCE to ABSENT for consistency">
+      <created>1719239103172</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1719239103172</updated>
+    </task>
+    <task id="LOCAL-00051" summary="feat: shorten descriptions of misimplemented deviation causes">
+      <created>1719239426899</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1719239426899</updated>
+    </task>
+    <task id="LOCAL-00052" summary="feat: add stats to console output">
+      <created>1719245302450</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1719245302450</updated>
+    </task>
+    <task id="LOCAL-00053" summary="feat: add ResultPrinter">
+      <created>1719247895330</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1719247895330</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -490,12 +569,17 @@
     </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
+        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c">
           <value>
             <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -514,13 +598,13 @@
                   </entry>
                 </map>
               </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
         <entry key="9613bee4-43f3-49f2-9397-99501a69537b">
           <value>
             <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -539,6 +623,7 @@
                   </entry>
                 </map>
               </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
@@ -549,23 +634,8 @@
         </entry>
       </map>
     </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
-        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: add first deviation detection &#10;&#10;Absent and unexpected classes can now be detected" />
-    <MESSAGE value="refactor: move PUMLModels to subpackage" />
-    <MESSAGE value="feat: format String representation of Deviation class" />
-    <MESSAGE value="refactor: rename package to lowercase" />
-    <MESSAGE value="feat: add detection of absent and unexpected relations" />
-    <MESSAGE value="feat: begin adding method checking&#10;&#10;Not yet working but code needs refactoring, save the current state" />
-    <MESSAGE value="refactor: split up PUMLComparatorImpl into sub-comparators" />
-    <MESSAGE value="feat: work on method comparison&#10;&#10;Method deviations still buggy" />
-    <MESSAGE value="feat: fix bug in method deviation detection" />
     <MESSAGE value="todo: add todos" />
     <MESSAGE value="feat: comment and clean up MethodComparator" />
     <MESSAGE value="feat: add FieldComparator" />
@@ -582,7 +652,16 @@
     <MESSAGE value="feat: change path extraction from file name to puml comment" />
     <MESSAGE value="feat: fix code path" />
     <MESSAGE value="feat: revise deviations output" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: revise deviations output" />
+    <MESSAGE value="feat: adjust path in DeviationBuilder to point to class instead of module" />
+    <MESSAGE value="fix: fix white space in path" />
+    <MESSAGE value="fix: fix paths for mikro deviations" />
+    <MESSAGE value="feat: adjust DeviationArea" />
+    <MESSAGE value="feat: merge DeviationArea and DeviationSubject to DeviationSubjectType" />
+    <MESSAGE value="feat: rename DeviationType.ABSENCE to ABSENT for consistency" />
+    <MESSAGE value="feat: shorten descriptions of misimplemented deviation causes" />
+    <MESSAGE value="feat: add stats to console output" />
+    <MESSAGE value="feat: add ResultPrinter" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add ResultPrinter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -603,13 +682,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/comparators/MethodComparator.kt</url>
-          <line>165</line>
+          <line>163</line>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="kotlin-line">
           <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/DeviationBuilder.kt</url>
-          <line>68</line>
+          <line>75</line>
           <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/util/extensions/StringExtensions.kt</url>
+          <line>10</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,5 +1,7 @@
 package control.api
 
+import core.model.deviation.Deviation
+
 interface Controller {
     /**
      * Execute the command for a single design PlantUML diagram
@@ -8,6 +10,18 @@ interface Controller {
      * @param designPath the path to the design PlantUML diagram
      */
     fun onExecuteCommandSingleFile(implementationPath: String, designPath: String)
+
+    /**
+     * Testing config
+     * Execute the command for a single design PlantUML diagram and related implementation file
+     *
+     * Mainly for testing purposes since it does not print the result but returns a list of deviations
+     * @param implementationPath the path to the implementation
+     * @param designPath the path to the design PlantUML diagram
+     * @param config a string indicating the codeParser config (release = parse packages, test = parse no packages)
+     * @return a list of all detected deviations or an empty list, if specified paths were empty
+     */
+    fun onExecuteCommandTest(implementationPath: String, designPath: String, config:String): List<Deviation>
 
     /**
      * Execute the command for a directory of design puml diagrams
