@@ -4,6 +4,7 @@ import core.model.deviation.Deviation
 import core.model.deviation.DeviationLevel
 import core.model.deviation.DeviationSubjectType
 import core.model.deviation.DeviationType
+import kotlin.system.exitProcess
 
 class ResultPrinter {
     companion object{
@@ -13,11 +14,13 @@ class ResultPrinter {
             println("----------------------------------------------------------------------------------\n")
             if (deviations.isEmpty()) {
                 println("No deviations between design and implementation found.")
+                exitProcess(0)
             } else {
                 printStatistics(deviations)
                 println("----------------------------------------------------------------------------------\n")
                 printDeviations(deviations)
                 println("----------------------------------------------------------------------------------\n")
+                exitProcess(1)
             }
         }
 
