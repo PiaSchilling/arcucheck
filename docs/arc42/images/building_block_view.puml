@@ -9,7 +9,7 @@ class ControllerImpl{
 - mapper:UMLMapper
 - comparator: UMLObjComparator
 - generator: WarningGenerator
-onExecuteCommand(args)
++ onExecuteCommand(args)
 }
 interface CodeParser{
 + parseCode(pathToCode):File

@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor user
+participant CLI
+participant Controller
+participant CodeParser
+participant UMLMapper
+participant UMLObjComparator
+participant WarningGenerator
+
+user -> CLI: exec command 'arcucheck -o ...'
+CLI -> Controller: onStartApplication(args)
+note right
+args = path to code,
+path to design UMLs
+end note
+Controller -> CodeParser: parseCodeToUML(pathToCode)
+CodeParser -> Controller: return generatedUML
+Controller -> UMLMapper: mapUMLs(codeUML,designUML)
+UMLMapper -> Controller: return mappedUMLObjects
+note left
+mapped UMLs in form of
+Kotlin objects
+end note
+Controller -> UMLObjComparator: compareUMLObjs(codeUMLObj,designUMLObj)
+UMLObjComparator -> Controller: return comparisonObject
+note left
+comparison object
+encapsulates comp results
+end note
+Controller -> WarningGenerator: generateWarnings(comparisonObject)
+WarningGenerator -> Controller: return generatedWarnings
+Controller -> CLI: forward generatedWarnings
+CLI -> user: output generatedWarnings
+
+@enduml

@@ -4,8 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add ResultPrinter">
+    <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add exitProcess with status 1 if deviations are detected">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ResultPrinter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ResultPrinter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/01_2_iso-25010-topics-EN.drawio.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/05_building_blocks-EN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/08-Crosscutting-Concepts-Structure-EN.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/building_block_view.puml" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/images/building_block_view.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/runtime_view.puml" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/images/runtime_view_simple.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/05_building_block_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/05_building_block_view.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/06_runtime_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/06_runtime_view.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/08_concepts.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/08_concepts.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/09_architecture_decisions.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/09_architecture_decisions.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/10_quality_requirements.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/10_quality_requirements.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/11_technical_risks.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/11_technical_risks.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/12_glossary.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/12_glossary.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +46,28 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="arcucheck" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="arcucheck" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="arcucheck" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
   </component>
@@ -56,32 +97,34 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2goYUfsfRXw5X63Ae8MZ0a20X3S" />
   <component name="ProjectViewState">
     <option name="autoscrollFromSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build arcucheck.executor&quot;: &quot;Run&quot;,
+    &quot;Kotlin.MaintKt_Directory.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/piaschilling/Documents/Studium/2024-03-19_Semeseter_8/Bachelorarbeit/Tool/Repo/arcucheck/arcucheck/libs&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   },
-  "keyToStringList": {
-    "kotlin-gradle-user-dirs": [
-      "/Users/piaschilling/.gradle"
+  &quot;keyToStringList&quot;: {
+    &quot;kotlin-gradle-user-dirs&quot;: [
+      &quot;/Users/piaschilling/.gradle&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/libs" />
@@ -113,10 +156,9 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="arcucheck [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="arcucheck [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -127,7 +169,7 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="dependencies" />
+            <option value="jar" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -135,7 +177,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
@@ -150,7 +191,7 @@
     <configuration name="MaintKt_Directory" type="JetRunConfigurationType">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="arcucheck.main" />
-      <option name="PROGRAM_PARAMETERS" value="-ddp $USER_HOME$/Desktop/DemoDocs/ -d" />
+      <option name="PROGRAM_PARAMETERS" value="-ddp $USER_HOME$/Desktop/arcudoc/arc/ -d" />
       <shortenClasspath name="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -171,8 +212,8 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.arcucheck [jar]" />
       <item itemvalue="Gradle.arcucheck [clean build]" />
-      <item itemvalue="Gradle.arcucheck [dependencies]" />
       <item itemvalue="Kotlin.MaintKt_Directory" />
       <item itemvalue="Kotlin.StringExtensionsKt" />
       <item itemvalue="Kotlin.MainKt" />
@@ -180,11 +221,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.arcucheck [jar]" />
         <item itemvalue="Kotlin.StringExtensionsKt" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.UMLMapperImplKt" />
         <item itemvalue="Gradle.arcucheck [clean build]" />
-        <item itemvalue="Gradle.arcucheck [dependencies]" />
       </list>
     </recent_temporary>
   </component>
@@ -210,13 +251,7 @@
       <workItem from="1721474823692" duration="615000" />
       <workItem from="1721653110226" duration="4175000" />
       <workItem from="1722220503971" duration="336000" />
-    </task>
-    <task id="LOCAL-00005" summary="chore: remove guice&#10;&#10;It caused problems that cant be fixed quickly">
-      <created>1716892748008</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1716892748008</updated>
+      <workItem from="1723104935952" duration="2426000" />
     </task>
     <task id="LOCAL-00006" summary="feat: add Koin di">
       <created>1716894560404</created>
@@ -554,7 +589,14 @@
       <option name="project" value="LOCAL" />
       <updated>1719247895330</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="feat: add exitProcess with status 1 if deviations are detected">
+      <created>1723068060276</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1723068060276</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -569,17 +611,12 @@
     </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
-        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
-      </map>
-    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c">
           <value>
             <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -598,13 +635,13 @@
                   </entry>
                 </map>
               </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
         <entry key="9613bee4-43f3-49f2-9397-99501a69537b">
           <value>
             <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -623,7 +660,6 @@
                   </entry>
                 </map>
               </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
@@ -634,9 +670,14 @@
         </entry>
       </map>
     </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
+        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="todo: add todos" />
     <MESSAGE value="feat: comment and clean up MethodComparator" />
     <MESSAGE value="feat: add FieldComparator" />
     <MESSAGE value="feat: comment and clean up" />
@@ -661,7 +702,8 @@
     <MESSAGE value="feat: shorten descriptions of misimplemented deviation causes" />
     <MESSAGE value="feat: add stats to console output" />
     <MESSAGE value="feat: add ResultPrinter" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add ResultPrinter" />
+    <MESSAGE value="feat: add exitProcess with status 1 if deviations are detected" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add exitProcess with status 1 if deviations are detected" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -694,6 +736,16 @@
           <url>file://$PROJECT_DIR$/src/main/kotlin/util/extensions/StringExtensions.kt</url>
           <line>10</line>
           <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt</url>
+          <line>55</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt</url>
+          <line>30</line>
+          <option name="timeStamp" value="46" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

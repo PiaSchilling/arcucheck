@@ -3,7 +3,8 @@ ifndef::imagesdir[:imagesdir: ../images]
 [[section-runtime-view]]
 == Runtime View
 
-[plantuml, system_context, svg]
+[plantuml, test, svg]
 ....
 include::../images/runtime_view.puml[]
 ....
+
