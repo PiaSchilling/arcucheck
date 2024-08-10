@@ -31,3 +31,11 @@ kotlin {
 application {
     mainClassName = 'MainKt'
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'MainKt'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}

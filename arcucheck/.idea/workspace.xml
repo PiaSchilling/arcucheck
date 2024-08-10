@@ -5,27 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add exitProcess with status 1 if deviations are detected">
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ControllerImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/control/impl/ResultPrinter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/control/impl/ResultPrinter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/core/impl/CodeParserImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/01_2_iso-25010-topics-EN.drawio.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/05_building_blocks-EN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/08-Crosscutting-Concepts-Structure-EN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/building_block_view.puml" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/images/building_block_view.puml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/images/runtime_view.puml" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/images/runtime_view_simple.puml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/05_building_block_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/05_building_block_view.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/06_runtime_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/06_runtime_view.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/08_concepts.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/08_concepts.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/09_architecture_decisions.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/09_architecture_decisions.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/10_quality_requirements.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/10_quality_requirements.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/11_technical_risks.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/11_technical_risks.adoc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/12_glossary.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/12_glossary.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,6 +92,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Gradle.Build arcucheck.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.arcucheck [jar].executor&quot;: &quot;Run&quot;,
     &quot;Kotlin.MaintKt_Directory.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -135,8 +120,13 @@
       <recent name="core.model.deviation" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.MaintKt_Directory">
-    <configuration name="arcucheck [clean build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle jar" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.arcucheck [test]">
+    <configuration name="Tests in 'arcucheck.test'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -147,15 +137,15 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value="clean" />
-            <option value="build" />
+            <option value=":test" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="arcucheck [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -177,6 +167,29 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="arcucheck [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
@@ -204,28 +217,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UMLMapperImplKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="core.impl.UMLMapperImplKt" />
-      <module name="arcucheck.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
+      <item itemvalue="Gradle.arcucheck [test]" />
+      <item itemvalue="Gradle.Tests in 'arcucheck.test'" />
       <item itemvalue="Gradle.arcucheck [jar]" />
-      <item itemvalue="Gradle.arcucheck [clean build]" />
       <item itemvalue="Kotlin.MaintKt_Directory" />
       <item itemvalue="Kotlin.StringExtensionsKt" />
       <item itemvalue="Kotlin.MainKt" />
-      <item itemvalue="Kotlin.UMLMapperImplKt" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.arcucheck [test]" />
         <item itemvalue="Gradle.arcucheck [jar]" />
+        <item itemvalue="Gradle.Tests in 'arcucheck.test'" />
         <item itemvalue="Kotlin.StringExtensionsKt" />
         <item itemvalue="Kotlin.MainKt" />
-        <item itemvalue="Kotlin.UMLMapperImplKt" />
-        <item itemvalue="Gradle.arcucheck [clean build]" />
       </list>
     </recent_temporary>
   </component>
@@ -252,6 +258,8 @@
       <workItem from="1721653110226" duration="4175000" />
       <workItem from="1722220503971" duration="336000" />
       <workItem from="1723104935952" duration="2426000" />
+      <workItem from="1723290185933" duration="344000" />
+      <workItem from="1723292526096" duration="2830000" />
     </task>
     <task id="LOCAL-00006" summary="feat: add Koin di">
       <created>1716894560404</created>
@@ -611,12 +619,17 @@
     </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
+        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c">
           <value>
             <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -635,13 +648,13 @@
                   </entry>
                 </map>
               </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
         <entry key="9613bee4-43f3-49f2-9397-99501a69537b">
           <value>
             <State>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
@@ -660,6 +673,7 @@
                   </entry>
                 </map>
               </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
             </State>
           </value>
         </entry>
@@ -668,12 +682,6 @@
             <State />
           </value>
         </entry>
-      </map>
-    </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="312e91c7-1b5a-4b43-9f24-55d82842940c" value="TOOL_WINDOW" />
-        <entry key="9613bee4-43f3-49f2-9397-99501a69537b" value="TOOL_WINDOW" />
       </map>
     </option>
   </component>
