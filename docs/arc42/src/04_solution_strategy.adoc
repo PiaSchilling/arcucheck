@@ -5,7 +5,22 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 
 [role="arc42help"]
-****
+
+=== Integration
+To integrate the tool into existing development processes, it could either be developed as an IDE plugin or structured to allow integration with Continuous Integration/Continuous Deployment (CI/CD) pipelines. Both would allow automated, regularly conformance checks. Since achieving pipeline integration compatibility is more straightforward, this approach was chosen for the prototype implementation. To facilitate easy integration into pipelines, the tool should provide a CLI.
+
+=== Output
+Since this is a prototypical implementation, a simple plain text output in the form of warnings to the console was found to be the easiest to implement while still effectively presenting details about detected deviations.
+
+=== Output structure
+
+[source]
+----
+Detected deviation <title >: Level: <deviation level > Subject: <deviation subject > Type: <deviation type > Cause: <message >
+Affected design diagram: <path to affected .puml file> Affected implementation at: <path to affected .java file>
+----
 
 
-****
+
+
+

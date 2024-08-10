@@ -6,6 +6,6 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 [role="arc42help"]
 ****
-
+There are no architecture constraints.
 
 ****

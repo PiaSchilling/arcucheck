@@ -4,3 +4,5 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 
 == Deployment View
+
+Not relevant.

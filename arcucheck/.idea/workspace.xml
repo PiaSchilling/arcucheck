@@ -5,11 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="19b6dbea-1328-4a6e-aab1-16c1bcf1be03" name="Changes" comment="feat: add exitProcess with status 1 if deviations are detected">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TestCases/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TestCases/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/02_architecture_constraints.adoc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/04_solution_strategy.adoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/arc42/src/07_deployment_view.adoc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -259,7 +260,7 @@
       <workItem from="1722220503971" duration="336000" />
       <workItem from="1723104935952" duration="2426000" />
       <workItem from="1723290185933" duration="344000" />
-      <workItem from="1723292526096" duration="2830000" />
+      <workItem from="1723292526096" duration="2859000" />
     </task>
     <task id="LOCAL-00006" summary="feat: add Koin di">
       <created>1716894560404</created>
