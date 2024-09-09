@@ -1,0 +1,59 @@
+@startuml
+
+actor user
+participant CLI
+participant Controller
+participant FileHandler
+participant CodeParser
+participant PUMLMapper
+participant PUMLComparator
+participant ResultPrinter
+
+user -> CLI: call(pathToDocu)
+activate CLI
+CLI -> Controller: onExecute(pathToDocu)
+activate Controller
+Controller -> FileHandler: extractDesignDiagrams(pathToDocu)
+activate FileHandler
+FileHandler -> FileHandler: extract .puml files
+Controller <-- FileHandler: designDiagramFiles
+deactivate FileHandler
+Controller -> FileHandler: convertDiagramToString(designDiagram)
+activate FileHandler
+FileHandler -> FileHandler: convert .puml file to string
+Controller <-- FileHandler: designDiagramStrings
+deactivate FileHandler
+Controller -> FileHandler: extractImplFiles(designDiagramStrings)
+activate FileHandler
+FileHandler -> FileHandler: extract path to impl
+Controller <-- FileHandler: implPaths
+deactivate FileHandler
+Controller -> CodeParser: convertImplFilesToDiagramStrings(implFiles)
+activate CodeParser
+CodeParser -> CodeParser: generate PUML diagram from code
+Controller <-- CodeParser: implDiagramStrings
+deactivate CodeParser
+Controller -> PUMLMapper: mapDiagrams(designDiagramStrings)
+activate PUMLMapper
+PUMLMapper -> PUMLMapper: map design diagram strings to PUML objects
+Controller <-- PUMLMapper: designPUMLObjects
+deactivate PUMLMapper
+Controller -> PUMLMapper: mapDiagrams(implDiagramStrings)
+activate PUMLMapper
+PUMLMapper -> PUMLMapper: map impl diagram strings to PUML objects
+Controller <-- PUMLMapper: implPUMLObjects
+deactivate PUMLMapper
+Controller -> PUMLComparator: comparePUMLObjects(designPUMLObjects,implPUMLObjects)
+activate PUMLComparator
+PUMLComparator -> PUMLComparator: compare PUML objects
+Controller <-- PUMLComparator: deviationObjects
+deactivate PUMLComparator
+Controller -> ResultPrinter: printResult(deviationObjects)
+deactivate Controller
+activate ResultPrinter
+ResultPrinter -> ResultPrinter: assemble warnings
+ResultPrinter -> CLI: printWarnings
+deactivate ResultPrinter
+user <-- CLI: showWarnings
+deactivate CLI
+@enduml

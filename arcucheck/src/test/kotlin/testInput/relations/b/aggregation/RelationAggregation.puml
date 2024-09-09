@@ -1,0 +1,5 @@
+@startuml
+class RelationAggregation{}
+class TestReferenceClass{}
+
+@enduml

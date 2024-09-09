@@ -1,0 +1,10 @@
+@startuml
+class RelationMultiplicity{
+- TestClass testClass
+}
+class TestClass{
+- RelationMultiplicity relationMultiplicity
+}
+
+RelationMultiplicity "1" -- "1"  TestClass
+@enduml

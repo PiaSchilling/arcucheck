@@ -1,0 +1,79 @@
+@startuml
+'https://plantuml.com/class-diagram
+note "postfix 'impl'='implementation'" as N1
+interface Controller{
+    onExecuteCommand(args)
+}
+class ControllerImpl{
+- parser:CodeParser
+- mapper:UMLMapper
+- comparator: UMLObjComparator
+- generator: WarningGenerator
++ onExecuteCommand(args)
+}
+interface CodeParser{
++ parseCode(pathToCode):File
+}
+class CodeParserImpl{
++ parseCode(pathToCode):umlFile
+}
+interface UMLMapper{
++ mapUML(umlFile):UMLDiagram
+}
+class UMLMapperImpl{
++ mapUML(umlFile):UMLDiagram
+}
+interface UMLObjComparator{
++ compareDiagramms(codeDiagram,
+designDiagram):Deviation[]
+}
+class UMLObjComparatorImpl{
++ compareDiagramms(codeDiagram,
+designDiagram):Deviation[]
+}
+interface WarningGenerator{
++ generateWarnings(deviations):String[]
+}
+class WarningGeneratorImpl{
++ generateWarnings(deviations):String[]
+}
+interface UI{
+    executeCommand()
+}
+class CLI{
+- controller:Controller
+executeCommand()
+}
+class UMLDiagram{
+- name:String
+- classes: UMLClass[]
+}
+
+class UMLClass{
+- fields: Field[]
+- methods: Method[]
+}
+
+class Deviation{
+- type:DeviationType
+- class:UMLClass
+- description:String
+}
+
+Controller <|-- ControllerImpl
+CodeParser <|-- CodeParserImpl
+UMLMapper <|-- UMLMapperImpl
+UMLObjComparator <|-- UMLObjComparatorImpl
+WarningGenerator <|-- WarningGeneratorImpl
+UI <|-- CLI
+
+ControllerImpl -- CodeParser
+ControllerImpl -- UMLMapper
+ControllerImpl -- UMLObjComparator
+ControllerImpl -- WarningGenerator
+
+CLI -- Controller
+
+UMLDiagram o-- UMLClass
+
+@enduml

@@ -1,0 +1,4 @@
+@startuml
+interface TestInterface{}
+class RelationRealisation{}
+@enduml

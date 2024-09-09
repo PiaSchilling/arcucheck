@@ -1,0 +1,4 @@
+@startuml
+class testInput.packages.a.packageOccurrence.PackageOccurrence {
+}
+@enduml
